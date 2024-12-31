@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Austin Dolan - Personal Portfolio</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/myna.png" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+    <!-- 
+      - #MODAL
+    -->
+
+    <!-- Modal Structure -->
+    <div id="image-modal" class="modal">
+      <span class="modal-close-btn">&times;</span>
+      <img class="modal-content" id="modal-img">
+      <button class="modal-button prev">&lt;</button>
+      <button class="modal-button next">&gt;</button>
+      <div id="modal-caption"></div>
+    </div>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my_avatar.png" alt="Austin Dolan" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Austin Dolan">Austin Dolan</h1>
+
+          <p class="title">Service Now Developer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+
+              <a href="mailto:austindolanportfolio@gmail.com" class="contact-link">austindolanportfolio@gmail.com</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+
+              <a href="tel:+8087247294" class="contact-link">+1 (808) 724-7294</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Birthday</p>
+
+              <time datetime="1990-05-26">May 26, 1990</time>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+
+              <address>Honolulu Hawaii, USA</address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="https://www.facebook.com/austin.dolan.7" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://www.twitter.com/haolehawaiian_" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="https://www.instagram.com/barrelshawaii/" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>About</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Resume</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portfolio</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Blog</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about  active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            I'm Software Developer from Kailua, Oahu, working in state government.
+            I enjoy
+            turning complex problems into simple, beautiful and intuitive designs.
+          </p>
+
+          <p>
+            My job is to build your application so that it is functional and user-friendly but at the same time attractive.
+            Moreover, I
+            add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring
+            across your
+            message and identity in the most creative way. 
+          </p>
+        </section>
+
+
+        <!--
+          - service
+        -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">What i'm doing</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg" alt="design icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web design</h4>
+
+                <p class="service-item-text">
+                  The most modern and high-quality design made at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web development</h4>
+
+                <p class="service-item-text">
+                  High-quality development of sites at the professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Mobile apps</h4>
+
+                <p class="service-item-text">
+                  Professional development of applications for iOS and Android.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Photography</h4>
+
+                <p class="service-item-text">
+                  I make high-quality photos of any category at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!--
+          - testimonials
+        -->
+
+        <section class="testimonials">
+
+          <h3 class="h3 testimonials-title">Testimonials</h3>
+
+          <ul class="testimonials-list has-scrollbar">
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-1.png" alt="Charles Kitsuki" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Charles Kitsuki</h4>
+                <div class="testimonials-date" data-testimonials-date>October 9, 2024</div>
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Austin has been very helpful in getting various ServiceNow applications up into production. He has gone above
+                    and beyond what I would expect from an intern. He works well with his fellow IT professionals and has provided
+                    outstanding service to the various end-users.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-2.png" alt="Scott Oie" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Scott Oie</h4>
+                <div class="testimonials-date" data-testimonials-date>October 10, 2024</div>
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    The accurate measure of someone's work ethic isn't revealed when everything goes smoothly but during times of crisis.
+                    I had the opportunity to work with Austin during a live event, where unexpected challenges often arise. In these moments,
+                    Austin consistently demonstrated his ability to think on his feet, stay calm under pressure, and communicate clearly 
+                    with the team. His professionalism and problem-solving skills were invaluable, ensuring the event's success despite the hurdles.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
+                <div class="testimonials-date" data-testimonials-date>October 11, 2024</div>
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
+                <div class="testimonials-date" data-testimonials-date>October 12, 2024</div>
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        <!--
+          - testimonials modal
+        -->
+
+        <!-- <div class="modal-container" data-modal-container>
+
+          <div class="overlay" data-overlay></div>
+
+          <section class="testimonials-modal">
+
+            <button class="modal-close-btn" data-modal-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <div class="modal-img-wrapper">
+              <figure class="modal-avatar-box">
+                <img src="./assets/images/avatar-1d.png" alt="Charles Kitsuki" width="80" data-modal-img>
+              </figure>
+
+              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+            </div>
+
+            <div class="modal-content">
+
+              <h4 class="h3 modal-title" data-modal-title>Charles Kitsuki</h4>
+
+              <time datetime="2021-06-14">9 October, 2024</time>
+
+              <div data-modal-text>
+                <p>
+                  Austin has been very helpful in getting various ServiceNow applications up into production. He has gone above
+                  and beyond what I would expect from an intern. He works well with his fellow IT professionals and has provided
+                  outstanding service to the various end-users.
+                </p>
+              </div>
+
+            </div>
+
+          </section>
+
+        </div> -->
+        
+        <!-- Testimonials Modal -->
+        <div class="modal-container testimonials-modal-container" data-modal-container="testimonials">
+          <div class="overlay testimonials-overlay" data-overlay="testimonials"></div>
+          <section class="testimonials-modal" data-modal="testimonials">
+            <button class="modal-close-btn" data-modal-close-btn="testimonials">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="modal-img-wrapper">
+              <figure class="modal-avatar-box">
+                <img src="./assets/images/avatar-1d.png" alt="Charles Kitsuki" width="80" data-modal-img="testimonials">
+              </figure>
+              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+            </div>
+            <div class="modal-content">
+              <h4 class="h3 modal-title" data-modal-title="testimonials">Name Text</h4>
+              <time datetime="2024-10-09" data-modal-date="testimonials">Date Text</time>
+              <div data-modal-text="testimonials">
+                <p>
+                  Testimonial Text
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+        <!--
+          - Apps
+        -->
+
+        <section class="Apps">
+
+          <h3 class="h3 clients-title">Apps</h3>
+
+          <ul class="clients-list has-scrollbar">
+
+            <li class="clients-item" data-apps-item>
+              <img src="./assets/images/active-directory.png" alt="SPO-036" data-apps-avatar>
+              <div class="testimonials-text" data-apps-title>
+                <h4>SPO-036: Procurement Authority Management System</h4>
+              </div>
+              <div class="testimonials-date" data-apps-date></div>
+              <div class="testimonials-text" data-apps-text>
+                <p>
+                  SPO-036 is a procurement authority management app that streamlines user creation, delegation, and revocation of authority within ServiceNow. 
+                  It automates transmittals for users with "Awaiting Approval" status and provides a dynamic dashboard for tracking DPAs and employee courses 
+                  in the Service Portal. Key skills used include workflow automation, UI design, and ServiceNow scripting.
+                </p>
+              </div>
+            </li>
+
+            <li class="clients-item" data-apps-item>
+              <img src="./assets/images/web-design.png" alt="Bus Log" data-apps-avatar>
+              <div class="testimonials-text" data-apps-title>
+                <h4>BUS Log: Daily Productivity Tracking Application</h4>
+              </div>
+              <div class="testimonials-date" data-apps-date></div>
+              <div class="testimonials-text" data-apps-text>
+                <p>
+                  The BUS Log application tracks daily office productivity and helps set data-driven goals. It includes a custom workspace for managers to view 
+                  current monthly productivity and automates the aggregation of daily logs into monthly reports. I used skills in workspace customization and automation 
+                  to enhance performance assessment.
+                </p>
+              </div>
+            </li>
+
+            <li class="clients-item" data-apps-item>
+              <img src="./assets/images/plugins.png" alt="SPO Log" data-apps-avatar>
+              <div class="testimonials-text" data-apps-title>
+                <h4>SPO CPO Request Log: Procurement Project Tracking Application</h4>
+              </div>
+              <div class="testimonials-date" data-apps-date></div>
+              <div class="testimonials-text" data-apps-text>
+                <p>
+                  SPO CPO Request Log tracks procurement contracts, invoices, and ongoing projects across multiple departments. It features Service Portal and workspace interfaces, 
+                  advanced performance analytics, and a custom attachment management widget. I leveraged skills in user interface creation, widget development, and performance analytics.
+                </p>
+              </div>
+            </li>
+
+            <li class="clients-item" data-apps-item>
+              <img src="./assets/images/property.png" alt="CSS Inventory" data-apps-avatar>
+              <div class="testimonials-text" data-apps-title>
+                <h4>CSS Inventory: Inventory Tracking System</h4>
+              </div>
+              <div class="testimonials-date" data-apps-date></div>
+              <div class="testimonials-text" data-apps-text>
+                <p>
+                  CSS Inventory is an application for tracking inventory and updating a relational database within the Department of Transportation. I took over its maintenance, addressing 
+                  user issues, updating patches, and aligning the user interface with other DOT applications. I also refactored code for improved efficiency and performance.
+                </p>
+              </div>
+            </li>
+
+            <li class="clients-item" data-apps-item>
+              <img src="./assets/images/logo-5-color.png" alt="App 5" data-apps-avatar>
+              <div class="testimonials-text" data-apps-title>
+                <p>App 5</p>
+              </div>
+              <div class="testimonials-date" data-apps-date></div>
+              <div class="testimonials-text" data-apps-text>
+                <p>
+                  Description of App 5.
+                </p>
+              </div>
+            </li>
+
+            <li class="clients-item" data-apps-item>
+              <img src="./assets/images/logo-6-color.png" alt="App 6" data-apps-avatar>
+              <div class="testimonials-text" data-apps-title>
+                <p>App 6</p>
+              </div>
+              <div class="testimonials-date" data-apps-date></div>
+              <div class="testimonials-text" data-apps-text>
+                <p>
+                  Description of App 6.
+                </p>
+              </div>
+            </li>
+
+          </ul>
+
+        </section>
+
+        <!-- Apps Modal
+        <div class="apps-modal-container" data-apps-modal-container>
+          <div class="apps-overlay" data-apps-overlay></div>
+          <section class="apps-modal">
+            <button class="apps-modal-close-btn" data-apps-modal-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="apps-modal-img-wrapper">
+              <figure class="apps-modal-avatar-box">
+                <img src="" alt="App Logo" width="80" data-apps-modal-img>
+              </figure>
+              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+            </div>
+            <div class="apps-modal-content">
+              <h4 class="h3 apps-modal-title" data-apps-modal-title>App Name</h4>
+              <div data-apps-modal-text>
+                <p>
+                  App description here.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+        -->
+        <!-- Apps Modal -->
+        <div class="modal-container apps-modal-container" data-modal-container="apps">
+          <div class="overlay apps-overlay" data-overlay="apps"></div>
+          <section class="apps-modal" data-modal="apps">
+            <button class="modal-close-btn" data-modal-close-btn="apps">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="modal-img-wrapper">
+              <figure class="avatar-box modal-avatar-box">
+                <img src="" alt="App Logo" width="80" data-modal-img="apps">
+              </figure>
+              <!-- <img src="./assets/images/icon-quote.svg" alt="quote icon"> -->
+            </div>
+            <div class="modal-content">
+              <h4 class="h3 modal-title" data-modal-title="apps">App Name</h4>
+              <time datetime="2024-10-09" data-modal-date="apps">Date Text</time>
+              <div data-modal-text="apps">
+                <p>App description here.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
+
+
+
+      <!--
+        - #RESUME
+      -->
+
+      <article class="resume" data-page="resume">
+
+        <header>
+          <h2 class="h2 article-title">Resume</h2>
+        </header>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Education</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Leeward Community College, Pearl City, HI</h4>
+              <span>Graduated: May 2024</span>
+              <p class="timeline-text">
+                AS I.C.S. Software Development Specialist
+              </p>
+            </li>
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Kapiolani CC, Honolulu, HI</h4>
+              <span>Graduated: May 2013</span>
+              <p class="timeline-text">
+                AS General Education
+              </p>
+            </li>
+
+          </ol>
+        </section>
+
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">DOT State of Hawaii, Honolulu, HI</h4>
+              <span>May 2024 – Present</span>
+              <p class="timeline-text">
+                Intern: ServiceNow Developer
+                <br> - Built custom ServiceNow apps to improve business processes, focusing on performance.
+                <br> - Developed scripts, UI actions, and logic to enhance functionality.
+                <br> - Transformed data from legacy systems using custom transform maps.
+                <br> - Helped migrate apps from Lotus Notes to ServiceNow, improving workflows.
+                <br> - Worked with teams to troubleshoot and ensure smooth deployments.
+              </p>
+            </li>
+            
+              
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">EDPSO State of Hawaii, Honolulu, HI</h4>
+              <span>February 2024 – May 2024</span>
+              <p class="timeline-text">
+                Intern: IT Help Desk Specialist
+                <br> - Responsible for software and hardware maintenance for over 600 employees.
+                <br> - Reimage and deploy workstations.
+                <br> - Respond to help desk tickets in a timely manner.
+              </p>
+            </li>
+
+
+
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Aloha Caravan, Honolulu, HI</h4>
+              <span>2019 – 2023</span>
+              <p class="timeline-text">
+                Owner/Manager of Operations
+                <br> - Kept detailed inventory of products.
+                <br> - Worked with customers to provide beverage services for large parties and weddings.
+                <br> - Performed ongoing maintenance, including necessary updates and troubleshooting tasks.
+              </p>
+            </li>
+
+          </ol>
+        </section>
+
+        <section class="skill">
+          <h3 class="h3 skills-title">My skills</h3>
+          <ul class="skills-list content-card">
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">IT Support</h5>
+                <data value="90">90%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Customer Service</h5>
+                <data value="80">80%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Hardware/Software Maintenance</h5>
+                <data value="85">85%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 85%;"></div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="honors">
+          <h3 class="h3 honors-title">Honors</h3>
+          <ul class="honors-list content-card">
+            <li class="honors-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Dean's List</h5>
+                <span class="honors-text">2023 – 2024</span>
+              </div>
+            </li>
+            <li class="honors-item">
+              <div class="title-wrapper">
+                <h5 class="h5 honors-gpa">4.0 GPA</h5>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+      </article>
+
+
+      <!--
+        - #PORTFOLIO
+      -->
+
+      <article class="portfolio" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Workspace</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Service Portal</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Custom Widget</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Documentation</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>User Guide</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>User Testing</button>
+            </li>
+
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select data-type="project">
+
+              <div class="select-value" data-select-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Workspace</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Service Portal</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Custom Widget</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Documentation</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>User Guide</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>User Testing</button>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <ul class="project-list">
+
+            <li class="project-item  active" data-filter-item data-category="workspace">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/SPO-036/spo_036_dashboard.png" alt="SPO-036 Workspace" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>SPO-036</h3>
+
+              <p class="project-category" data-project-category>Workspace</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/SPO-036/spo_036_dashboard.png" alt="Photo 1">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/SPO-036/spo_036_all_spos.png" alt="Photo 2">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/SPO-036/spo_036_employee_courses.png" alt="Photo 3">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/SPO-036/spo_036_profile.png" alt="Photo 4">
+                    </div>
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <!-- Old modal location -->
+                <!-- Hidden Details title/category/description -->
+                <h3 class="project-details-title">SPO-036</h3>
+                <p class="project-details-category">DPA Compliance and Tracking System</p>
+                <section class="description">
+                  <p>
+                    The <strong>SPO-036 Workspace</strong> is a modernized application designed to streamline and enhance procurement processes 
+                    for delegated procurement authorities (DPAs). This innovative system replaces the legacy application with a robust, efficient, 
+                    and user-friendly platform, ensuring improved performance and data integrity.
+                  </p>
+                </section>
+              
+                <section class="features">
+                  <h3>Key Features</h3>
+                  <ul>
+                    <li><strong>Dynamic Delegation Management</strong>: Create, edit, and track delegated procurement authorities (DPAs) in real time. Automatic updates for associated mandatory courses and training records.</li>
+                    <li><strong>Integrated Course Tracking</strong>: Tracks course completions for DPAs and highlights overdue or expired training. Automatic status updates based on training compliance.</li>
+                    <li><strong>E-Signature Integration</strong>: Seamlessly integrates with Adobe Sign for secure and efficient approval workflows. Reduces paperwork and expedites approval processes.</li>
+                    <li><strong>Customizable Reporting</strong>: Generates detailed reports for active, inactive, and pending DPAs. Allows export options for auditing and compliance purposes.</li>
+                    <li><strong>Real-Time Notifications</strong>: Alerts users of status changes, incomplete training, or expiring delegations. Improves accountability and keeps users informed.</li>
+                    <li><strong>Enhanced User Interface</strong>: Built using the ServiceNow platform for a consistent and intuitive experience. Centralized dashboard with easy navigation to related records and modules.</li>
+                  </ul>
+                </section>
+              
+                <section class="improvements">
+                  <h3>Improvements Over the Old System</h3>
+                  <ul>
+                    <li><strong>Performance Enhancements</strong>: Eliminates redundant processes, reducing load times and improving responsiveness. Optimized queries for faster data retrieval and processing.</li>
+                    <li><strong>Data Integrity</strong>: Implements stricter validation rules to minimize data entry errors. Ensures data consistency across related tables and workflows.</li>
+                    <li><strong>Scalability</strong>: Designed to handle increasing user demands and record volumes. Supports future enhancements and integrations without performance degradation.</li>
+                  </ul>
+                </section>
+              
+                <section class="benefits">
+                  <h3>Benefits</h3>
+                  <ul>
+                    <li><strong>Increased Efficiency</strong>: Automates repetitive tasks, allowing users to focus on critical decision-making. Reduces manual errors and time spent on administrative tasks.</li>
+                    <li><strong>Improved Transparency</strong>: Provides clear visibility into delegation statuses, training requirements, and approval workflows. Simplifies compliance monitoring with easy access to real-time data.</li>
+                    <li><strong>Streamlined Processes</strong>: Combines multiple steps into a single workflow, reducing processing time. Ensures consistent application of policies and rules.</li>
+                  </ul>
+                </section>
+              
+                <footer class="conclusion">
+                  <p>
+                    The <strong>SPO-036 Workspace</strong> has transformed how procurement delegations are managed, making the process faster, 
+                    more reliable, and easier to use. By leveraging cutting-edge technology and best practices, it has set a new standard for 
+                    efficiency and data management.
+                  </p>
+                </footer>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="workspace">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/SPO-Log/spo_log_ws_db.png" alt="spo-log dashboard" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>SPO-Log</h3>
+
+              <p class="project-category" data-project-category>Workspace</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/SPO-Log/spo_log_ws_db.png" alt="Photo 1">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/SPO-Log/spo_log_ws_form.png" alt="Photo 2">
+                    </div>
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">SPO Log</h3>
+                <p class="project-details-category">Logging and Tracking System</p>              
+                <section class="description">
+                  <p>
+                    The <strong>SPO Log</strong> application is a comprehensive logging and tracking system designed to improve operational 
+                    efficiency and data accuracy in state procurement processes. By replacing fragmented manual logs, this application 
+                    centralizes procurement data, enabling seamless tracking and enhanced decision-making for all stakeholders.
+                  </p>
+                </section>
+              
+                <section class="features">
+                  <h3>Key Features</h3>
+                  <ul>
+                    <li><strong>Centralized Logging</strong>: Combines procurement activity records into a single, searchable database for real-time access to critical information.</li>
+                    <li><strong>Automated Workflows</strong>: Automates routine logging tasks, including timestamps, categorization, and user tracking.</li>
+                    <li><strong>Advanced Filtering</strong>: Allows users to filter and search logs by date, category, and other key fields for quick access to relevant data.</li>
+                    <li><strong>Role-Based Access Control</strong>: Ensures data security by granting access permissions based on user roles.</li>
+                    <li><strong>Customizable Dashboards</strong>: Provides visual insights with graphs, charts, and tables tailored to user-specific requirements.</li>
+                    <li><strong>Integration with External Systems</strong>: Seamlessly integrates with Adobe Sign and other applications to enhance logging efficiency.</li>
+                  </ul>
+                </section>
+              
+                <section class="improvements">
+                  <h3>Improvements Over the Old System</h3>
+                  <ul>
+                    <li><strong>Elimination of Manual Errors</strong>: Replaces manual data entry with automated logging to ensure accuracy and reduce errors.</li>
+                    <li><strong>Enhanced Data Accessibility</strong>: Consolidates scattered records into a centralized system accessible from anywhere via a web-based platform.</li>
+                    <li><strong>Improved Reporting</strong>: Provides pre-built and customizable reports for better insights and decision-making.</li>
+                    <li><strong>Real-Time Updates</strong>: Ensures all logs are updated in real-time, eliminating delays in data availability.</li>
+                    <li><strong>Compliance Tracking</strong>: Tracks procurement activities against state compliance requirements, improving audit readiness.</li>
+                  </ul>
+                </section>
+              
+                <section class="benefits">
+                  <h3>Benefits</h3>
+                  <ul>
+                    <li><strong>Streamlined Processes</strong>: Simplifies logging workflows, saving time and improving productivity.</li>
+                    <li><strong>Enhanced Transparency</strong>: Provides a clear and complete view of procurement logs for all stakeholders.</li>
+                    <li><strong>Scalability</strong>: Designed to handle increasing volumes of procurement data as the organization grows.</li>
+                    <li><strong>Data Security</strong>: Protects sensitive information with robust access controls and encryption.</li>
+                    <li><strong>User-Friendly Interface</strong>: Intuitive design ensures easy adoption and use by all team members.</li>
+                  </ul>
+                </section>
+              
+                <footer class="conclusion">
+                  <p>
+                    The <strong>SPO Log Application</strong> has revolutionized how procurement logs are managed by introducing a streamlined, 
+                    centralized system that enhances data accuracy and transparency. Its advanced features and improvements over legacy systems 
+                    make it an indispensable tool for efficient and compliant procurement operations.
+                  </p>
+                </footer>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="workspace">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/BUS-Log/bus_dashboard.png" alt="bus-log" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>BUS Log</h3>
+
+              <p class="project-category" data-project-category>Workspace</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/BUS-Log/bus_dashboard.png" alt="Photo 1">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/BUS-Log/bus_form.png" alt="Photo 2">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/BUS-Log/bus_service_portal.png" alt="Photo 3">
+                    </div>
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">BUS Log</h3>
+                <p class="project-details-category">Workspace</p>
+                <section class="description">
+                  <p>
+                    The <strong>Bus Log Application</strong> is a specialized fleet management system designed to streamline operations, 
+                    improve data accuracy, and provide real-time insights into bus schedules, maintenance, and performance. 
+                    By automating logging processes, it enhances efficiency and ensures consistent data tracking for transportation services.
+                  </p>
+                </section>
+              
+                <section class="features">
+                  <h3>Key Features</h3>
+                  <ul>
+                    <li><strong>Schedule Tracking</strong>: Real-time monitoring of bus schedules, including departure and arrival times.</li>
+                    <li><strong>Maintenance Logging</strong>: Records maintenance activities and schedules, ensuring timely servicing and reduced downtime.</li>
+                    <li><strong>Driver Assignment Management</strong>: Tracks driver assignments and ensures accurate logging of shift details.</li>
+                    <li><strong>Route Optimization</strong>: Provides data-driven insights to optimize bus routes for efficiency and cost savings.</li>
+                    <li><strong>Incident Reporting</strong>: Logs incidents and delays with timestamps for better accountability and resolution.</li>
+                    <li><strong>Customizable Dashboards</strong>: Displays key metrics such as fuel usage, mileage, and route performance.</li>
+                  </ul>
+                </section>
+              
+                <section class="improvements">
+                  <h3>Improvements Over the Old System</h3>
+                  <ul>
+                    <li><strong>Centralized Data Management</strong>: Replaces manual logbooks with a unified digital system accessible across departments.</li>
+                    <li><strong>Reduced Errors</strong>: Minimizes human errors in logging and data tracking through automation.</li>
+                    <li><strong>Enhanced Data Analysis</strong>: Enables detailed reporting and analysis of fleet performance and operational efficiency.</li>
+                    <li><strong>Scalability</strong>: Designed to support an increasing number of buses, drivers, and routes as operations grow.</li>
+                    <li><strong>Real-Time Updates</strong>: Provides up-to-date information on schedules, delays, and incidents for better decision-making.</li>
+                  </ul>
+                </section>
+              
+                <section class="benefits">
+                  <h3>Benefits</h3>
+                  <ul>
+                    <li><strong>Improved Efficiency</strong>: Automates repetitive tasks, saving time and resources.</li>
+                    <li><strong>Enhanced Accountability</strong>: Provides clear visibility into operations and individual responsibilities.</li>
+                    <li><strong>Better Resource Allocation</strong>: Helps optimize schedules, routes, and maintenance to maximize efficiency.</li>
+                    <li><strong>Data-Driven Insights</strong>: Supports strategic decision-making with comprehensive data and analytics.</li>
+                    <li><strong>User-Friendly Interface</strong>: Designed for ease of use, enabling quick adoption by all team members.</li>
+                  </ul>
+                </section>
+              
+                <footer class="conclusion">
+                  <p>
+                    The <strong>Bus Log Application</strong> has redefined fleet management by introducing a centralized and automated logging system. 
+                    With its advanced features and improvements, it ensures operational excellence, enhances data accuracy, and supports the growing 
+                    needs of transportation services.
+                  </p>
+                </footer>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="service portal">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/CSS-Inventory/css-inv_portal.png" alt="css-inventory" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>CSS Inventory</h3>
+
+              <p class="project-category" data-project-category>Service Portal</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/CSS-Inventory/css-inv_portal.png" alt="Photo 1">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_list.png" alt="Photo 2">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_form.png" alt="Photo 3">
+                    </div>
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">CSS Inventory</h3>
+                <p class="project-details-category">Service Portal</p>
+                <p>Here are some additional details about the CSS-Inventory Service Portal project. This section can include a description, 
+                  links, or any relevant content that will appear when the item expands.</p>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="service portal">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/SPO-036/spo_036_emp_courses_db.png" alt="dynamic dashboard" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>Dynamic Employee Course Dashboard</h3>
+
+              <p class="project-category" data-project-category>Service Portal</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/SPO-036/spo_036_emp_courses_db.png" alt="Photo 1">
+                    </div>
+                    <!-- <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_list.png" alt="Photo 2">
+                    </div>
+                    <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_form.png" alt="Photo 3">
+                    </div> -->
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">Dynamic Employee Course Dashboard</h3>
+                <p class="project-details-category">Service Portal</p>
+                <p>Here are some additional details about the Dynamic Employee Course Service Portal project. This section can include a description, 
+                  links, or any relevant content that will appear when the item expands.</p>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="service portal">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/SPO-036/spo_036_emp_courses_db.png" alt="dynamic dashboard" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>SPO CPO Request Log</h3>
+
+              <p class="project-category" data-project-category>Service Portal</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/SPO-Log/spo_log_sp_list.png" alt="SPO-Log SP list">
+                    </div>
+                    <!-- <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_list.png" alt="Photo 2">
+                    </div>
+                    -->
+                    <div class="gallery-slide">
+                      <img src="./assets/images/SPO-Log/spo_sp_form.png" alt="SPO-Log SP form">
+                    </div> 
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">SPO Log</h3>
+                <p class="project-details-category">Service Portal</p>
+                <p>Here are some additional details about the SPO Log Service Portal project. This section can include a description, 
+                  links, or any relevant content that will appear when the item expands.</p>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="custom widget">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/SPO-Log/spo_log_custom_widget.png" alt="dynamic dashboard" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>Attachment Manager</h3>
+
+              <p class="project-category" data-project-category>Custom Widget</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/SPO-Log/spo_log_custom_widget.png" alt="SPO-Log SP list">
+                    </div>
+                    <!-- <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_list.png" alt="Photo 2">
+                    </div>
+                    -->
+                    <!-- <div class="gallery-slide">
+                      <img src="./assets/images/SPO-Log/spo_log_custom_widget.png" alt="SPO-Log SP form">
+                    </div>  -->
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">SPO Log</h3>
+                <p class="project-details-category">Service Portal</p>
+                <p>Here are some additional details about the SPO Log Service Portal project. This section can include a description, 
+                  links, or any relevant content that will appear when the item expands.</p>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="documentation">
+              <figure class="project-img" data-project-img="">
+                <div class="project-item-icon-box">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </div>
+
+                <img src="./assets/images/Documentation/doc_spo_036.png" alt="technical documentation" loading="lazy">
+              </figure>
+
+              <h3 class="project-title" data-project-title>UML Diagram</h3>
+
+              <p class="project-category" data-project-category>Documentation</p>
+
+              <!-- Hidden Additional Information Section -->
+              <div class="project-details" data-project-details>
+                <!--Gallery-->
+                <div class="gallery-container">
+                  <div class="gallery-wrapper">
+                    <div class="gallery-slide active" >
+                      <img src="./assets/images/SPO-Log/spo_log_custom_widget.png" alt="SPO-Log SP list">
+                    </div>
+                    <!-- <div class="gallery-slide">
+                      <img src="./assets/images/CSS-Inventory/css-inv_list.png" alt="Photo 2">
+                    </div>
+                    -->
+                    <!-- <div class="gallery-slide">
+                      <img src="./assets/images/SPO-Log/spo_log_custom_widget.png" alt="SPO-Log SP form">
+                    </div>  -->
+                    <!-- Add more slides as needed -->
+                  </div>
+                  <button class="gallery-button prev">❮</button>
+                  <button class="gallery-button next">❯</button>
+                </div>
+                <h3 class="project-details-title">SPO Log</h3>
+                <p class="project-details-category">Service Portal</p>
+                <p>Here are some additional details about the SPO Log Service Portal project. This section can include a description, 
+                  links, or any relevant content that will appear when the item expands.</p>
+                <!-- <button class="close-btn">Close</button> -->
+              </div>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #BLOG
+      -->
+
+      <article class="blog" data-page="blog">
+
+        <header>
+          <h2 class="h2 article-title">Blog</h2>
+        </header>
+
+        <!-- Blog Nav -->
+        <section class="blog-posts">
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Ho'o</button>
+            </li>
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select data-type="blog">
+
+              <div class="select-value" data-select-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Ho'o</button>
+              </li>
+            </ul>
+
+          </div>
+
+          <!-- Blog Posts -->
+          <ul class="blog-posts-list">
+
+            <li class="blog-post-item" data-blog-filter-item data-category="Ho'o">
+              <a href="#">
+
+              <figure class="blog-banner-box">
+                <img src="./assets/images/blog-2.jpg" alt="Design conferences in 2022" loading="lazy">
+              </figure>
+
+              <div class="blog-content">
+
+                <div class="blog-meta">
+                <p class="blog-category">Design</p>
+
+                <span class="dot"></span>
+
+                <time datetime="2022-02-23">Feb 23, 2022</time>
+                </div>
+
+                <h3 class="h3 blog-item-title">First blog post!</h3>
+
+                <p class="blog-text">
+                Super exciting blog information.
+                </p>
+
+              </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item" data-blog-filter-item data-category="Ho'o">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
+
+                  <p class="blog-text">
+                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <!-- <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #80</h3>
+
+                  <p class="blog-text">
+                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
+
+                  <p class="blog-text">
+                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
+
+                  <p class="blog-text">
+                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #79</h3>
+
+                  <p class="blog-text">
+                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
+                  </p>
+
+                </div>
+
+              </a>
+            </li> -->
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #CONTACT
+      -->
+
+      <article class="contact" data-page="contact">
+
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+        <section class="mapbox" data-mapbox>
+          <figure>
+            <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59471.840110!2d-157.858333!3d21.306944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c006d4bc64b1733%3A0x8d38f6630cbbcb43!2sHonolulu%2C%20HI%2C%20USA!5e0!3m2!1sen!2sus!4v1696514325699!5m2!1sen!2sus"           width="400" height="300" loading="lazy"></iframe>
+          </figure>
+        </section>
+
+        <section class="contact-form">
+
+          <h3 class="h3 form-title">Contact Form</h3>
+
+          <form action="https://formsubmit.co/austindolanportfolio@gmail.com" method="POST" class="form" data-form>
+            <!-- Honeypot -->
+            <input type="text" name="_honey" style="display: none;">
+
+            <!-- Disable Captcha -->
+            <input type="hidden" name="_captcha" value="false">
+
+            <!-- Success Page -->
+            <!-- <input type="hidden" name="_next" value="https://www.austindolan.com/success.html"> -->
+
+            <div class="input-wrapper">
+              <input type="text" name="name" class="form-input" placeholder="Full name" required data-form-input>
+
+              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+            </div>
+
+            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>Send Message</span>
+            </button>
+
+          </form>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
