@@ -1,5 +1,39 @@
 'use strict';
 
+// Obfuscated email
+const emailUser = "austindolanportfolio";
+const emailDomain = "gmail.com";
+const emailLink = document.getElementById("email-link");
+emailLink.href = `mailto:${emailUser}@${emailDomain}`;
+emailLink.textContent = `${emailUser}@${emailDomain}`;
+
+// Obfuscated phone
+const phoneNumber = "+1 (808) 724-7294";
+const phoneLink = document.getElementById("phone-link");
+phoneLink.href = `tel:${phoneNumber.replace(/\s|\(|\)|-/g, '')}`;
+phoneLink.textContent = phoneNumber;
+
+// Obfuscated Facebook link
+const facebookUser = "austin.dolan.7";
+const facebookBase = "https://www.facebook.com/";
+const facebookLink = document.getElementById("facebook-link");
+facebookLink.href = `${facebookBase}${facebookUser}`;
+facebookLink.setAttribute("aria-label", "Visit my Facebook profile"); 
+
+// Obfuscated Twitter link
+const twitterUser = "haolehawaiian_";
+const twitterBase = "https://www.twitter.com/";
+const twitterLink = document.getElementById("twitter-link");
+twitterLink.href = `${twitterBase}${twitterUser}`;
+twitterLink.setAttribute("aria-label", "Visit my Twitter profile");
+
+// Obfuscated Instagram link
+const instagramUser = "ctrlalt_austin";
+const instagramBase = "https://www.instagram.com/";
+const instagramLink = document.getElementById("instagram-link");
+instagramLink.href = `${instagramBase}${instagramUser}`;
+instagramLink.setAttribute("aria-label", "Visit my Instagram profile");
+
 
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
