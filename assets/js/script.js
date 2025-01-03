@@ -61,6 +61,8 @@ const addModalListeners = (type) => {
 addModalListeners("testimonials");
 addModalListeners("apps");
 
+/* Filter Functionality for Projects */
+
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
@@ -72,10 +74,10 @@ select.addEventListener("click", function () { elementToggleFunc(this); });
 for (let i = 0; i < selectItems.length; i++) {
   selectItems[i].addEventListener("click", function () {
 
-    const selectedValue = this.innerText.toLowerCase();
+    let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     elementToggleFunc(select);
-    filterFunc(selectedValue, select.dataset.type);
+    filterFunc(selectedValue);
 
   });
 }
@@ -89,63 +91,33 @@ const dataImg = document.querySelectorAll("[data-project-img]");
 const dataTitle = document.querySelectorAll("[data-project-title]");
 const dataCategory = document.querySelectorAll("[data-project-category]");
 
-// blog variables
-const blogFilterItems = document.querySelectorAll("[data-blog-filter-item]");
-const blogDataDetails = document.querySelectorAll("[data-blog-details]");
-const blogDataImg = document.querySelectorAll("[data-blog-img]");
-const blogDataTitle = document.querySelectorAll("[data-blog-title]");
-const blogDataCategory = document.querySelectorAll("[data-blog-category]");
+const filterFunc = function (selectedValue) {
 
-const filterFunc = function (selectedValue, type) {
-  if (type === 'project') {
-    // Reset expanded and active state for all project items
-    projectItems.forEach(item => {
-      item.classList.remove('expanded');
-      item.classList.remove('active');
-    });
+  // Reset expanded and active state for all project items
+  projectItems.forEach(item => {
+    item.classList.remove('expanded');
+    item.classList.remove('active');
+  });
 
-    for (let i = 0; i < filterItems.length; i++) {
-      if (selectedValue === "all") {
-        filterItems[i].classList.add("active");
-        dataDetails[i].classList.remove("visible");
-        dataImg[i].classList.remove("hidden");
-        dataTitle[i].classList.remove("hidden");
-        dataCategory[i].classList.remove("hidden");
-      } else if (selectedValue === filterItems[i].dataset.category) {
-        filterItems[i].classList.add("active");
-        dataDetails[i].classList.remove("visible");
-        dataImg[i].classList.remove("hidden");
-        dataTitle[i].classList.remove("hidden");
-        dataCategory[i].classList.remove("hidden");
-      } else {
-        filterItems[i].classList.remove("active");
-      }
+  for (let i = 0; i < filterItems.length; i++) {
+    if (selectedValue === "all") {
+      filterItems[i].classList.add("active");
+      dataDetails[i].classList.remove("visible");
+      dataImg[i].classList.remove("hidden");
+      dataTitle[i].classList.remove("hidden");
+      dataCategory[i].classList.remove("hidden");
+    } else if (selectedValue === filterItems[i].dataset.category) {
+      filterItems[i].classList.add("active");
+      dataDetails[i].classList.remove("visible");
+      dataImg[i].classList.remove("hidden");
+      dataTitle[i].classList.remove("hidden");
+      dataCategory[i].classList.remove("hidden");
+    } else {
+      filterItems[i].classList.remove("active");
     }
-  } else if (type === 'blog') {
-    // Reset expanded and active state for all blog items
-    blogItems.forEach(item => {
-      item.classList.remove('expanded');
-    });
 
-    for (let i = 0; i < blogFilterItems.length; i++) {
-      if (selectedValue === "all") {
-        blogFilterItems[i].classList.add("active");
-        // blogDataDetails[i].classList.remove("visible");
-        // blogDataImg[i].classList.remove("hidden");
-        // blogDataTitle[i].classList.remove("hidden");
-        // blogDataCategory[i].classList.remove("hidden");
-      } else if (selectedValue === blogFilterItems[i].dataset.category) {
-        blogFilterItems[i].classList.add("active");
-        // blogDataDetails[i].classList.remove("visible");
-        // blogDataImg[i].classList.remove("hidden");
-        // blogDataTitle[i].classList.remove("hidden");
-        // blogDataCategory[i].classList.remove("hidden");
-      } else {
-        blogFilterItems[i].classList.remove("active");
-      }
-    }
   }
-}
+};
 
 // add event in all filter button items for large screen
 let lastClickedBtn = filterBtn[0];
@@ -162,20 +134,75 @@ for (let i = 0; i < filterBtn.length; i++) {
   });
 }
 
-// Blog filter button functionality
-const blogFilterBtn = document.querySelectorAll("[data-blog-filter-btn]");
-let lastClickedBlogBtn = blogFilterBtn[0];
+/* Filter Functionality for Blogs */
 
-for (let i = 0; i < blogFilterBtn.length; i++) {
-  blogFilterBtn[i].addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    filterFunc(selectedValue, 'blog');
+// // custom blogSelect variables
+// const blogSelect = document.querySelector("[blog-select]");
+// const blogSelectItems = document.querySelectorAll("[blog-select-item]");
+// const blogSelectValue = document.querySelector("[blog-select-value]");
+// const blogFilterBtn = document.querySelectorAll("[blog-filter-btn]");
 
-    lastClickedBlogBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBlogBtn = this;
-  });
-}
+// blogSelect.addEventListener("click", function () { elementToggleFunc(this); });
+// // add event in all blogSelect items
+// for (let i = 0; i < blogSelectItems.length; i++) {
+//   blogSelectItems[i].addEventListener("click", function () {
+
+//     const selectedValue = this.innerText.toLowerCase();
+//     selectValue.innerText = this.innerText;
+//     elementToggleFunc(blogSelect);
+//     blogFilterFunc(selectedValue);
+
+//   });
+// }
+
+// // blog variables
+// const blogFilterItems = document.querySelectorAll("[data-blog-filter-item]");
+// const blogDataDetails = document.querySelectorAll("[data-blog-details]");
+// const blogDataImg = document.querySelectorAll("[data-blog-img]");
+// const blogDataTitle = document.querySelectorAll("[data-blog-title]");
+// const blogDataCategory = document.querySelectorAll("[data-blog-category]");
+
+// const blogFilterFunc = function (selectedValue) {
+//   // Reset expanded and active state for all blog items
+//   blogItems.forEach(item => {
+//     item.classList.remove('expanded');
+//   });
+
+//   for (let i = 0; i < blogFilterItems.length; i++) {
+//     if (selectedValue === "blog") {
+//       blogFilterItems[i].classList.add("active");
+//       blogFilterItems[i].classList.remove("expanded");
+//       blogFilterItems[i].classList.remove("hidden");
+//       // blogDataDetails[i].classList.remove("visible");
+//       // blogDataImg[i].classList.remove("hidden");
+//       // blogDataTitle[i].classList.remove("hidden");
+//       // blogDataCategory[i].classList.remove("hidden");
+//     } else if (selectedValue === blogFilterItems[i].dataset.category) {
+//       blogFilterItems[i].classList.add("active");
+//       blogFilterItems[i].classList.remove("expanded");
+//       // blogDataDetails[i].classList.remove("visible");
+//       // blogDataImg[i].classList.remove("hidden");
+//       // blogDataTitle[i].classList.remove("hidden");
+//       // blogDataCategory[i].classList.remove("hidden");
+//     } else {
+//       blogFilterItems[i].classList.remove("active");
+//     }
+//   }
+// };
+
+// // Blog filter button functionality
+// let lastClickedBlogBtn = blogFilterBtn[0];
+
+// for (let i = 0; i < blogFilterBtn.length; i++) {
+//   blogFilterBtn[i].addEventListener("click", function () {
+//     let selectedValue = this.innerText.toLowerCase();
+//     filterFunc(selectedValue, 'blog');
+
+//     lastClickedBlogBtn.classList.remove("active");
+//     this.classList.add("active");
+//     lastClickedBlogBtn = this;
+//   });
+// }
 
 
 
@@ -255,6 +282,8 @@ for (let i = 0; i < navigationLinks.length; i++) {
 }
 
 const blogItems = document.querySelectorAll('.blog-post-item');
+const blogBackBtnContainer = document.querySelector('.blog-back-container');
+const blogBackBtn = document.querySelector('.blog-back-btn');
 
 // Expand/Collapse functionality for blog items
 document.addEventListener('DOMContentLoaded', function () {
@@ -264,14 +293,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const toggleDetails = () => {
       blogItems.forEach(otherItem => {
-        const otherBlogPhoto = otherItem.querySelector('.blog-banner-box');
 
         if (otherItem === item) {
           item.classList.add('expanded');
+          blogBackBtnContainer.classList.add('active');
+          blogBackBtn.classList.add('active');
         } else {
-          // Restore other blog photos
-          otherItem.classList.remove('expanded');
-          otherItem.classList.add('hidden');
+          // Hide other blog items
+          otherItem.classList.remove('active');
         }
       });
     };
@@ -287,6 +316,15 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Blog back button functionality
+blogBackBtn.addEventListener('click', function () {
+  blogItems.forEach(item => {
+    item.classList.add('active');
+    item.classList.remove('expanded');
+  });
+  blogBackBtnContainer.classList.remove('active');
+  blogBackBtn.classList.remove('active');
+});
 const projectItems = document.querySelectorAll('.project-item');
 
 // Expand/Collapse functionality for project items
@@ -457,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
+
 });
 
 
