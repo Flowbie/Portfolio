@@ -530,6 +530,53 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  /************************
+   * Touch Gesture Gallery *
+   ***********************/
+
+  // Variables to track touch positions
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  // Get modal and slides
+  const galleryModal = document.getElementById('modal');
+  const slides = document.querySelectorAll('.slides img');
+  let currentSlideIndex = 0;
+
+  // Functions to show slides
+  const swipeNextSlide = () => {
+    slides[currentSlideIndex].classList.remove('active');
+    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    slides[currentSlideIndex].classList.add('active');
+  };
+
+  const swipePrevSlide = () => {
+    slides[currentSlideIndex].classList.remove('active');
+    currentSlideIndex =
+      (currentSlideIndex - 1 + slides.length) % slides.length;
+    slides[currentSlideIndex].classList.add('active');
+  };
+
+  // Handle gesture logic
+  const handleGesture = () => {
+    if (touchEndX < touchStartX) {
+      swipeNextSlide();
+    } else if (touchEndX > touchStartX) {
+      swipePrevSlide();
+    }
+  };
+
+  // Add event listeners for touch events
+  galleryModal.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  galleryModal.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+  });
+
+
 });
 
 
