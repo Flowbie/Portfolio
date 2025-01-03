@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahalo</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./assets/images/myna.png" type="image/x-icon">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Main Content Area -->
+  <main>
+
+    <!-- Sidebar Component -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my_avatar.png" alt="Austin Dolan" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Austin Dolan">Austin Dolan</h1>
+
+          <p class="title">Service Now Developer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+
+              <a id="email-link" class="contact-link"></a>
+            </div>
+
+          </li>
+      
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+
+              <a id="phone-link" class="contact-link"></a>
+            </div>
+
+          </li>
+      
+
+          <!-- <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Birthday</p>
+
+              <time datetime=""></time>
+            </div>
+
+          </li> -->
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+
+              <address>Honolulu Hawaii, USA</address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            
+            <a id="facebook-link" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+
+          </li>
+      
+          <li class="social-item">
+
+            <a id="twitter-link" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+
+          </li>
+      
+          <li class="social-item">
+
+            <a id="instagram-link" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+
+      <!-- Page Content Area: Replaceable Content -->
+      <article class="active" data-page="Thank You">
+        <header>
+            <div class="thank-you-container">
+            <img class="thank-you" src="./assets/images/thank-you.png" alt="Thank You" width="100%">
+            </div>
+          </header>
+
+        <section>
+          <div class="thank-you-message">
+            <h2 class="h2">Thank you for contacting me!</h2>
+            <h4 class="h4">I have received your message and will respond as soon as possible.</h4>
+          </div>
+
+          <div class="return-home-btn">
+          <button onclick="location.href='austindolan.com'" class="btn">Return to Homepage</button>
+          </div>
+        </section>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- JavaScript Files -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+  - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
