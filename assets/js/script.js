@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // });
   });
 });
-
+// // Old Gallery Functionality
 // // Gallery functionality
 // document.addEventListener('DOMContentLoaded', function () {
 //   const galleries = document.querySelectorAll('.gallery-container'); // Select all gallery instances
@@ -529,147 +529,70 @@ document.addEventListener('DOMContentLoaded', function () {
 //       }
 //     }
 //   });
+// });
 
-//   /************************
-//    * Touch Gesture Gallery *
-//    ***********************/
-
-//   // Variables to track touch positions
-//   let touchStartX = 0;
-//   let touchEndX = 0;
-
-//   // Get modal and slides
-//   const galleryModal = document.getElementById('modal');
-//   const slides = document.querySelectorAll('.slides img');
-//   let currentSlideIndex = 0;
-
-//   // Functions to show slides
-//   const swipeNextSlide = () => {
-//     slides[currentSlideIndex].classList.remove('active');
-//     currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-//     slides[currentSlideIndex].classList.add('active');
-//   };
-
-//   const swipePrevSlide = () => {
-//     slides[currentSlideIndex].classList.remove('active');
-//     currentSlideIndex =
-//       (currentSlideIndex - 1 + slides.length) % slides.length;
-//     slides[currentSlideIndex].classList.add('active');
-//   };
-
-//   // Handle gesture logic
-//   const handleGesture = () => {
-//     if (touchEndX < touchStartX) {
-//       swipeNextSlide();
-//     } else if (touchEndX > touchStartX) {
-//       swipePrevSlide();
-//     }
-//   };
-
-//   // Add event listeners for touch events
-//   galleryModal.addEventListener('touchstart', (e) => {
-//     touchStartX = e.changedTouches[0].screenX;
-//   });
-
-//   galleryModal.addEventListener('touchend', (e) => {
-//     touchEndX = e.changedTouches[0].screenX;
-//     handleGesture();
-//   });
-// Gallery functionality
+// New Gallery Functionality (with swipe functionality but messes up css)
 document.addEventListener('DOMContentLoaded', function () {
   const galleries = document.querySelectorAll('.gallery-container'); // Select all gallery instances
-
-  galleries.forEach(gallery => {
-    const wrapper = gallery.querySelector('.gallery-wrapper');
-    const slides = gallery.querySelectorAll('.gallery-slide');
-    const prevButton = gallery.querySelector('.gallery-button.prev');
-    const nextButton = gallery.querySelector('.gallery-button.next');
-
-    let currentIndex = 0;
-
-    const updateGallery = () => {
-      const offset = -currentIndex * 100; // Calculate transform offset
-      wrapper.style.transform = `translateX(${offset}%)`; // Apply offset to wrapper
-    };
-
-    const showNextSlide = () => {
-      currentIndex = (currentIndex + 1) % slides.length; // Loop back to start
-      updateGallery();
-    };
-
-    const showPrevSlide = () => {
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length; // Loop to end
-      updateGallery();
-    };
-
-    // Event listeners for buttons
-    nextButton.addEventListener('click', showNextSlide);
-    prevButton.addEventListener('click', showPrevSlide);
-
-    // Optional: Auto slide
-    // setInterval(showNextSlide, 5000); // Uncomment to enable auto-sliding
-
-    // Add touch event listeners for swipe functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    const handleGesture = () => {
-      if (touchEndX < touchStartX) {
-        showNextSlide();
-      }
-      if (touchEndX > touchStartX) {
-        showPrevSlide();
-      }
-    };
-
-    wrapper.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-
-    wrapper.addEventListener('touchend', function (e) {
-      touchEndX = e.changedTouches[0].screenX;
-      handleGesture();
-    });
-  });
-});
-
-// Gallery modal functionality
-document.addEventListener('DOMContentLoaded', function () {
-  const galleries = document.querySelectorAll('.gallery-container'); // All galleries
   const modal = document.getElementById('image-modal'); // Modal container
   const modalImg = document.getElementById('modal-img'); // Modal image element
   const closeModal = document.querySelector('.modal-close-btn'); // Close button
   const prevButton = document.querySelector('.modal-button.prev'); // Modal prev button
   const nextButton = document.querySelector('.modal-button.next'); // Modal next button
+  // const modalCaption = document.getElementById('modal-caption'); // Caption for modal image
 
-  const modalCaption = document.getElementById('modal-caption'); // Caption for modal image
   let currentGallerySlides = []; // Tracks slides in the active gallery
   let currentIndex = 0; // Tracks the current image index
 
+  // Function to update slides (used for both modal and gallery)
+  const updateSlide = (slides, index) => {
+    modalImg.src = slides[index].src; // Update modal image
+    // modalCaption.textContent = slides[index].alt || ''; // Update caption
+  };
+
+  // Open modal with selected gallery and slide
   const openModal = (gallerySlides, index) => {
     currentGallerySlides = gallerySlides;
     currentIndex = index;
-
-    modalImg.src = gallerySlides[index].src; // Set modal image
-    modalCaption.textContent = gallerySlides[index].alt || ''; // Set caption
+    updateSlide(gallerySlides, index);
     modal.style.display = 'flex'; // Show modal
   };
 
+  // Close modal
   const closeModalHandler = () => {
     modal.style.display = 'none'; // Hide modal
   };
 
+  // Show next slide
   const showNextSlide = () => {
-    currentIndex = (currentIndex + 1) % currentGallerySlides.length; // Loop to start
-    modalImg.src = currentGallerySlides[currentIndex].src; // Update modal image
-    modalCaption.textContent = currentGallerySlides[currentIndex].alt || ''; // Update caption
+    currentIndex = (currentIndex + 1) % currentGallerySlides.length;
+    updateSlide(currentGallerySlides, currentIndex);
   };
 
+  // Show previous slide
   const showPrevSlide = () => {
-    currentIndex = (currentIndex - 1 + currentGallerySlides.length) % currentGallerySlides.length; // Loop to end
-    modalImg.src = currentGallerySlides[currentIndex].src; // Update modal image
-    modalCaption.textContent = currentGallerySlides[currentIndex].alt || ''; // Update caption
+    currentIndex = (currentIndex - 1 + currentGallerySlides.length) % currentGallerySlides.length;
+    updateSlide(currentGallerySlides, currentIndex);
   };
+
+  // Handle swipe gestures
+  const addSwipeHandlers = (element, nextCallback, prevCallback) => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    element.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    element.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX) nextCallback();
+      if (touchEndX > touchStartX) prevCallback();
+    });
+  };
+
+  // Add swipe functionality to modal
+  addSwipeHandlers(modal, showNextSlide, showPrevSlide);
 
   // Close modal when clicking outside the image
   modal.addEventListener('click', function (e) {
@@ -682,51 +605,48 @@ document.addEventListener('DOMContentLoaded', function () {
   prevButton.addEventListener('click', showPrevSlide);
   nextButton.addEventListener('click', showNextSlide);
 
-  galleries.forEach(gallery => {
-    const slides = gallery.querySelectorAll('.gallery-slide img'); // Images in the gallery
-
-    slides.forEach((slide, index) => {
-      slide.addEventListener('click', function () {
-        openModal(slides, index); // Open modal with selected gallery and slide index
-      });
-    });
-  });
-
-  // Add keydown event listener for Escape, ArrowLeft, and ArrowRight
+  // Add keydown navigation for modal
   document.addEventListener('keydown', function (e) {
     if (modal.style.display === 'flex') { // Only run if modal is open
-      if (e.key === 'Escape') {
-        closeModalHandler();
-      } else if (e.key === 'ArrowRight') {
-        showNextSlide();
-      } else if (e.key === 'ArrowLeft') {
-        showPrevSlide();
-      }
+      if (e.key === 'Escape') closeModalHandler();
+      if (e.key === 'ArrowRight') showNextSlide();
+      if (e.key === 'ArrowLeft') showPrevSlide();
     }
   });
 
-  // Add touch event listeners for swipe functionality in modal
-  let touchStartX = 0;
-  let touchEndX = 0;
+  // Initialize galleries
+  galleries.forEach((gallery) => {
+    const wrapper = gallery.querySelector('.gallery-wrapper');
+    const slides = gallery.querySelectorAll('.gallery-slide img');
+    const prevButton = gallery.querySelector('.gallery-button.prev');
+    const nextButton = gallery.querySelector('.gallery-button.next');
+    let currentIndex = 0;
 
-  const handleModalGesture = () => {
-    if (touchEndX < touchStartX) {
-      showNextSlide();
-    }
-    if (touchEndX > touchStartX) {
-      showPrevSlide();
-    }
-  };
+    const updateGallery = () => {
+      const offset = -currentIndex * 100;
+      wrapper.style.transform = `translateX(${offset}%)`;
+    };
 
-  modal.addEventListener('touchstart', function (e) {
-    touchStartX = e.changedTouches[0].screenX;
-  });
+    const showNextGallerySlide = () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateGallery();
+    };
 
-  modal.addEventListener('touchend', function (e) {
-    touchEndX = e.changedTouches[0].screenX;
-    handleModalGesture();
+    const showPrevGallerySlide = () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateGallery();
+    };
+
+    // Add swipe functionality to gallery
+    addSwipeHandlers(wrapper, showNextGallerySlide, showPrevGallerySlide);
+
+    // Event listeners for gallery buttons
+    nextButton.addEventListener('click', showNextGallerySlide);
+    prevButton.addEventListener('click', showPrevGallerySlide);
+
+    // Open modal on image click
+    slides.forEach((slide, index) => {
+      slide.addEventListener('click', () => openModal(slides, index));
+    });
   });
 });
-
-
-
