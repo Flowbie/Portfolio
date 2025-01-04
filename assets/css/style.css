@@ -1367,12 +1367,14 @@ main-content {
   opacity: 0.7; */
 }
 
+.modal-caption { display: none;}
+
 /* Navigation buttons in modal */
 .modal-button {
   position: absolute;
   top: 0; /* Align with the top of the modal */
   height: 100%; /* Make the button take up the full height of the modal */
-  width: 40px; /* Set a fixed width for the button */
+  width: 10%; /* Set a fixed width for the button */
   /* background: rgba(0, 0, 0, 0.3); Optional: Semi-transparent background */
   color: var(--orange-yellow-crayola);
   border: none;
@@ -1885,7 +1887,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     gap: 25px;
     padding: 30px;
     border-radius: 20px;
-  } 
+  }
 
   .modal-img-wrapper {
     display: flex;
@@ -1904,8 +1906,8 @@ textarea.form-input::-webkit-resizer { display: none; }
     width: 35px;
   }
 
-  .modal-button.prev,
-  .modal-button.next {padding: 0;}
+  /* .modal-button.prev,
+  .modal-button.next {padding: 0;} */
 
 
   /* clients */
