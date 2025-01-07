@@ -47,6 +47,22 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
 
+// Chevron toggle functionality for sidebar(up/down)
+document.addEventListener('DOMContentLoaded', function () {
+  const infoMoreButton = document.querySelector('.info_more-btn');
+  const icon = infoMoreButton.querySelector('ion-icon');
+
+  infoMoreButton.addEventListener('click', function () {
+    // Toggle the icon's name attribute
+    if (icon.getAttribute('name') === 'chevron-down') {
+      icon.setAttribute('name', 'chevron-up');
+    } else {
+      icon.setAttribute('name', 'chevron-down');
+    }
+  });
+});
+
+
 // Reusable Modal Functions
 const openModal = (type) => {
   const modalContainer = document.querySelector(`[data-modal-container="${type}"]`);
