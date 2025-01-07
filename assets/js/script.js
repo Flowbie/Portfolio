@@ -315,6 +315,66 @@ for (let i = 0; i < navigationLinks.length; i++) {
   });
 }
 
+// OLD BLOG FUNCTIONALITY
+// const blogItems = document.querySelectorAll('.blog-post-item');
+// const blogBackBtnContainer = document.querySelector('.blog-back-container');
+// const blogBackBtn = document.querySelector('.blog-back-btn');
+
+// // Expand/Collapse functionality for blog items
+// document.addEventListener('DOMContentLoaded', function () {
+
+//   blogItems.forEach(item => {
+//     const blogPhoto = item.querySelector('.blog-banner-box');
+//     const blogDetails = document.querySelector('.blog-details');
+//     const blogItemTitle = document.querySelector('.blog-item-title');
+
+//     const toggleDetails = () => {
+//       blogItems.forEach(otherItem => {
+//         const otherDetails = otherItem.querySelector('.blog-details');
+//         const otherTitle = otherItem.querySelector('.blog-item-title');
+
+//         if (otherItem === item) {
+//           item.classList.add('expanded');
+//           blogBackBtnContainer.classList.add('active');
+//           blogBackBtn.classList.add('active');
+//           blogDetails.classList.add('active');
+//         } else {
+//           // Hide other blog items
+//           otherItem.classList.remove('expanded');
+//           otherDetails.classList.remove('active'); // Hide other blog details
+//           blogItemTitle.classList.add('hidden'); // Hide other titles
+//         }
+//       });
+//     };
+
+//     // Add event listeners for photo and title
+//     [blogPhoto, blogItemTitle].forEach(element => {
+//       element.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         toggleDetails();
+//       });
+//     });
+//   });
+// });
+
+// // Blog back button functionality
+// blogBackBtn.addEventListener('click', function () {
+
+//   blogItems.forEach(item => {
+//     const blogDetails = item.querySelector('.blog-details');
+//     const blogItemTitle = item.querySelector('.blog-item-title'); // Target the title inside this blog post
+
+//     // Restore the default state of all blog items
+//     item.classList.remove('expanded');
+//     blogItemTitle.classList.remove('hidden');
+//     blogDetails.classList.remove('active');
+//     item.classList.add('active');
+//   });
+//   blogBackBtnContainer.classList.remove('active');
+//   blogBackBtn.classList.remove('active');
+// });
+
+// NEW BLOG FUNCTIONALITY
 const blogItems = document.querySelectorAll('.blog-post-item');
 const blogBackBtnContainer = document.querySelector('.blog-back-container');
 const blogBackBtn = document.querySelector('.blog-back-btn');
@@ -324,6 +384,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   blogItems.forEach(item => {
     const blogPhoto = item.querySelector('.blog-banner-box');
+    const blogTitle = item.querySelector('.blog-item-title');
+    const blogDetails = item.querySelector('.blog-details');
 
     const toggleDetails = () => {
       blogItems.forEach(otherItem => {
@@ -332,6 +394,8 @@ document.addEventListener('DOMContentLoaded', function () {
           item.classList.add('expanded');
           blogBackBtnContainer.classList.add('active');
           blogBackBtn.classList.add('active');
+          blogTitle.classList.add('hidden');
+          blogDetails.classList.remove('hidden');
         } else {
           // Hide other blog items
           otherItem.classList.remove('active');
@@ -340,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Add event listeners for photo and title
-    [blogPhoto].forEach(element => {
+    [blogPhoto, blogTitle].forEach(element => {
       element.addEventListener('click', function (e) {
         e.preventDefault();
         toggleDetails();
@@ -353,12 +417,19 @@ document.addEventListener('DOMContentLoaded', function () {
 // Blog back button functionality
 blogBackBtn.addEventListener('click', function () {
   blogItems.forEach(item => {
+    const blogDetails = item.querySelector('.blog-details');
+    const blogTitle = item.querySelector('.blog-item-title');
     item.classList.add('active');
     item.classList.remove('expanded');
+    blogTitle.classList.remove('hidden');
+    blogDetails.classList.add('hidden');
   });
   blogBackBtnContainer.classList.remove('active');
   blogBackBtn.classList.remove('active');
 });
+
+
+// Project Item Variables
 const projectItems = document.querySelectorAll('.project-item');
 
 // Expand/Collapse functionality for project items
@@ -367,8 +438,6 @@ document.addEventListener('DOMContentLoaded', function () {
   projectItems.forEach(item => {
     const photo = item.querySelector('.project-img'); // Select the photo
     const title = item.querySelector('.project-title'); // Select the title
-    const details = item.querySelector('.project-details'); // Select the details section
-    const closeButton = item.querySelector('.close-btn'); // Select the close button
     const category = item.querySelector('.project-category'); // Select the category
 
     const toggleDetails = () => {
@@ -401,6 +470,19 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleDetails();
       });
     });
+  });
+});
+
+// Blog Detail Links Open in New Tab
+document.addEventListener('DOMContentLoaded', function () {
+  const links = document.querySelectorAll('.blog-details a');
+
+  links.forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer'); // Improves security
+  });
+});
+
 
     // Add close button functionality
     // closeButton.addEventListener('click', function (e) {
@@ -419,8 +501,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //     if (otherDetails) otherDetails.style.display = 'none'; // Hide the project-details
     //   });
     // });
-  });
-});
+
 // // Old Gallery Functionality
 // // Gallery functionality
 // document.addEventListener('DOMContentLoaded', function () {
@@ -539,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeModal = document.querySelector('.modal-close-btn'); // Close button
   const prevButton = document.querySelector('.modal-button.prev'); // Modal prev button
   const nextButton = document.querySelector('.modal-button.next'); // Modal next button
-  // const modalCaption = document.getElementById('modal-caption'); // Caption for modal image
+  // const modalCaption = document.getElementById('modal-caption'); // Caption for modal image not working
 
   let currentGallerySlides = []; // Tracks slides in the active gallery
   let currentIndex = 0; // Tracks the current image index
@@ -547,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to update slides (used for both modal and gallery)
   const updateSlide = (slides, index) => {
     modalImg.src = slides[index].src; // Update modal image
-    // modalCaption.textContent = slides[index].alt || ''; // Update caption
+    // modalCaption.textContent = slides[index].alt || ''; // Update caption not working
   };
 
   // Open modal with selected gallery and slide
