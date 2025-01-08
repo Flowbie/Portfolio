@@ -545,10 +545,26 @@ main-content {
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
   line-height: 1.6;
+  margin-bottom: 15px;
 }
 
 .about-text p { margin-bottom: 15px; }
 
+.about-more {display: none;}
+
+.read-more-btn {
+  /* background-color: var(--onyx);  */
+  color: var(--orange-yellow-crayola);
+  border: none;
+  padding: 0px 15px;
+  cursor: pointer;
+  font-size: --fs-5;
+  border-radius: 5px;
+}
+
+.read-more-btn:hover {
+  background-color: var(--eerie-black-1); 
+}
 
 
 /**
@@ -1914,7 +1930,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .about .article-title { margin-bottom: 20px; }
 
-  .about-text { margin-bottom: 40px; }
+  .about-text { margin-bottom: 15px; }
 
   /* service */
 
