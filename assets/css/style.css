@@ -855,13 +855,13 @@ main-content {
   #RESUME
 \*-----------------------------------*/
 
-.article-title { margin-bottom: 15px; }
+.article-title { margin-bottom: 20px; }
 
 .resume-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .resume-header .article-title {
