@@ -68,6 +68,24 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// About Me Read More Functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const readMoreButton = document.querySelector(".read-more-btn");
+  const moreContent = document.querySelector(".about-more");
+
+  readMoreButton.addEventListener("click", function () {
+    if (moreContent.style.display === "none" || !moreContent.style.display) {
+      moreContent.style.display = "inline";
+      readMoreButton.textContent = "Read Less";
+    } else {
+      moreContent.style.display = "none";
+      readMoreButton.textContent = "Read More";
+    }
+  });
+});
+
+
+
 // Reusable Modal Functions
 const openModal = (type) => {
   const modalContainer = document.querySelector(`[data-modal-container="${type}"]`);
