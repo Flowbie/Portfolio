@@ -855,13 +855,13 @@ main-content {
   #RESUME
 \*-----------------------------------*/
 
-.article-title { margin-bottom: 20px; }
+.article-title { margin-bottom: 15px; }
 
 .resume-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .resume-header .article-title {
@@ -1928,7 +1928,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    * #ABOUT
    */
 
-  .about .article-title { margin-bottom: 20px; }
+  .about .article-title { margin-bottom: 15px; }
 
   .about-text { margin-bottom: 15px; }
 
@@ -2158,7 +2158,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    * PORTFOLIO AND BLOG
    */
 
-  .article-title { padding-bottom: 20px; }
+  .article-title { padding-bottom: 15px; }
 
   .filter-select-box { display: none; }
 
