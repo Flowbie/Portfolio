@@ -1662,6 +1662,26 @@ main-content {
   #CONTACT
 \*-----------------------------------*/
 
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.contact-img-box {
+  position: relative;
+  height: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.contact-img-box img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
 .mapbox {
   position: relative;
   height: 250px;
@@ -2238,6 +2258,8 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
 
+  .blog .article-title { margin-bottom: 20px; }
+  .contact .article-title { margin-bottom: 20px; }
 
   /**
    * MAIN 
@@ -2281,6 +2303,9 @@ textarea.form-input::-webkit-resizer { display: none; }
   /**
    * ABOUT
    */
+
+  /* resume */
+  .resume-header { margin-bottom: 20px;}
 
   /* service */
 
