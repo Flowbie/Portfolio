@@ -484,11 +484,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const card = document.getElementById('insta-polaroid');
   if (!card) return;
 
-  const mediaWrap = card.querySelector('.polaroid-media');
-  const captionEl = card.querySelector('#polaroid-caption');
-  const prevBtn = card.querySelector('.polaroid-nav.prev');
-  const nextBtn = card.querySelector('.polaroid-nav.next');
-  const profileLink = document.getElementById('insta-profile-link');
+  const mediaWrap  = card.querySelector('.polaroid-media');
+  const captionEl  = card.querySelector('#polaroid-caption');
+  const prevBtn    = card.querySelector('.polaroid-nav.prev');
+  const nextBtn    = card.querySelector('.polaroid-nav.next');
+  const profileLink= document.getElementById('insta-profile-link');
 
   // Reuse your existing obfuscated profile URL if available
   const PROFILE_URL = (typeof instagramLink !== 'undefined' && instagramLink && instagramLink.href)
@@ -497,15 +497,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (profileLink) profileLink.href = PROFILE_URL;
 
-  // The static JSON written by your GitHub Action
-  const ENDPOINT = '/assets/data/instagram.json';
+  // IMPORTANT: use a relative path so it works on GitHub Pages project sites (e.g. /Portfolio)
+  // new URL() resolves against the current document <base> automatically
+  const ENDPOINT = new URL('assets/data/instagram.json', document.baseURI).toString();
 
-  // Provide a very safe fallback image (optional). If you don't have this, leave it empty.
-  const FALLBACK_IMAGE = ''; // e.g., './assets/images/placeholder.jpg'
+  // Optional: fallback image if JSON missing (leave '' to just hide the widget on failure)
+  const FALLBACK_IMAGE = '';
 
   function renderSlides(items) {
     mediaWrap.innerHTML = '';
-    const slides = (Array.isArray(items) && items.length) ? items : (FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
+    const slides = (Array.isArray(items) && items.length)
+      ? items
+      : (FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
+
     slides.forEach((m, i) => {
       const wrapper = document.createElement('div');
       wrapper.className = 'slide' + (i === 0 ? ' active' : '');
@@ -527,6 +531,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       mediaWrap.appendChild(wrapper);
     });
+
     card.setAttribute('data-slides', String(slides.length || 0));
   }
 
@@ -539,14 +544,14 @@ document.addEventListener('DOMContentLoaded', function () {
       idx = (n + S.length) % S.length;
       S.forEach((el, i) => el.classList.toggle('active', i === idx));
     };
-    if (prevBtn) prevBtn.addEventListener('click', () => show(idx - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => show(idx + 1));
+    prevBtn && prevBtn.addEventListener('click', () => show(idx - 1));
+    nextBtn && nextBtn.addEventListener('click', () => show(idx + 1));
   }
 
   async function loadLatest() {
     try {
-      const res = await fetch(ENDPOINT + '?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error('Bad status ' + res.status);
+      const res = await fetch(ENDPOINT + (ENDPOINT.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('Bad status ' + res.status + ' for ' + ENDPOINT);
       const data = await res.json(); // { caption, permalink, media: [{type,url}] }
 
       renderSlides(data.media);
@@ -560,12 +565,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       wireCarousel();
 
-      // If only one slide, arrows are hidden by CSS via [data-slides="1"]
+      // If only one slide, arrows should be hidden via CSS using [data-slides="1"]
     } catch (e) {
+      console.warn('[Polaroid] Failed to load instagram.json:', e);
       // Silent fallback: if we have a fallback image, show it; otherwise hide the card
       renderSlides(FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
       if (!FALLBACK_IMAGE) {
-        // No media to show — optionally hide the entire widget
         card.style.display = 'none';
       } else {
         if (captionEl) captionEl.textContent = 'Follow me on Instagram →';
