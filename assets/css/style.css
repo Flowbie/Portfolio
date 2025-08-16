@@ -2463,4 +2463,92 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .timeline-text { max-width: 700px; }
 
+  /* === Polaroid Instagram === */
+  .polaroid-card {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  .polaroid-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 5px 12px;
+  }
+
+  .polaroid-frame {
+    position: relative;
+    background: var(--eerie-black-2);
+    border: 1px solid var(--jet);
+    border-radius: 14px;
+    box-shadow: var(--shadow-2);
+    transform: rotate(-0.4deg);
+    padding: 10px;
+  }
+
+  .polaroid-media {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 260px; /* matches cardy vibe; adjust if you like */
+  }
+
+  .polaroid-media .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition-1);
+  }
+
+  .polaroid-media .slide.active { opacity: 1; }
+
+  .polaroid-media img,
+  .polaroid-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .polaroid-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--onyx);
+    color: var(--white-2);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    box-shadow: var(--shadow-1);
+    display: grid;
+    place-items: center;
+    opacity: 0.85;
+    transition: var(--transition-1);
+  }
+
+  .polaroid-nav:hover { opacity: 1; }
+
+  .polaroid-nav.prev { left: 10px; }
+  .polaroid-nav.next { right: 10px; }
+
+  .polaroid-caption {
+    color: var(--light-gray);
+    font-size: var(--fs-7);
+    margin: 10px 6px 0;
+    line-height: 1.4;
+  }
+
+  .polaroid-fallback {
+    margin-top: 8px;
+  }
+
+  .polaroid-fallback .contact-link {
+    color: var(--orange-yellow-crayola);
+    word-break: break-word;
+  }
+
+  /* hide arrows when single image */
+  #insta-polaroid[data-slides="1"] .polaroid-nav { display: none; }
+
+
 }

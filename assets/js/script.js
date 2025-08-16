@@ -476,3 +476,103 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+// === Instagram Polaroid Loader (Static JSON on GitHub Pages) ===
+(() => {
+  // Only run if the polaroid section exists
+  const card = document.getElementById('insta-polaroid');
+  if (!card) return;
+
+  const mediaWrap = card.querySelector('.polaroid-media');
+  const captionEl = card.querySelector('#polaroid-caption');
+  const prevBtn = card.querySelector('.polaroid-nav.prev');
+  const nextBtn = card.querySelector('.polaroid-nav.next');
+  const profileLink = document.getElementById('insta-profile-link');
+
+  // Reuse your existing obfuscated profile URL if available
+  const PROFILE_URL = (typeof instagramLink !== 'undefined' && instagramLink && instagramLink.href)
+    ? instagramLink.href
+    : 'https://www.instagram.com/';
+
+  if (profileLink) profileLink.href = PROFILE_URL;
+
+  // The static JSON written by your GitHub Action
+  const ENDPOINT = '/assets/data/instagram.json';
+
+  // Provide a very safe fallback image (optional). If you don't have this, leave it empty.
+  const FALLBACK_IMAGE = ''; // e.g., './assets/images/placeholder.jpg'
+
+  function renderSlides(items) {
+    mediaWrap.innerHTML = '';
+    const slides = (Array.isArray(items) && items.length) ? items : (FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
+    slides.forEach((m, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'slide' + (i === 0 ? ' active' : '');
+
+      if (m.type === 'video') {
+        const v = document.createElement('video');
+        v.src = m.url;
+        v.controls = true;
+        v.playsInline = true;
+        v.preload = 'metadata';
+        wrapper.appendChild(v);
+      } else {
+        const img = document.createElement('img');
+        img.src = m.url;
+        img.alt = m.alt || 'Instagram post';
+        img.loading = 'lazy';
+        wrapper.appendChild(img);
+      }
+
+      mediaWrap.appendChild(wrapper);
+    });
+    card.setAttribute('data-slides', String(slides.length || 0));
+  }
+
+  function wireCarousel() {
+    let idx = 0;
+    const slides = () => Array.from(mediaWrap.querySelectorAll('.slide'));
+    const show = (n) => {
+      const S = slides();
+      if (!S.length) return;
+      idx = (n + S.length) % S.length;
+      S.forEach((el, i) => el.classList.toggle('active', i === idx));
+    };
+    if (prevBtn) prevBtn.addEventListener('click', () => show(idx - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => show(idx + 1));
+  }
+
+  async function loadLatest() {
+    try {
+      const res = await fetch(ENDPOINT + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('Bad status ' + res.status);
+      const data = await res.json(); // { caption, permalink, media: [{type,url}] }
+
+      renderSlides(data.media);
+      if (captionEl) captionEl.textContent = data.caption || '';
+
+      // Click anywhere on media to open the post (or profile as fallback)
+      mediaWrap.addEventListener('click', () => {
+        const href = data.permalink || PROFILE_URL;
+        window.open(href, '_blank', 'noopener');
+      });
+
+      wireCarousel();
+
+      // If only one slide, arrows are hidden by CSS via [data-slides="1"]
+    } catch (e) {
+      // Silent fallback: if we have a fallback image, show it; otherwise hide the card
+      renderSlides(FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
+      if (!FALLBACK_IMAGE) {
+        // No media to show — optionally hide the entire widget
+        card.style.display = 'none';
+      } else {
+        if (captionEl) captionEl.textContent = 'Follow me on Instagram →';
+        wireCarousel();
+      }
+    }
+  }
+
+  loadLatest();
+})();
