@@ -18,7 +18,7 @@
   <!--
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/mini.css">
+  <link rel="stylesheet" href="./assets/css/mini_pretty.css">
 
   <!--
     - google font link
@@ -145,8 +145,29 @@
 
         </ul>
 
+        <div class="separator-mid"></div>
+
+        <!--
+        - #Instagram Polaroid
+        -->
+        <div class="polaroid-frame">
+
+          <div class="polaroid-media">
+            <!-- slides injected by JS -->
+          </div>
+
+          <button class="polaroid-nav prev" aria-label="Previous photo">❮</button>
+          <button class="polaroid-nav next" aria-label="Next photo">❯</button>
+          <div class="polaroid-caption" id="polaroid-caption"></div>
+        </div>
+
+        
+
         <div class="separator"></div>
 
+        <!--
+        - #Socials
+        -->
         <ul class="social-list">
 
           <li class="social-item">
@@ -186,32 +207,23 @@
 
       </div>
 
+      <!-- <div class="polaroid-head">
+        <div class="icon-box"><ion-icon name="logo-instagram"></ion-icon></div>
+        <h3 class="h3">Latest on Instagram</h3>
+      </div> -->
+
     </aside>
 
 
     <!-- Polaroid Instagram (under sidebar) -->
-    <section id="insta-polaroid" class="content-card polaroid-card" aria-live="polite">
-      <div class="polaroid-head">
-        <div class="icon-box"><ion-icon name="logo-instagram"></ion-icon></div>
-        <h3 class="h3">Latest on Instagram</h3>
-      </div>
+    <!-- <section id="insta-polaroid" class="content-card polaroid-card" aria-live="polite"> -->
 
-      <div class="polaroid-frame">
-        <div class="polaroid-media">
-          <!-- slides injected by JS -->
-        </div>
-
-        <button class="polaroid-nav prev" aria-label="Previous photo">❮</button>
-        <button class="polaroid-nav next" aria-label="Next photo">❯</button>
-      </div>
-
-      <div class="polaroid-caption" id="polaroid-caption"></div>
 
       <!-- graceful fallback -->
-      <div class="polaroid-fallback">
+      <!-- <div class="polaroid-fallback">
         <a id="insta-profile-link" class="contact-link" target="_blank" rel="noopener">See more on Instagram</a>
-      </div>
-    </section>
+      </div> -->
+    <!-- </section> -->
 
 
     <!--
@@ -1995,7 +2007,7 @@
   <!--
     - custom js link
   -->
-  <script src="./assets/js/mini.js"></script>
+  <script src="./assets/js/script.js"></script>
 
   <!--
     - ionicon link

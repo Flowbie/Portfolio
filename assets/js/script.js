@@ -2,10 +2,11 @@
 
 // Obfuscated email
 const emailUser = "austindolanportfolio";
+const emailDomainDisplay = "";
 const emailDomain = "gmail.com";
 const emailLink = document.getElementById("email-link");
 emailLink.href = `mailto:${emailUser}@${emailDomain}`;
-emailLink.textContent = `${emailUser}@${emailDomain}`;
+emailLink.textContent = `${emailUser}${emailDomainDisplay}`;
 
 // Obfuscated phone
 const phoneNumber = "+1 (808) 724-7294";
@@ -478,31 +479,28 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// === Instagram Polaroid Loader (Static JSON on GitHub Pages) ===
+// === Instagram Polaroid Loader (works with .polaroid-frame in sidebar) ===
 (() => {
-  // Only run if the polaroid section exists
-  const card = document.getElementById('insta-polaroid');
-  if (!card) return;
+  // New selectors to match your sidebar markup
+  const frame      = document.querySelector('.polaroid-frame');
+  if (!frame) { console.warn('[Polaroid] .polaroid-frame not found'); return; }
 
-  const mediaWrap  = card.querySelector('.polaroid-media');
-  const captionEl  = card.querySelector('#polaroid-caption');
-  const prevBtn    = card.querySelector('.polaroid-nav.prev');
-  const nextBtn    = card.querySelector('.polaroid-nav.next');
-  const profileLink= document.getElementById('insta-profile-link');
+  const mediaWrap  = frame.querySelector('.polaroid-media');
+  const prevBtn    = frame.querySelector('.polaroid-nav.prev');
+  const nextBtn    = frame.querySelector('.polaroid-nav.next');
+  const captionEl  = document.getElementById('polaroid-caption');
 
-  // Reuse your existing obfuscated profile URL if available
-  const PROFILE_URL = (typeof instagramLink !== 'undefined' && instagramLink && instagramLink.href)
-    ? instagramLink.href
-    : 'https://www.instagram.com/';
+  // Reuse obfuscated Instagram profile link you already wire up
+  const PROFILE_URL = (typeof instagramLink !== 'undefined' && instagramLink?.href)
+    ? instagramLink.href : 'https://www.instagram.com/';
 
-  if (profileLink) profileLink.href = PROFILE_URL;
+  // Try both paths so it works locally (http-server) and on your custom domain
+  const CANDIDATES = [
+    new URL('assets/data/instagram.json', document.baseURI).toString(), // local & project sites
+    `${location.origin}/assets/data/instagram.json`,                    // custom domain root
+  ];
 
-  // IMPORTANT: use a relative path so it works on GitHub Pages project sites (e.g. /Portfolio)
-  // new URL() resolves against the current document <base> automatically
-  const ENDPOINT = new URL('assets/data/instagram.json', document.baseURI).toString();
-
-  // Optional: fallback image if JSON missing (leave '' to just hide the widget on failure)
-  const FALLBACK_IMAGE = '';
+  const FALLBACK_IMAGE = ''; // optional: put a local placeholder path if you want
 
   function renderSlides(items) {
     mediaWrap.innerHTML = '';
@@ -513,34 +511,26 @@ document.addEventListener('DOMContentLoaded', function () {
     slides.forEach((m, i) => {
       const wrapper = document.createElement('div');
       wrapper.className = 'slide' + (i === 0 ? ' active' : '');
-
       if (m.type === 'video') {
         const v = document.createElement('video');
-        v.src = m.url;
-        v.controls = true;
-        v.playsInline = true;
-        v.preload = 'metadata';
+        v.src = m.url; v.controls = true; v.playsInline = true; v.preload = 'metadata';
         wrapper.appendChild(v);
       } else {
         const img = document.createElement('img');
-        img.src = m.url;
-        img.alt = m.alt || 'Instagram post';
-        img.loading = 'lazy';
+        img.src = m.url; img.alt = m.alt || 'Instagram post'; img.loading = 'lazy';
         wrapper.appendChild(img);
       }
-
       mediaWrap.appendChild(wrapper);
     });
 
-    card.setAttribute('data-slides', String(slides.length || 0));
+    frame.setAttribute('data-slides', String(slides.length || 0));
   }
 
   function wireCarousel() {
     let idx = 0;
     const slides = () => Array.from(mediaWrap.querySelectorAll('.slide'));
     const show = (n) => {
-      const S = slides();
-      if (!S.length) return;
+      const S = slides(); if (!S.length) return;
       idx = (n + S.length) % S.length;
       S.forEach((el, i) => el.classList.toggle('active', i === idx));
     };
@@ -548,36 +538,73 @@ document.addEventListener('DOMContentLoaded', function () {
     nextBtn && nextBtn.addEventListener('click', () => show(idx + 1));
   }
 
-  async function loadLatest() {
+  function normalize(json) {
+    // Our action already writes {caption, permalink, media:[{type,url}]}
+    if (json && Array.isArray(json.media)) return json;
+
+    // But if you ever drop in a raw IG response, make it work too
+    if (json && Array.isArray(json.data) && json.data.length) {
+      const item = json.data[0];
+      const toType = (t) => (t === 'VIDEO' ? 'video' : 'image');
+      const media = (item.media_type === 'CAROUSEL_ALBUM' && item.children?.data?.length)
+        ? item.children.data.map(c => ({ type: toType(c.media_type), url: c.media_url || item.thumbnail_url }))
+        : [{ type: toType(item.media_type), url: item.media_url || item.thumbnail_url }];
+      return { caption: item.caption || '', permalink: item.permalink || '', media };
+    }
+    return null;
+  }
+
+  async function fetchFirst(paths) {
+    let lastErr;
+    for (const p of paths) {
+      try {
+        // console.log('[Polaroid] Fetching:', p);
+        const res = await fetch(p + (p.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const j = await res.json();
+        // console.log('[Polaroid] JSON from', p, j);
+        return j;
+      } catch (e) {
+        console.warn('[Polaroid] Failed:', p, e);
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error('All paths failed');
+  }
+
+  async function start() {
     try {
-      const res = await fetch(ENDPOINT + (ENDPOINT.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error('Bad status ' + res.status + ' for ' + ENDPOINT);
-      const data = await res.json(); // { caption, permalink, media: [{type,url}] }
+      const raw = await fetchFirst(CANDIDATES);
+      const data = normalize(raw);
+      if (!data || !data.media?.length) {
+        console.warn('[Polaroid] No media in JSON. Hiding widget.');
+        frame.closest('.sidebar-info_more')?.removeChild(frame.nextElementSibling); // caption divider cleanup (optional)
+        frame.style.display = 'none';
+        return;
+      }
 
       renderSlides(data.media);
       if (captionEl) captionEl.textContent = data.caption || '';
 
-      // Click anywhere on media to open the post (or profile as fallback)
-      mediaWrap.addEventListener('click', () => {
-        const href = data.permalink || PROFILE_URL;
-        window.open(href, '_blank', 'noopener');
-      });
+      // Click opens post (or profile fallback)
+      mediaWrap.addEventListener('click', () =>
+        window.open(data.permalink || PROFILE_URL, '_blank', 'noopener')
+      );
 
       wireCarousel();
-
-      // If only one slide, arrows should be hidden via CSS using [data-slides="1"]
     } catch (e) {
-      console.warn('[Polaroid] Failed to load instagram.json:', e);
-      // Silent fallback: if we have a fallback image, show it; otherwise hide the card
-      renderSlides(FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
-      if (!FALLBACK_IMAGE) {
-        card.style.display = 'none';
+      console.warn('[Polaroid] Giving up:', e);
+      if (FALLBACK_IMAGE) {
+        renderSlides([{ type: 'image', url: FALLBACK_IMAGE }]); wireCarousel();
       } else {
-        if (captionEl) captionEl.textContent = 'Follow me on Instagram →';
-        wireCarousel();
+        frame.style.display = 'none';
       }
     }
   }
 
-  loadLatest();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  } else {
+    start();
+  }
 })();
