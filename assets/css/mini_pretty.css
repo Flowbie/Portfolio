@@ -1302,7 +1302,8 @@ cursor:not-allowed}
 
 .polaroid-media { aspect-ratio: 4 / 3; }
 
-.sidebar,article{width:520px;
+.sidebar,article{
+width:560px;
 margin-inline:auto;
 padding:30px}
 

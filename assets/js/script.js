@@ -358,6 +358,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Reusable swipe helper
+function addSwipeHandlers(element, onNext, onPrev) {
+  let startX = 0;
+
+  element.addEventListener('touchstart', (e) => {
+    startX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  element.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].screenX;
+    if (endX < startX - 20) onNext(); // swipe left -> next
+    if (endX > startX + 20) onPrev(); // swipe right -> prev
+  }, { passive: true });
+}
+
+
 // New Gallery Functionality (with swipe functionality but messes up css)
 document.addEventListener('DOMContentLoaded', function () {
   const galleries = document.querySelectorAll('.gallery-container'); // Select all gallery instances
@@ -544,6 +560,9 @@ document.addEventListener('DOMContentLoaded', function () {
       idx = (n + S.length) % S.length;
       S.forEach((el, i) => el.classList.toggle('active', i === idx));
     };
+
+    const next = () => show(idx + 1);
+    const prev = () => show(idx - 1);
   
     // stop the click from reaching mediaWrap
     prevBtn?.addEventListener('click', (e) => {
@@ -551,6 +570,8 @@ document.addEventListener('DOMContentLoaded', function () {
       e.stopPropagation();
       show(idx - 1);
     });
+
+    addSwipeHandlers(mediaWrap, next, prev);
   
     nextBtn?.addEventListener('click', (e) => {
       e.preventDefault();
