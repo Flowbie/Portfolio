@@ -722,8 +722,12 @@ line-height:1.6}
   cursor:pointer;
 }
 
-.polaroid-media:hover .polaroid-nav {
+/* .polaroid-media:hover .polaroid-nav {
   opacity: 1;
+} */
+
+@media (hover: hover) and (pointer: fine) {
+  .polaroid-media:hover .polaroid-nav { opacity: 1; }
 }
 
 .polaroid-media .slide.active { opacity: 1; }
@@ -759,10 +763,6 @@ line-height:1.6}
 
 .polaroid-frame.nav-visible .polaroid-nav {
   opacity: 1;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .polaroid-media:hover .polaroid-nav { opacity: 1; }
 }
 
 .polaroid-nav.prev { left: 0 }
