@@ -576,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
     if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); next(); });
 
-    mediaWrap.addEventListener('touchstart', () => flashNav(1000), { passive: true });
+    // mediaWrap.addEventListener('touchstart', () => flashNav(1000), { passive: true });
     // 🔹 Add swipe using the shared helper
     addSwipeHandlers(mediaWrap, next, prev);
   }
