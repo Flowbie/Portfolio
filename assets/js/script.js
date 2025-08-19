@@ -479,36 +479,48 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// === Instagram Polaroid Loader (works with .polaroid-frame in sidebar) ===
+// === Instagram Polaroid Loader ===
 (() => {
-  // New selectors to match your sidebar markup
-  const frame      = document.querySelector('.polaroid-frame');
+  const frame     = document.querySelector('.polaroid-frame');
   if (!frame) { console.warn('[Polaroid] .polaroid-frame not found'); return; }
 
-  const mediaWrap  = frame.querySelector('.polaroid-media');
-  const prevBtn    = frame.querySelector('.polaroid-nav.prev');
-  const nextBtn    = frame.querySelector('.polaroid-nav.next');
-  const captionEl  = document.getElementById('polaroid-caption');
+  const mediaWrap = frame.querySelector('.polaroid-media');
+  let   prevBtn   = frame.querySelector('.polaroid-nav.prev');  // <-- let, not const
+  let   nextBtn   = frame.querySelector('.polaroid-nav.next');  // <-- let, not const
+  const captionEl = document.getElementById('polaroid-caption');
 
-  // Reuse obfuscated Instagram profile link you already wire up
   const PROFILE_URL = (typeof instagramLink !== 'undefined' && instagramLink?.href)
     ? instagramLink.href : 'https://www.instagram.com/';
 
-  // Try both paths so it works locally (http-server) and on your custom domain
   const CANDIDATES = [
-    new URL('assets/data/instagram.json', document.baseURI).toString(), // local & project sites
-    `${location.origin}/assets/data/instagram.json`,                    // custom domain root
+    new URL('assets/data/instagram.json', document.baseURI).toString(),
+    `${location.origin}/assets/data/instagram.json`,
   ];
 
-  const FALLBACK_IMAGE = ''; // optional: put a local placeholder path if you want
+  function ensureNavButtons() {
+    // (Re)select in case they already exist
+    let prev = frame.querySelector('.polaroid-nav.prev');
+    let next = frame.querySelector('.polaroid-nav.next');
+
+    if (!prev || !next) {
+      ['prev','next'].forEach(dir => {
+        const b = document.createElement('button');
+        b.className = `polaroid-nav ${dir}`;
+        b.setAttribute('aria-label', dir === 'prev' ? 'Previous photo' : 'Next photo');
+        b.textContent = dir === 'prev' ? '❮' : '❯';
+        mediaWrap.appendChild(b);    // inside .polaroid-media so they overlay the image only
+      });
+      prev = frame.querySelector('.polaroid-nav.prev');
+      next = frame.querySelector('.polaroid-nav.next');
+    }
+    // Update the outer refs for wireCarousel()
+    prevBtn = prev;
+    nextBtn = next;
+  }
 
   function renderSlides(items) {
-    mediaWrap.innerHTML = '';
-    const slides = (Array.isArray(items) && items.length)
-      ? items
-      : (FALLBACK_IMAGE ? [{ type: 'image', url: FALLBACK_IMAGE }] : []);
-
-    slides.forEach((m, i) => {
+    mediaWrap.innerHTML = '';                       // clears any old slides (not the buttons we add later)
+    (items || []).forEach((m, i) => {
       const wrapper = document.createElement('div');
       wrapper.className = 'slide' + (i === 0 ? ' active' : '');
       if (m.type === 'video') {
@@ -522,8 +534,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       mediaWrap.appendChild(wrapper);
     });
-
-    frame.setAttribute('data-slides', String(slides.length || 0));
   }
 
   function wireCarousel() {
@@ -534,21 +544,30 @@ document.addEventListener('DOMContentLoaded', function () {
       idx = (n + S.length) % S.length;
       S.forEach((el, i) => el.classList.toggle('active', i === idx));
     };
-    prevBtn && prevBtn.addEventListener('click', () => show(idx - 1));
-    nextBtn && nextBtn.addEventListener('click', () => show(idx + 1));
+  
+    // stop the click from reaching mediaWrap
+    prevBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(idx - 1);
+    });
+  
+    nextBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(idx + 1);
+    });
   }
+  
 
   function normalize(json) {
-    // Our action already writes {caption, permalink, media:[{type,url}]}
     if (json && Array.isArray(json.media)) return json;
-
-    // But if you ever drop in a raw IG response, make it work too
     if (json && Array.isArray(json.data) && json.data.length) {
-      const item = json.data[0];
-      const toType = (t) => (t === 'VIDEO' ? 'video' : 'image');
+      const item  = json.data[0];
+      const toRes = (t,u,thumb) => ({ type: t === 'VIDEO' ? 'video' : 'image', url: u || thumb });
       const media = (item.media_type === 'CAROUSEL_ALBUM' && item.children?.data?.length)
-        ? item.children.data.map(c => ({ type: toType(c.media_type), url: c.media_url || item.thumbnail_url }))
-        : [{ type: toType(item.media_type), url: item.media_url || item.thumbnail_url }];
+        ? item.children.data.map(c => toRes(c.media_type, c.media_url, item.thumbnail_url))
+        : [toRes(item.media_type, item.media_url, item.thumbnail_url)];
       return { caption: item.caption || '', permalink: item.permalink || '', media };
     }
     return null;
@@ -558,47 +577,31 @@ document.addEventListener('DOMContentLoaded', function () {
     let lastErr;
     for (const p of paths) {
       try {
-        // console.log('[Polaroid] Fetching:', p);
         const res = await fetch(p + (p.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        const j = await res.json();
-        // console.log('[Polaroid] JSON from', p, j);
-        return j;
-      } catch (e) {
-        console.warn('[Polaroid] Failed:', p, e);
-        lastErr = e;
-      }
+        return await res.json();
+      } catch (e) { lastErr = e; }
     }
     throw lastErr || new Error('All paths failed');
   }
 
   async function start() {
     try {
-      const raw = await fetchFirst(CANDIDATES);
+      const raw  = await fetchFirst(CANDIDATES);
       const data = normalize(raw);
-      if (!data || !data.media?.length) {
-        console.warn('[Polaroid] No media in JSON. Hiding widget.');
-        frame.closest('.sidebar-info_more')?.removeChild(frame.nextElementSibling); // caption divider cleanup (optional)
-        frame.style.display = 'none';
-        return;
-      }
+      if (!data || !data.media?.length) { frame.style.display = 'none'; return; }
 
-      renderSlides(data.media);
+      renderSlides(data.media);        // 1) draw slides
+      ensureNavButtons();              // 2) then ensure buttons so they aren’t cleared
+      wireCarousel();                  // 3) hook up events
+
       if (captionEl) captionEl.textContent = data.caption || '';
-
-      // Click opens post (or profile fallback)
       mediaWrap.addEventListener('click', () =>
         window.open(data.permalink || PROFILE_URL, '_blank', 'noopener')
       );
-
-      wireCarousel();
     } catch (e) {
-      console.warn('[Polaroid] Giving up:', e);
-      if (FALLBACK_IMAGE) {
-        renderSlides([{ type: 'image', url: FALLBACK_IMAGE }]); wireCarousel();
-      } else {
-        frame.style.display = 'none';
-      }
+      console.warn('[Polaroid] error:', e);
+      frame.style.display = 'none';
     }
   }
 
@@ -608,3 +611,4 @@ document.addEventListener('DOMContentLoaded', function () {
     start();
   }
 })();
+

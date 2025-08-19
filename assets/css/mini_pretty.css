@@ -668,19 +668,24 @@ line-height:1.6}
 
 .honors-gpa{color:var(--orange-yellow-crayola)}
 
-/* === Polaroid Instagram (mobile-first) === */
-.polaroid-card {
-  margin-top: 15px;
-  padding-top: 15px;
-}
+/* === Polaroid Instagram */
 
 .polaroid-head {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 5px 12px;
+  margin: 0 0 12px;
 }
 
+.polaroid-container{
+  position:relative;
+    width:100%;
+    margin:0 auto;
+    overflow:hidden;
+    border-radius:10px;
+    margin-bottom:30px;
+  }
+    
 .polaroid-frame {
   position: relative;
   background: var(--eerie-black-2);
@@ -722,38 +727,34 @@ line-height:1.6}
 }
 
 .polaroid-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--onyx);
-  color: var(--white-2);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  box-shadow: var(--shadow-1);
-  display: grid;
-  place-items: center;
-  opacity: 0.85;
-  transition: var(--transition-1);
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--orange-yellow-crayola);
+  border:none;
+  padding:10px 15px;
+  cursor:pointer;
+  font-size:18px;
+  height:100%;
+  width:40px;
+  z-index:1;
+  opacity:0;
+  transition:opacity 0.3s ease,background-color 0.3s ease;
 }
 
-.polaroid-nav:hover { opacity: 1; }
+.polaroid-nav:hover { 
+  background:rgb(0 0 0 / .4);
+  opacity: 1;
+}
 
-.polaroid-nav.prev { left: 6px; }
-.polaroid-nav.next { right: 6px; }
+.polaroid-nav.prev { left: 0 }
+.polaroid-nav.next { right: 0 }
 
 .polaroid-caption {
   color: var(--light-gray);
   font-size: var(--fs-7);
   margin: 8px 4px 0;
   line-height: 1.4;
-}
-
-.polaroid-fallback { margin-top: 6px; }
-
-.polaroid-fallback .contact-link {
-  color: var(--orange-yellow-crayola);
-  word-break: break-word;
 }
 
 /* Hide arrows when single image */
@@ -1299,7 +1300,6 @@ cursor:not-allowed}
 --fs-8:12px}
 
 .polaroid-media { aspect-ratio: 4 / 3; }
-.polaroid-nav { width: 32px; height: 32px; }
 
 .sidebar,article{width:520px;
 margin-inline:auto;
@@ -1469,9 +1469,9 @@ padding:16px 20px}
     display:grid;
     grid-template-columns: 1fr minmax(300px, 1fr);
     grid-template-areas:
-      "sepA     sepA"   /* <— separator-A immediately under .sidebar-info */
+      "sepA     sepA"   
+      "contacts head"
       "contacts polaroid"
-      "head     polaroid"
       "sepB     sepB"
       "social   social";
     gap:20px;
@@ -1486,9 +1486,11 @@ padding:16px 20px}
     flex-direction:column;
     gap:15px;
     min-width:0;
+    align-content: center;
+    justify-self:center;
   }
 
-  .separator-A{          /* first separator: always under .sidebar-info */
+  .separator-A{  
     grid-area: sepA;
     display:block;
     grid-column: 1 / -1;
@@ -1500,10 +1502,10 @@ padding:16px 20px}
     margin:0;
   }
 
-  .separator-B{          /* second separator: always above social list */
+  .separator-B{ 
     grid-area: sepB;
     display:block;
-    grid-column: 1 / -1; /* span across if you like the full-width look */
+    grid-column: 1 / -1; /* span across*/
   }
 
   .separator-mid{ display:none; }
@@ -1514,7 +1516,7 @@ padding:16px 20px}
     gap:16px;
   }
 
-  /* Right column (media) */
+
   .polaroid-frame{
     grid-area: polaroid;
     width:100%;
@@ -1527,7 +1529,7 @@ padding:16px 20px}
 
   .polaroid-media { aspect-ratio: 3 / 2; }
   .polaroid-caption { font-size: var(--fs-6); }
-  .polaroid-nav { width: 34px; height: 34px; }
+
 
   /* keep your other existing rules */
   .navbar-link{--fs-8:15px}
@@ -1592,7 +1594,7 @@ gap:20px 25px}
 .blog-banner-box{height:230px}
 
 /* .polaroid-media { aspect-ratio: 16 / 10; } */
-.polaroid-nav { width: 36px; height: 36px; }
+/* .polaroid-nav { width: 36px; height: 36px; } */
 
 }
 
@@ -1735,7 +1737,7 @@ gap:20px 25px}
     display: block;
   }
 
-  .polaroid-nav {
+  /* .polaroid-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -1752,7 +1754,7 @@ gap:20px 25px}
   }
   .polaroid-nav:hover { opacity: 1; }
   .polaroid-nav.prev { left: 10px; }
-  .polaroid-nav.next { right: 10px; }
+  .polaroid-nav.next { right: 10px; } */
 
   /* Clamp caption to 2 lines */
   .polaroid-caption {
