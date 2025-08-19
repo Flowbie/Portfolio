@@ -761,6 +761,10 @@ line-height:1.6}
   opacity: 1;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .polaroid-media:hover .polaroid-nav { opacity: 1; }
+}
+
 .polaroid-nav.prev { left: 0 }
 .polaroid-nav.next { right: 0 }
 
