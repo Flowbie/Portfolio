@@ -1656,7 +1656,7 @@ gap:20px 25px}
   }
 
   /* === CONTACTS (ellipsis works) === */
-  .contacts-list { grid-template-columns: 1fr; }
+  .contacts-list { grid-template-columns: 1fr; justify-self:start;}
   .contacts-list > * { min-width: 0; }
 
   .contacts-list > .contact-item {
@@ -1688,7 +1688,7 @@ gap:20px 25px}
   /* Reset header placement */
   .polaroid-head {
     grid-column: auto;
-    margin-top: 0;
+    margin: 0 5 12px;
     justify-self: start;
   }
 
