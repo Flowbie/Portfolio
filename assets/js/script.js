@@ -563,12 +563,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const next = () => show(idx + 1);
     const prev = () => show(idx - 1);
+
+    let hideTimer = null;
+    const flashNav = (ms = 800) => {
+      frame.classList.add('nav-visible');
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => frame.classList.remove('nav-visible'), ms);
+    };
   
     // ensure nav buttons exist (your ensureNavButtons or static HTML)
     // and make them NOT trigger the permalink click
     if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
     if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); next(); });
 
+    mediaWrap.addEventListener('touchstart', () => flashNav(1000), { passive: true });
     // 🔹 Add swipe using the shared helper
     addSwipeHandlers(mediaWrap, next, prev);
   }
