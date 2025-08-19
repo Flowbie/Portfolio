@@ -564,20 +564,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const next = () => show(idx + 1);
     const prev = () => show(idx - 1);
   
-    // stop the click from reaching mediaWrap
-    prevBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      show(idx - 1);
-    });
+    // ensure nav buttons exist (your ensureNavButtons or static HTML)
+    // and make them NOT trigger the permalink click
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); next(); });
 
+    // 🔹 Add swipe using the shared helper
     addSwipeHandlers(mediaWrap, next, prev);
-  
-    nextBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      show(idx + 1);
-    });
   }
   
 
