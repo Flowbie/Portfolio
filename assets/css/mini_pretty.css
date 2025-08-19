@@ -103,7 +103,7 @@ padding:15px;
 box-shadow:var(--shadow-1);
 z-index:1}
 
-.separator,.separator-mid{width:100%;
+.separator-A,.separator-B,.separator-mid{width:100%;
 height:1px;
 background:var(--jet);
 margin:16px 0}
@@ -1343,7 +1343,7 @@ font-size:var(--fs-8)}
 
 .info_more-btn ion-icon{display:none}
 
-.separator{margin:32px 0}
+.separator-A,.separator-B{margin:32px 0}
 
 .contacts-list{gap:20px}
 
@@ -1460,85 +1460,91 @@ padding:16px 20px}
 }
 
 @media (min-width:768px){
-.sidebar, article { width:auto; max-width:100%; }
+  .sidebar, article { width:auto; max-width:100%; }
+  .has-scrollbar::-webkit-scrollbar-button{width:100px}
 
-.has-scrollbar::-webkit-scrollbar-button{width:100px}
+  /* 2-col layout with left stack order:
+     sepA (under .sidebar-info) → contacts → head → sepB → social  */
+  .sidebar-info_more{
+    display:grid;
+    grid-template-columns: 1fr minmax(300px, 1fr);
+    grid-template-areas:
+      "sepA     sepA"   /* <— separator-A immediately under .sidebar-info */
+      "contacts polaroid"
+      "head     polaroid"
+      "sepB     sepB"
+      "social   social";
+    gap:20px;
+    align-items:start;
+    justify-items:stretch;
+  }
 
-.contacts-list{
-  grid-column: 1;
-  display: flex !important;
-  flex-direction: column;
-  gap: 15px;
+  /* Left column pieces in order */
+  .contacts-list{
+    grid-area: contacts;
+    display:flex !important;
+    flex-direction:column;
+    gap:15px;
+    min-width:0;
+  }
+
+  .separator-A{          /* first separator: always under .sidebar-info */
+    grid-area: sepA;
+    display:block;
+    grid-column: 1 / -1;
+  }
+
+  .polaroid-head{
+    grid-area: head;
+    justify-self:start;
+    margin:0;
+  }
+
+  .separator-B{          /* second separator: always above social list */
+    grid-area: sepB;
+    display:block;
+    grid-column: 1 / -1; /* span across if you like the full-width look */
+  }
+
+  .separator-mid{ display:none; }
+
+  .social-list{
+    grid-area: social;
+    justify-content:flex-start;
+    gap:16px;
+  }
+
+  /* Right column (media) */
+  .polaroid-frame{
+    grid-area: polaroid;
+    width:100%;
+    max-width:100%;
+    padding:12px;
+    margin:0;
+    justify-self:center;
+    align-self:start;
+  }
+
+  .polaroid-media { aspect-ratio: 3 / 2; }
+  .polaroid-caption { font-size: var(--fs-6); }
+  .polaroid-nav { width: 34px; height: 34px; }
+
+  /* keep your other existing rules */
+  .navbar-link{--fs-8:15px}
+  .testimonials-modal{gap:35px;max-width:680px}
+  .apps-modal{gap:35px;max-width:680px}
+  .modal-avatar-box img{width:100px}
+  .article-title{padding-bottom:15px}
+  .filter-select-box{display:none}
+  .filter-list{display:flex;justify-content:flex-start;align-items:center;gap:25px;padding-left:5px;margin-bottom:15px}
+  .filter-item button{color:var(--light-gray);font-size:var(--fs-5);transition:var(--transition-1)}
+  .filter-item button:hover{color:var(--light-gray-70)}
+  .filter-item button.active{color:var(--orange-yellow-crayola)}
+  .project-list,.blog-posts-list{grid-template-columns:1fr 1fr}
+  .input-wrapper{grid-template-columns:1fr 1fr}
+  .form-btn{width:max-content;margin-left:auto}
 }
 
-
-.navbar-link{--fs-8:15px}
-
-.testimonials-modal{gap:35px;
-max-width:680px}
-
-.apps-modal{gap:35px;
-max-width:680px}
-
-.modal-avatar-box img{width:100px}
-
-.article-title{padding-bottom:15px}
-
-.filter-select-box{display:none}
-
-.filter-list{display:flex;
-justify-content:flex-start;
-align-items:center;
-gap:25px;
-padding-left:5px;
-margin-bottom:15px}
-
-.filter-item button{color:var(--light-gray);
-font-size:var(--fs-5);
-transition:var(--transition-1)}
-
-.filter-item button:hover{color:var(--light-gray-70)}
-
-.filter-item button.active{color:var(--orange-yellow-crayola)}
-
-.project-list,.blog-posts-list{grid-template-columns:1fr 1fr}
-
-.input-wrapper{grid-template-columns:1fr 1fr}
-
-.form-btn{width:max-content;
-margin-left:auto}
-
-
-.sidebar-info_more{
-  display:grid;
-  grid-template-columns: 1fr minmax(300px, 1fr);
-  gap:20px;
-  align-items:start;
-  justify-items: center;
-}
-
-
-.polaroid-frame{
-  grid-column:2;
-  width:100%;
-  max-width:100%;
-  justify-self: center;
-  align-self: center; /* vertical centering within its grid cell */
-  margin: 0 auto;
-}
-
-.separator{
-  grid-column:1 / -1;  /* stretch across the whole grid */
-}
-.separator-mid{
-  display:none;
-}
-
-.polaroid-frame { padding: 12px; }
-.polaroid-media { aspect-ratio: 3 / 2; }
-.polaroid-caption { font-size: var(--fs-6); }
-.polaroid-nav { width: 34px; height: 34px; }
-}
 
 @media (min-width:1024px){:root{--shadow-1:-4px 8px 24px hsla(0, 0%, 0%, 0.125);
 --shadow-2:0 16px 30px hsla(0, 0%, 0%, 0.125);
@@ -1592,18 +1598,18 @@ gap:20px 25px}
 
 @media (min-width:1250px) {
 
+  /* Scrollbar cosmetics */
   body::-webkit-scrollbar { width: 20px; }
   body::-webkit-scrollbar-track { background: var(--smoky-black); }
   body::-webkit-scrollbar-thumb {
     border: 5px solid var(--smoky-black);
     background: hsl(0 0% 100% / .1);
     border-radius: 20px;
-    box-shadow: inset 1px 1px 0 hsl(0 0% 100% / .11),
-                inset -1px -1px 0 hsl(0 0% 100% / .11);
+    box-shadow:
+      inset  1px  1px 0 hsl(0 0% 100% / .11),
+      inset -1px -1px 0 hsl(0 0% 100% / .11);
   }
-  body::-webkit-scrollbar-thumb:hover {
-    background: hsl(0 0% 100% / .15);
-  }
+  body::-webkit-scrollbar-thumb:hover { background: hsl(0 0% 100% / .15); }
   body::-webkit-scrollbar-button { height: 60px; }
 
   .sidebar, article { width: auto; }
@@ -1618,11 +1624,7 @@ gap:20px 25px}
     gap: 25px;
   }
 
-  .main-content {
-    min-width: 75%;
-    width: 75%;
-    margin: 0;
-  }
+  .main-content { min-width: 75%; width: 75%; margin: 0; }
 
   .sidebar {
     position: sticky;
@@ -1637,36 +1639,35 @@ gap:20px 25px}
   .sidebar-info { flex-direction: column; }
   .avatar-box img { width: 150px; }
 
-  .info-content .name {
-    white-space: nowrap;
-    text-align: center;
-  }
+  .info-content .name { white-space: nowrap; text-align: center; }
   .info-content .title { margin: auto; }
 
   .info_more-btn { display: none; }
+
+  /* Reset: stop using the grid layout at desktop */
   .sidebar-info_more {
+    display: block;
     opacity: 1;
     visibility: visible;
     justify-items: start;
     align-items: start;
-    display: block;
   }
 
-  /* === CONTACTS === */
+  /* === CONTACTS (ellipsis works) === */
   .contacts-list { grid-template-columns: 1fr; }
-  .contacts-list > * { min-width: 0; } /* allow children to shrink */
+  .contacts-list > * { min-width: 0; }
 
   .contacts-list > .contact-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    min-width: 0; /* critical for ellipsis */
+    min-width: 0;
   }
 
   .contact-item .icon-box { flex: 0 0 auto; }
   .contact-item .contact-info {
     flex: 1 1 auto;
-    min-width: 0; /* critical for ellipsis */
+    min-width: 0;
   }
 
   .contact-info .contact-link {
@@ -1674,7 +1675,7 @@ gap:20px 25px}
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* truncates email */
+    text-overflow: ellipsis;
   }
 
   .contact-info :is(.contact-link, time, address) {
@@ -1682,15 +1683,19 @@ gap:20px 25px}
     font-weight: var(--fw-300);
   }
 
-  .separator:last-of-type {
-    margin: 15px 0;
-    opacity: 0;
+  /* Reset header placement */
+  .polaroid-head {
+    grid-column: auto;
+    margin-top: 0;
+    justify-self: start;
   }
+
+  .separator-A,.separator-B:last-of-type { margin: 15px 0;}
 
   .social-list { justify-content: center; }
   .timeline-text { max-width: 700px; }
 
-  /* === POLAROID === */
+  /* === POLAROID (desktop) === */
   .polaroid-frame {
     position: relative;
     background: var(--eerie-black-2);
@@ -1711,7 +1716,7 @@ gap:20px 25px}
     position: relative;
     border-radius: 10px;
     overflow: hidden;
-    aspect-ratio: auto;
+    aspect-ratio: auto; /* fixed height handled by content */
   }
 
   .polaroid-media .slide {
@@ -1749,25 +1754,29 @@ gap:20px 25px}
   .polaroid-nav.prev { left: 10px; }
   .polaroid-nav.next { right: 10px; }
 
+  /* Clamp caption to 2 lines */
   .polaroid-caption {
     color: var(--light-gray);
     font-size: var(--fs-7);
     margin: 10px 6px 0;
     line-height: 1.4;
-
     display: -webkit-box;
-    -webkit-line-clamp: 2;   /* limit to 2 lines */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  /* Hide arrows when single image */
   #insta-polaroid[data-slides="1"] .polaroid-nav { display: none; }
 
-  .separator, .separator-mid {
+  .separator-A,
+  .separator-B,
+  .separator-mid {
     grid-column: auto;
     display: block;
   }
 }
+
 
 
