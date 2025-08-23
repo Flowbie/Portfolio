@@ -545,6 +545,7 @@ font-weight:var(--fw-300);
 margin-bottom:10px}
 
 .modal-content p{color:var(--light-gray);
+
 font-size:var(--fs-6);
 font-weight:var(--fw-300);
 line-height:1.6}
@@ -1022,7 +1023,6 @@ align-items:center}
 max-height:80%;
 display:block;
 border-radius:10px;
-box-shadow:0 4px 8px rgb(0 0 0 / .2);
 animation:zoomIn 0.3s}
 
 .modal-close{position:absolute;
