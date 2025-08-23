@@ -577,6 +577,8 @@ margin:10px}
 
 .clients-item img:hover{filter:grayscale(0)}
 
+li.clients-item:hover{cursor:pointer}
+
 .article-title{margin-bottom:15px}
 
 .resume-header{display:flex;
