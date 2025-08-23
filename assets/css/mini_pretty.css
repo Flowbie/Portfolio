@@ -640,6 +640,14 @@ line-height:1.6}
 
 .skills-item:not(:last-child){margin-bottom:15px}
 
+ul.skills-list.content-card {
+  cursor: default;
+}
+
+ul.honors-list.content-card {
+  cursor: default;
+}
+
 .skill .title-wrapper{display:flex;
 align-items:center;
 gap:5px;
