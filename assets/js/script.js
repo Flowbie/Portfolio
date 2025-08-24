@@ -235,25 +235,45 @@ const pages = document.querySelectorAll("[data-page]");
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
+    for (let j = 0; j < pages.length; j++) {
+      if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
+        pages[j].classList.add("active");
+        navigationLinks[j].classList.add("active");
         window.scrollTo(0, 0);
       } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+        pages[j].classList.remove("active");
+        navigationLinks[j].classList.remove("active");
       }
     }
 
+    // Update hash to support external activation (e.g., from standalone back button)
+    const pageName = this.innerHTML.toLowerCase();
+    try { history.replaceState({}, '', `#${pageName}`); } catch {}
   });
+}
+
+// Activate tab based on hash on load
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = (location.hash || '').replace('#','');
+  if (hash) activatePage(hash);
+});
+
+// Helper to activate a page programmatically
+function activatePage(pageName) {
+  if (!pages || !navigationLinks) return;
+  for (let i = 0; i < pages.length; i++) {
+    const isMatch = pages[i].dataset.page === pageName;
+    pages[i].classList.toggle('active', isMatch);
+    if (navigationLinks[i]) navigationLinks[i].classList.toggle('active', isMatch);
+  }
+  window.scrollTo(0, 0);
 }
 
 // NEW BLOG FUNCTIONALITY
 const blogItems = document.querySelectorAll('.blog-post-item');
 const blogBackBtnContainer = document.querySelector('.blog-back-container');
 const blogBackBtn = document.querySelector('.blog-back-btn');
-const blogListEl = document.querySelector('[data-blog-list]') || document.querySelector('.blog-posts-list');
+const blogListEl = document.querySelector('[data-blog-list]');
 let blogPostsManifest = null;
 
 // === Head metadata helpers (for SPA view) ===
@@ -403,6 +423,7 @@ async function loadPost(slug) {
   const doc = parser.parseFromString(html, 'text/html');
   const li = doc.querySelector('.blog-post-item');
   if (!li) return;
+  activatePage('blog');
   blogListEl.innerHTML = '';
   blogListEl.appendChild(li);
   if (blogBackBtnContainer && blogBackBtn) {
@@ -444,15 +465,13 @@ if (blogListEl) {
   document.addEventListener('DOMContentLoaded', () => {
     route();
     window.addEventListener('popstate', route);
-    // Click delegation for cards -> SPA navigation
+    // Click delegation for cards -> hard navigation to standalone page
     blogListEl.addEventListener('click', (e) => {
       const a = e.target.closest('a.blog-card-link[data-slug]');
       if (!a) return;
-      e.preventDefault();
       const slug = a.getAttribute('data-slug');
-      history.pushState({ slug }, '', `blog/${slug}/`);
-      trackEvent('post_open', { slug });
-      loadPost(slug);
+      // Let browser navigate to the standalone page
+      a.setAttribute('href', `/blog/${slug}/`);
     });
   }, { once: true });
 }
@@ -496,22 +515,7 @@ if (!blogListEl) {
 // Blog back button functionality
 if (blogBackBtn) {
   blogBackBtn.addEventListener('click', function (e) {
-    if (blogListEl) {
-      e.preventDefault();
-      history.pushState({}, '', './');
-      route();
-      return;
-    }
-    blogItems.forEach(item => {
-      const blogDetails = item.querySelector('.blog-details');
-      const blogTitle = item.querySelector('.blog-item-title');
-      item.classList.add('active');
-      item.classList.remove('expanded');
-      blogTitle.classList.remove('hidden');
-      blogDetails.classList.add('hidden');
-    });
-    if (blogBackBtnContainer) blogBackBtnContainer.classList.remove('active');
-    blogBackBtn.classList.remove('active');
+    // Allow anchors with href to handle navigation; no JS override needed
   });
 }
 

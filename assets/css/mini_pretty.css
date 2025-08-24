@@ -40,7 +40,7 @@
 --light-gray:hsl(0, 0%, 84%);
 --light-gray-70:hsla(0, 0%, 84%, 0.7);
 --bittersweet-shimmer:hsl(0, 43%, 51%);
---visited-link:hsl(275, 86%, 36%);
+--visited-link:hsl(275, 90%, 51%);
 --ff-poppins:'Poppins', sans-serif;
 --fs-1:24px;
 --fs-2:18px;
@@ -1083,9 +1083,7 @@ opacity:1}
 
 .blog-post-item{display:none}
 
-.blog-post-item.active{display:block;
-animation:scaleUp 0.25s ease forwards;
-cursor:pointer}
+.blog-post-item.active{display:block;}
 
 .blog-post-item.expanded{cursor:default}
 
@@ -1093,22 +1091,25 @@ cursor:pointer}
 grid-template-columns:1fr;
 gap:20px}
 
-.blog-post-item{position:relative;
-background:var(--border-gradient-onyx);
+.blog-post-item{
+position:relative;
+background:var(--eerie-black-2);
 height:100%;
-box-shadow:var(--shadow-4);
 border-radius:16px;
 z-index:1}
 
-.blog-post-item::before{content:"";
+.blog-post-item::before{
+content:"";
 position:absolute;
 inset:1px;
 border-radius:inherit;
-background:var(--eerie-black-1);
+background:var(--eerie-black-2);
 z-index:-1}
 
-.blog-banner-box{width:100%;
+.blog-banner-box{
+width:100%;
 height:200px;
+animation:scaleUp 0.25s ease forwards;
 border-radius:12px;
 overflow:hidden}
 
@@ -1125,7 +1126,7 @@ z-index:1;
 width:100%;
 height:auto}
 
-.blog-content{padding:15px}
+.blog-content{padding-top:15px}
 
 .blog-meta{display:flex;
 justify-content:flex-start;
@@ -1153,7 +1154,7 @@ font-size:var(--fs-6);
 font-weight:var(--fw-300);
 line-height:1.6}
 
-.blog-details-title{color:var(--white-2);
+.blog-details-title{color:var(--orange-yellow-crayola);
 font-size:var(--fs-3);
 font-weight:var(--fw-400);
 text-transform:capitalize;
@@ -1166,7 +1167,7 @@ display:inline}
 
 .blog-details a:visited{color:var(--visited-link)}
 
-.blog-details h2{color:var(--vegas-gold);
+.blog-details h2{color:var(--orange-yellow-crayola);
 margin-bottom:10px}
 
 .blog-details p{margin-bottom:15px;
@@ -1469,7 +1470,7 @@ left:-43px}
 
 .blog-posts-list{gap:30px}
 
-.blog-content{padding:25px}
+.blog-content{padding-top:25px}
 
 .mapbox{height:380px;
 border-radius:18px}
@@ -1647,7 +1648,10 @@ gap:20px 25px}
   body::-webkit-scrollbar-button { height: 60px; }
 
   .sidebar, article { width: auto; }
-  article { min-height: 100%; }
+  article {
+    min-height: 100%;
+    animation:scaleUp 0.25s ease forwards;
+  }
 
   main {
     max-width: 1300px;
