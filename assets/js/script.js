@@ -253,55 +253,267 @@ for (let i = 0; i < navigationLinks.length; i++) {
 const blogItems = document.querySelectorAll('.blog-post-item');
 const blogBackBtnContainer = document.querySelector('.blog-back-container');
 const blogBackBtn = document.querySelector('.blog-back-btn');
+const blogListEl = document.querySelector('[data-blog-list]') || document.querySelector('.blog-posts-list');
+let blogPostsManifest = null;
+
+// === Head metadata helpers (for SPA view) ===
+const originalHead = {
+  title: document.title,
+  description: (document.querySelector('meta[name="description"]') || {}).getAttribute?.('content') || '',
+  canonicalHref: (document.querySelector('link[rel="canonical"]') || {}).getAttribute?.('href') || ''
+};
+
+function upsertMeta(selector, attrs) {
+  let el = document.querySelector(selector);
+  if (!el) {
+    const tag = selector.startsWith('meta[') ? 'meta' : selector.startsWith('link[') ? 'link' : 'meta';
+    el = document.createElement(tag);
+    const attrPairs = selector.replace(/^[^[]+\[|]$/g, '').split('][');
+    attrPairs.forEach(pair => {
+      const [k, v] = pair.replace(/[\[\]"]+/g, '').split('=');
+      if (k && v) el.setAttribute(k, v);
+    });
+    document.head.appendChild(el);
+  }
+  Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, v));
+  return el;
+}
+
+function setHeadForPost(post) {
+  if (!post) return;
+  const url = `/blog/${post.slug}/`;
+  const image = post.banner;
+  document.title = post.title;
+  upsertMeta('meta[name="description"]', { content: post.description || '' });
+  upsertMeta('link[rel="canonical"]', { rel: 'canonical', href: url });
+  // Open Graph
+  upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'article' });
+  upsertMeta('meta[property="og:title"]', { property: 'og:title', content: post.title });
+  upsertMeta('meta[property="og:description"]', { property: 'og:description', content: post.description || '' });
+  upsertMeta('meta[property="og:image"]', { property: 'og:image', content: image });
+  upsertMeta('meta[property="og:url"]', { property: 'og:url', content: url });
+  // Twitter
+  upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+  upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: post.title });
+  upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: post.description || '' });
+  upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image });
+  // JSON-LD (client-side only; bots will use standalone page)
+  let ld = document.getElementById('post-json-ld');
+  if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'post-json-ld'; document.head.appendChild(ld); }
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    datePublished: post.dateISO || '',
+    dateModified: post.dateISO || '',
+    author: { '@type': 'Person', name: 'Austin Dolan' },
+    image,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url }
+  });
+}
+
+function resetHeadToIndex() {
+  document.title = originalHead.title || document.title;
+  if (originalHead.description) upsertMeta('meta[name="description"]', { content: originalHead.description });
+  if (originalHead.canonicalHref) upsertMeta('link[rel="canonical"]', { rel: 'canonical', href: originalHead.canonicalHref });
+  // Clear OG/Twitter to avoid stale content
+  ['og:type','og:title','og:description','og:image','og:url'].forEach(p => {
+    const el = document.querySelector(`meta[property="${p}"]`);
+    if (el) el.parentNode.removeChild(el);
+  });
+  ['twitter:card','twitter:title','twitter:description','twitter:image'].forEach(n => {
+    const el = document.querySelector(`meta[name="${n}"]`);
+    if (el) el.parentNode.removeChild(el);
+  });
+  const ld = document.getElementById('post-json-ld');
+  if (ld) ld.parentNode.removeChild(ld);
+}
+
+// === Analytics helpers (no-op unless gtag exists) ===
+function trackPageView(path) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_location: location.origin + path,
+        page_path: path,
+        page_title: document.title
+      });
+    }
+  } catch {}
+}
+
+function trackEvent(name, params) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, params || {});
+    }
+  } catch {}
+}
+
+function getSlugFromPath(pathname) {
+  const match = pathname.match(/(?:^|\/)blog\/([^/]+)\/?$/);
+  return match ? match[1] : null;
+}
+
+async function fetchManifest() {
+  if (blogPostsManifest) return blogPostsManifest;
+  const manifestUrl = '/assets/data/posts.json';
+  const res = await fetch(manifestUrl, { cache: 'no-store' });
+  if (!res.ok) throw new Error('Failed to load posts manifest');
+  blogPostsManifest = await res.json();
+  return blogPostsManifest;
+}
+
+function renderIndex(posts) {
+  if (!blogListEl) return;
+  blogListEl.innerHTML = '';
+  (posts || []).forEach(post => {
+    const li = document.createElement('li');
+    li.className = 'blog-post-item active';
+    li.innerHTML = `
+      <a href="blog/${post.slug}/" data-slug="${post.slug}" class="blog-card-link" style="display:block">
+        <figure class="blog-banner-box">
+          <img src="${post.banner}" alt="${post.title}" loading="lazy">
+        </figure>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <p class="blog-category">${post.category || ''}</p>
+            <span class="dot"></span>
+            <time datetime="${post.dateISO || ''}">${post.dateText || ''}</time>
+          </div>
+          <h3 class="h3 blog-item-title">${post.title}</h3>
+        </div>
+      </a>
+    `;
+    blogListEl.appendChild(li);
+  });
+  if (blogBackBtnContainer && blogBackBtn) {
+    blogBackBtnContainer.classList.remove('active');
+    blogBackBtn.classList.remove('active');
+  }
+}
+
+async function loadPost(slug) {
+  if (!blogListEl || !slug) return;
+  const postUrl = `/blog/${slug}/index.html`;
+  const res = await fetch(postUrl, { cache: 'no-store' });
+  if (!res.ok) { console.warn('Post fetch failed', slug); return; }
+  const html = await res.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const li = doc.querySelector('.blog-post-item');
+  if (!li) return;
+  blogListEl.innerHTML = '';
+  blogListEl.appendChild(li);
+  if (blogBackBtnContainer && blogBackBtn) {
+    blogBackBtnContainer.classList.add('active');
+    blogBackBtn.classList.add('active');
+  }
+  // Ensure links in injected content open in new tabs
+  const links = blogListEl.querySelectorAll('.blog-details a');
+  links.forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+  // Set head metadata based on manifest
+  try {
+    const posts = await fetchManifest();
+    const post = posts.find(p => p.slug === slug);
+    if (post) setHeadForPost(post);
+  } catch {}
+  trackPageView(`/blog/${slug}/`);
+}
+
+async function route() {
+  try {
+    const slug = getSlugFromPath(location.pathname);
+    const posts = await fetchManifest();
+    if (slug) {
+      await loadPost(slug);
+    } else {
+      renderIndex(posts);
+      resetHeadToIndex();
+      trackPageView('/blog/');
+    }
+  } catch (e) {
+    console.warn('[Blog] route error', e);
+  }
+}
+
+if (blogListEl) {
+  document.addEventListener('DOMContentLoaded', () => {
+    route();
+    window.addEventListener('popstate', route);
+    // Click delegation for cards -> SPA navigation
+    blogListEl.addEventListener('click', (e) => {
+      const a = e.target.closest('a.blog-card-link[data-slug]');
+      if (!a) return;
+      e.preventDefault();
+      const slug = a.getAttribute('data-slug');
+      history.pushState({ slug }, '', `blog/${slug}/`);
+      trackEvent('post_open', { slug });
+      loadPost(slug);
+    });
+  }, { once: true });
+}
 
 // Expand/Collapse functionality for blog items
-document.addEventListener('DOMContentLoaded', function () {
+if (!blogListEl) {
+  document.addEventListener('DOMContentLoaded', function () {
+    blogItems.forEach(item => {
+      const blogPhoto = item.querySelector('.blog-banner-box');
+      const blogTitle = item.querySelector('.blog-item-title');
+      const blogDetails = item.querySelector('.blog-details');
 
-  blogItems.forEach(item => {
-    const blogPhoto = item.querySelector('.blog-banner-box');
-    const blogTitle = item.querySelector('.blog-item-title');
-    const blogDetails = item.querySelector('.blog-details');
+      const toggleDetails = () => {
+        blogItems.forEach(otherItem => {
+          if (otherItem === item) {
+            item.classList.add('expanded');
+            if (blogBackBtnContainer && blogBackBtn) {
+              blogBackBtnContainer.classList.add('active');
+              blogBackBtn.classList.add('active');
+            }
+            blogTitle.classList.add('hidden');
+            blogDetails.classList.remove('hidden');
+          } else {
+            // Hide other blog items
+            otherItem.classList.remove('active');
+          }
+        });
+      };
 
-    const toggleDetails = () => {
-      blogItems.forEach(otherItem => {
-
-        if (otherItem === item) {
-          item.classList.add('expanded');
-          blogBackBtnContainer.classList.add('active');
-          blogBackBtn.classList.add('active');
-          blogTitle.classList.add('hidden');
-          blogDetails.classList.remove('hidden');
-        } else {
-          // Hide other blog items
-          otherItem.classList.remove('active');
-        }
-      });
-    };
-
-    // Add event listeners for photo and title
-    [blogPhoto, blogTitle].forEach(element => {
-      element.addEventListener('click', function (e) {
-        e.preventDefault();
-        toggleDetails();
+      // Add event listeners for photo and title
+      [blogPhoto, blogTitle].forEach(element => {
+        element.addEventListener('click', function (e) {
+          e.preventDefault();
+          toggleDetails();
+        });
       });
     });
-
   });
-});
+}
 
 // Blog back button functionality
-blogBackBtn.addEventListener('click', function () {
-  blogItems.forEach(item => {
-    const blogDetails = item.querySelector('.blog-details');
-    const blogTitle = item.querySelector('.blog-item-title');
-    item.classList.add('active');
-    item.classList.remove('expanded');
-    blogTitle.classList.remove('hidden');
-    blogDetails.classList.add('hidden');
+if (blogBackBtn) {
+  blogBackBtn.addEventListener('click', function (e) {
+    if (blogListEl) {
+      e.preventDefault();
+      history.pushState({}, '', './');
+      route();
+      return;
+    }
+    blogItems.forEach(item => {
+      const blogDetails = item.querySelector('.blog-details');
+      const blogTitle = item.querySelector('.blog-item-title');
+      item.classList.add('active');
+      item.classList.remove('expanded');
+      blogTitle.classList.remove('hidden');
+      blogDetails.classList.add('hidden');
+    });
+    if (blogBackBtnContainer) blogBackBtnContainer.classList.remove('active');
+    blogBackBtn.classList.remove('active');
   });
-  blogBackBtnContainer.classList.remove('active');
-  blogBackBtn.classList.remove('active');
-});
+}
 
 
 // Project Item Variables

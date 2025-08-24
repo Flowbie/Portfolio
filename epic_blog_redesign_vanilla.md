@@ -44,53 +44,53 @@
 ---
 
 ## Sprint 2: Rendering & Navigation
-- [ ] **Story 2.1: Render blog index dynamically**
-  - [ ] Replace hard‑coded `<li>` items with `<ul class="blog-posts-list" data-blog-list></ul>`.
-  - [ ] Load `assets/data/posts.json` via `fetch`, render cards with same `.blog-post-item` structure.
-  - [ ] Preserve existing CSS classes so styling is unchanged.
+- [x] **Story 2.1: Render blog index dynamically**
+  - [x] Replace hard‑coded <li> items with <ul class="blog-posts-list" data-blog-list></ul>.
+  - [x] Load assets/data/posts.json via fetch, render cards with same .blog-post-item structure.
+  - [x] Preserve existing CSS classes so styling is unchanged.
 
-- [ ] **Story 2.2: Implement client‑side navigation (pushState)**
-  - [ ] On card click, call `history.pushState({}, '', '/blog/[slug]/')`.
-  - [ ] Lazy‑load the corresponding post HTML (`/blog/[slug]/index.html`) and inject into `.blog-details`.
-  - [ ] Show back button and hide other cards (preserve your current behavior).
-  - [ ] On `popstate`, restore the index or show the appropriate post depending on `location.pathname`.
+- [x] **Story 2.2: Implement client‑side navigation (pushState)**
+  - [x] On card click, call history.pushState({}, '', '/blog/[slug]/').
+  - [x] Lazy‑load the corresponding post HTML ('/blog/[slug]/index.html') and inject into .blog-details.
+  - [x] Show back button and hide other cards (preserve your current behavior).
+  - [x] On popstate, restore the index or show the appropriate post depending on location.pathname.
 
-- [ ] **Story 2.3: Support direct load of standalone pages**
-  - [ ] If `location.pathname` matches `/blog/:slug/`, render the post page in full (no index dependency).
-  - [ ] Include a link back to the main blog index.
-  - [ ] Ensure internal links open in new tabs where appropriate (re-apply after dynamic inject).
+- [x] **Story 2.3: Support direct load of standalone pages**
+  - [x] If `location.pathname` matches `/blog/:slug/`, render the post page in full (no index dependency).
+  - [x] Include a link back to the main blog index.
+  - [x] Ensure internal links open in new tabs where appropriate (re-apply after dynamic inject).
 
 ---
 
 ## Sprint 3: SEO & Metadata
-- [ ] **Story 3.1: Add per‑post head metadata**
-  - [ ] Unique `<title>` and `<meta name="description">` per post.
-  - [ ] `<link rel="canonical" href="…">` per post.
-  - [ ] Set language and charset appropriately.
+- [x] **Story 3.1: Add per‑post head metadata**
+  - [x] Unique <title> and <meta name="description"> per post.
+  - [x] <link rel="canonical" href="…"> per post (root‑relative).
+  - [x] Set language and charset appropriately.
 
-- [ ] **Story 3.2: Social sharing tags**
-  - [ ] Open Graph: `og:title`, `og:description`, `og:image`, `og:url`.
-  - [ ] Twitter Card: `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`.
-  - [ ] Verify previews via social debuggers.
+- [x] **Story 3.2: Social sharing tags**
+  - [x] Open Graph: og:title, og:description, og:image, og:url (root‑relative).
+  - [x] Twitter Card: twitter:card, twitter:title, twitter:description, twitter:image.
+  - [x] Verify previews via social debuggers.
 
-- [ ] **Story 3.3: Structured data (JSON‑LD)**
-  - [ ] Add `Article` schema with `headline`, `datePublished`, `dateModified`, `author`, `image`, `mainEntityOfPage`.
-  - [ ] Validate in Google Rich Results Test.
+- [x] **Story 3.3: Structured data (JSON‑LD)**
+  - [x] Add Article schema with headline, datePublished, dateModified, author, image, mainEntityOfPage.
+  - [x] Validate in Google Rich Results Test.
 
 ---
 
 ## Sprint 4: Analytics & Feeds
-- [ ] **Story 4.1: Analytics per post**
-  - [ ] Ensure pageviews fire per unique URL.
-  - [ ] Optional: custom event when opening post in-place from index.
+- [x] **Story 4.1: Analytics per post**
+  - [x] Ensure pageviews fire per unique URL.
+  - [x] Optional: custom event when opening post in-place from index.
 
-- [ ] **Story 4.2: Generate sitemap**
-  - [ ] Add static `sitemap.xml` including all `/blog/[slug]/` URLs with `<lastmod>`.
-  - [ ] Reference it in `robots.txt` and submit in Search Console.
+- [x] **Story 4.2: Generate sitemap**
+  - [x] Add static `sitemap.xml` including all `/blog/[slug]/` URLs with `<lastmod>`.
+  - [x] Reference it in `robots.txt` and submit in Search Console.
 
-- [ ] **Story 4.3: RSS/Atom feed**
-  - [ ] Add `/feed.xml` (RSS) or `/atom.xml` with `title`, `link`, `pubDate`, `description`, and per‑item GUIDs.
-  - [ ] Validate with an RSS/Atom validator.
+- [x] **Story 4.3: RSS/Atom feed**
+  - [x] Add `/feed.xml` (RSS) with `title`, `link`, `pubDate`, `description`, and per‑item GUIDs.
+  - [x] Validate with an RSS/Atom validator.
 
 ---
 
