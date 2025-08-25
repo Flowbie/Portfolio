@@ -310,6 +310,7 @@ const blogBackBtnContainer = document.querySelector('.blog-back-container');
 const blogBackBtn = document.querySelector('.blog-back-btn');
 const blogListEl = document.querySelector('[data-blog-list]');
 let blogPostsManifest = null;
+const blogPrefetchCache = new Map(); // slug -> { htmlText, parsedLi }
 
 // === Head metadata helpers (for SPA view) ===
 const originalHead = {
@@ -451,9 +452,17 @@ function renderIndex(posts) {
 async function loadPost(slug) {
   if (!blogListEl || !slug) return;
   const postUrl = `/blog/${slug}/index.html`;
-  const res = await fetch(postUrl, { cache: 'no-store' });
-  if (!res.ok) { console.warn('Post fetch failed', slug); return; }
-  const html = await res.text();
+  let html;
+  // Use prefetched cache if present
+  const cached = blogPrefetchCache.get(slug);
+  if (cached && cached.htmlText) {
+    html = cached.htmlText;
+  } else {
+    const res = await fetch(postUrl, { cache: 'no-store' });
+    if (!res.ok) { console.warn('Post fetch failed', slug); return; }
+    html = await res.text();
+    blogPrefetchCache.set(slug, { htmlText: html, parsedLi: null });
+  }
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/html');
   const li = doc.querySelector('.blog-post-item');
@@ -498,14 +507,46 @@ async function route() {
 
 if (blogListEl) {
   document.addEventListener('DOMContentLoaded', () => {
+    // Backward-compat: support legacy hash/query formats
+    try {
+      const hash = (location.hash || '').replace(/^#\/?/, '');
+      const legacyMatch = hash.match(/^blog\/([^/?#]+)\/?$/);
+      const params = new URLSearchParams(location.search);
+      const qpSlug = params.get('post');
+      const slug = legacyMatch ? legacyMatch[1] : qpSlug;
+      if (slug) {
+        history.replaceState({}, '', `/blog/${slug}/`);
+      }
+    } catch {}
+
     route();
     window.addEventListener('popstate', route);
+    // Prefetch on hover/focus/touchstart
+    const prefetch = (slug) => {
+      if (!slug || blogPrefetchCache.has(slug)) return;
+      const url = `/blog/${slug}/index.html`;
+      blogPrefetchCache.set(slug, { htmlText: null, parsedLi: null });
+      fetch(url, { cache: 'no-store' }).then(r => r.ok ? r.text() : '').then(txt => {
+        if (txt) blogPrefetchCache.set(slug, { htmlText: txt, parsedLi: null });
+      }).catch(() => {});
+    };
+    const hoverEvents = ['mouseenter','focusin','touchstart'];
+    hoverEvents.forEach(evt => {
+      blogListEl.addEventListener(evt, (e) => {
+        const a = e.target.closest('a.blog-card-link[data-slug]');
+        if (!a) return;
+        const slug = a.getAttribute('data-slug');
+        prefetch(slug);
+      }, { passive: true });
+    });
+
     // Click delegation for cards -> hard navigation to standalone page
     blogListEl.addEventListener('click', (e) => {
       const a = e.target.closest('a.blog-card-link[data-slug]');
       if (!a) return;
       const slug = a.getAttribute('data-slug');
-      // Let browser navigate to the standalone page
+      if (!slug) return;
+      // Ensure href points to the standalone page and let browser navigate
       a.setAttribute('href', `/blog/${slug}/`);
     });
   }, { once: true });

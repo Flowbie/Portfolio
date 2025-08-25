@@ -95,15 +95,15 @@
 ---
 
 ## Sprint 5: Enhancements & Polish
-- [ ] **Story 5.1: Prefetch on hover (optional)**
-  - [ ] On mouseenter, `fetch('/blog/[slug]/index.html')` to warm cache.
+- [x] **Story 5.1: Prefetch on hover (optional)**
+  - [x] On mouseenter/focus/touchstart, prefetch `'/blog/[slug]/index.html'` to warm cache.
 
-- [ ] **Story 5.2: Progressive enhancement fallback**
-  - [ ] Index cards have `<a href="/blog/[slug]/">` so JS‑off users navigate to the standalone page.
-  - [ ] JS intercepts the click to use `pushState` for in‑place display.
+- [x] **Story 5.2: Progressive enhancement fallback**
+  - [x] Index cards use real anchors (`<a href="/blog/[slug]/">`) so JS‑off users navigate to the standalone page.
+  - [x] Decision: prefer hard navigation to standalone pages on click (no JS interception), while keeping prefetch for perceived speed.
 
-- [ ] **Story 5.3: Backward compatibility**
-  - [ ] If any legacy paths exist, add `<meta http-equiv="refresh">` or server‑side 301s to `/blog/[slug]/`.
+- [x] **Story 5.3: Backward compatibility**
+  - [x] Normalize legacy formats like `#/blog/[slug]` and `?post=[slug]` to `/blog/[slug]/` client‑side.
   - [ ] Verify zero 404s in analytics and Search Console.
 
 ---
