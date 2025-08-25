@@ -5,42 +5,54 @@ const emailUser = "austindolanportfolio";
 const emailDomainDisplay = "";
 const emailDomain = "gmail.com";
 const emailLink = document.getElementById("email-link");
-emailLink.href = `mailto:${emailUser}@${emailDomain}`;
-emailLink.textContent = `${emailUser}${emailDomainDisplay}`;
+if (emailLink) {
+  emailLink.href = `mailto:${emailUser}@${emailDomain}`;
+  emailLink.textContent = `${emailUser}${emailDomainDisplay}`;
+}
 
 // Obfuscated phone
 const phoneNumber = "+1 (808) 724-7294";
 const phoneLink = document.getElementById("phone-link");
-phoneLink.href = `tel:${phoneNumber.replace(/\s|\(|\)|-/g, '')}`;
-phoneLink.textContent = phoneNumber;
+if (phoneLink) {
+  phoneLink.href = `tel:${phoneNumber.replace(/\s|\(|\)|-/g, '')}`;
+  phoneLink.textContent = phoneNumber;
+}
 
 // Obfuscated Facebook link
 const facebookUser = "austin.dolan.7";
 const facebookBase = "https://www.facebook.com/";
 const facebookLink = document.getElementById("facebook-link");
-facebookLink.href = `${facebookBase}${facebookUser}`;
-facebookLink.setAttribute("aria-label", "Visit my Facebook profile"); 
+if (facebookLink) {
+  facebookLink.href = `${facebookBase}${facebookUser}`;
+  facebookLink.setAttribute("aria-label", "Visit my Facebook profile"); 
+}
 
 // Obfuscated Twitter link
 const twitterUser = "haolehawaiian_";
 const twitterBase = "https://www.twitter.com/";
 const twitterLink = document.getElementById("twitter-link");
-twitterLink.href = `${twitterBase}${twitterUser}`;
-twitterLink.setAttribute("aria-label", "Visit my Twitter profile");
+if (twitterLink) {
+  twitterLink.href = `${twitterBase}${twitterUser}`;
+  twitterLink.setAttribute("aria-label", "Visit my Twitter profile");
+}
 
 // Obfuscated Instagram link
 const instagramUser = "ctrlalt_austin";
 const instagramBase = "https://www.instagram.com/";
 const instagramLink = document.getElementById("instagram-link");
-instagramLink.href = `${instagramBase}${instagramUser}`;
-instagramLink.setAttribute("aria-label", "Visit my Instagram profile");
+if (instagramLink) {
+  instagramLink.href = `${instagramBase}${instagramUser}`;
+  instagramLink.setAttribute("aria-label", "Visit my Instagram profile");
+}
 
 // Obfuscated LinkedIn link
 const linkedInUser = "austin-david-dolan";
 const linkedInBase = "https://www.linkedin.com/in/";
 const linkedInLink = document.getElementById("linkedin-link");
-linkedInLink.href = `${linkedInBase}${linkedInUser}`;
-linkedInLink.setAttribute("aria-label", "Visit my LinkedIn profile");
+if (linkedInLink) {
+  linkedInLink.href = `${linkedInBase}${linkedInUser}`;
+  linkedInLink.setAttribute("aria-label", "Visit my LinkedIn profile");
+}
 
 
 // element toggle function
@@ -52,37 +64,42 @@ const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 // sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+if (sidebar && sidebarBtn) {
+  sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+}
 
 // Chevron toggle functionality for sidebar(up/down)
 document.addEventListener('DOMContentLoaded', function () {
   const infoMoreButton = document.querySelector('.info_more-btn');
-  const icon = infoMoreButton.querySelector('ion-icon');
-
-  infoMoreButton.addEventListener('click', function () {
-    // Toggle the icon's name attribute
-    if (icon.getAttribute('name') === 'chevron-down') {
-      icon.setAttribute('name', 'chevron-up');
-    } else {
-      icon.setAttribute('name', 'chevron-down');
-    }
-  });
+  if (infoMoreButton) {
+    const icon = infoMoreButton.querySelector('ion-icon');
+    infoMoreButton.addEventListener('click', function () {
+      if (!icon) return;
+      // Toggle the icon's name attribute
+      if (icon.getAttribute('name') === 'chevron-down') {
+        icon.setAttribute('name', 'chevron-up');
+      } else {
+        icon.setAttribute('name', 'chevron-down');
+      }
+    });
+  }
 });
 
 // About Me Read More Functionality
 document.addEventListener("DOMContentLoaded", function () {
   const readMoreButton = document.querySelector(".read-more-btn");
   const moreContent = document.querySelector(".about-more");
-
-  readMoreButton.addEventListener("click", function () {
-    if (moreContent.style.display === "none" || !moreContent.style.display) {
-      moreContent.style.display = "inline";
-      readMoreButton.textContent = "Read Less";
-    } else {
-      moreContent.style.display = "none";
-      readMoreButton.textContent = "Read More";
-    }
-  });
+  if (readMoreButton && moreContent) {
+    readMoreButton.addEventListener("click", function () {
+      if (moreContent.style.display === "none" || !moreContent.style.display) {
+        moreContent.style.display = "inline";
+        readMoreButton.textContent = "Read Less";
+      } else {
+        moreContent.style.display = "none";
+        readMoreButton.textContent = "Read More";
+      }
+    });
+  }
 });
 
 
@@ -127,8 +144,8 @@ const addModalListeners = (type) => {
     });
   });
 
-  modalCloseBtn.addEventListener("click", () => closeModal(type));
-  overlay.addEventListener("click", () => closeModal(type));
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", () => closeModal(type));
+  if (overlay) overlay.addEventListener("click", () => closeModal(type));
 };
 
 // Initialize Modal Listeners for Testimonials and Apps
@@ -143,17 +160,17 @@ const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
-  });
+if (select) {
+  select.addEventListener("click", function () { elementToggleFunc(this); });
+  // add event in all select items
+  for (let i = 0; i < selectItems.length; i++) {
+    selectItems[i].addEventListener("click", function () {
+      let selectedValue = this.innerText.toLowerCase();
+      if (selectValue) selectValue.innerText = this.innerText;
+      elementToggleFunc(select);
+      filterFunc(selectedValue);
+    });
+  }
 }
 
 // filter variables
@@ -194,18 +211,18 @@ const filterFunc = function (selectedValue) {
 };
 
 // add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-  filterBtn[i].addEventListener("click", function () {
-    const selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue, 'project');
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
+if (filterBtn && filterBtn.length) {
+  let lastClickedBtn = filterBtn[0];
+  for (let i = 0; i < filterBtn.length; i++) {
+    filterBtn[i].addEventListener("click", function () {
+      const selectedValue = this.innerText.toLowerCase();
+      if (selectValue) selectValue.innerText = this.innerText;
+      filterFunc(selectedValue, 'project');
+      if (lastClickedBtn) lastClickedBtn.classList.remove("active");
+      this.classList.add("active");
+      lastClickedBtn = this;
+    });
+  }
 }
 
 // contact form variables
@@ -214,94 +231,369 @@ const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
 // add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-
-  });
+if (form && formInputs && formInputs.length && formBtn) {
+  for (let i = 0; i < formInputs.length; i++) {
+    formInputs[i].addEventListener("input", function () {
+      if (form.checkValidity()) {
+        formBtn.removeAttribute("disabled");
+      } else {
+        formBtn.setAttribute("disabled", "");
+      }
+    });
+  }
 }
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+const hasIndexPages = document.querySelector('[data-page="about"]') != null;
+if (hasIndexPages) {
+  // add event to all nav link (SPA behavior)
+  for (let i = 0; i < navigationLinks.length; i++) {
+    navigationLinks[i].addEventListener("click", function () {
+      for (let j = 0; j < pages.length; j++) {
+        if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
+          pages[j].classList.add("active");
+          if (navigationLinks[j]) navigationLinks[j].classList.add("active");
+          window.scrollTo(0, 0);
+        } else {
+          pages[j].classList.remove("active");
+          if (navigationLinks[j]) navigationLinks[j].classList.remove("active");
+        }
       }
-    }
-
+      const pageName = this.innerHTML.toLowerCase();
+      try { history.replaceState({}, '', `#${pageName}`); } catch {}
+    });
+  }
+} else if (navigationLinks && navigationLinks.length) {
+  // Standalone pages: navigate to index anchors
+  const sectionHrefBase = location.pathname.includes('/blog/') ? '../../index.html#' : './index.html#';
+  const map = { about: 'about', resume: 'resume', portfolio: 'portfolio', blog: 'blog', contact: 'contact' };
+  navigationLinks.forEach(btn => {
+    const key = (btn.textContent || btn.innerText || '').trim().toLowerCase();
+    const section = map[key];
+    if (!section) return;
+    btn.addEventListener('click', function () {
+      location.href = sectionHrefBase + section;
+    });
   });
+  // Mark Blog as active in standalone blog pages
+  navigationLinks.forEach(btn => {
+    const isBlog = (btn.textContent || btn.innerText || '').trim().toLowerCase() === 'blog';
+    btn.classList.toggle('active', isBlog);
+  });
+}
+
+// Activate tab based on hash on load
+document.addEventListener('DOMContentLoaded', () => {
+  if (hasIndexPages) {
+    const hash = (location.hash || '').replace('#','');
+    if (hash) activatePage(hash);
+  }
+});
+
+// Helper to activate a page programmatically
+function activatePage(pageName) {
+  if (!pages || !navigationLinks) return;
+  for (let i = 0; i < pages.length; i++) {
+    const isMatch = pages[i].dataset.page === pageName;
+    pages[i].classList.toggle('active', isMatch);
+    if (navigationLinks[i]) navigationLinks[i].classList.toggle('active', isMatch);
+  }
+  window.scrollTo(0, 0);
 }
 
 // NEW BLOG FUNCTIONALITY
 const blogItems = document.querySelectorAll('.blog-post-item');
 const blogBackBtnContainer = document.querySelector('.blog-back-container');
 const blogBackBtn = document.querySelector('.blog-back-btn');
+const blogListEl = document.querySelector('[data-blog-list]');
+let blogPostsManifest = null;
+const blogPrefetchCache = new Map(); // slug -> { htmlText, parsedLi }
 
-// Expand/Collapse functionality for blog items
-document.addEventListener('DOMContentLoaded', function () {
+// === Head metadata helpers (for SPA view) ===
+const originalHead = {
+  title: document.title,
+  description: (document.querySelector('meta[name="description"]') || {}).getAttribute?.('content') || '',
+  canonicalHref: (document.querySelector('link[rel="canonical"]') || {}).getAttribute?.('href') || ''
+};
 
-  blogItems.forEach(item => {
-    const blogPhoto = item.querySelector('.blog-banner-box');
-    const blogTitle = item.querySelector('.blog-item-title');
-    const blogDetails = item.querySelector('.blog-details');
+function upsertMeta(selector, attrs) {
+  let el = document.querySelector(selector);
+  if (!el) {
+    const tag = selector.startsWith('meta[') ? 'meta' : selector.startsWith('link[') ? 'link' : 'meta';
+    el = document.createElement(tag);
+    const attrPairs = selector.replace(/^[^[]+\[|]$/g, '').split('][');
+    attrPairs.forEach(pair => {
+      const [k, v] = pair.replace(/[\[\]"]+/g, '').split('=');
+      if (k && v) el.setAttribute(k, v);
+    });
+    document.head.appendChild(el);
+  }
+  Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, v));
+  return el;
+}
 
-    const toggleDetails = () => {
-      blogItems.forEach(otherItem => {
+function setHeadForPost(post) {
+  if (!post) return;
+  const url = `/blog/${post.slug}/`;
+  const image = post.banner;
+  document.title = post.title;
+  upsertMeta('meta[name="description"]', { content: post.description || '' });
+  upsertMeta('link[rel="canonical"]', { rel: 'canonical', href: url });
+  // Open Graph
+  upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'article' });
+  upsertMeta('meta[property="og:title"]', { property: 'og:title', content: post.title });
+  upsertMeta('meta[property="og:description"]', { property: 'og:description', content: post.description || '' });
+  upsertMeta('meta[property="og:image"]', { property: 'og:image', content: image });
+  upsertMeta('meta[property="og:url"]', { property: 'og:url', content: url });
+  // Twitter
+  upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+  upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: post.title });
+  upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: post.description || '' });
+  upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image });
+  // JSON-LD (client-side only; bots will use standalone page)
+  let ld = document.getElementById('post-json-ld');
+  if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'post-json-ld'; document.head.appendChild(ld); }
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    datePublished: post.dateISO || '',
+    dateModified: post.dateISO || '',
+    author: { '@type': 'Person', name: 'Austin Dolan' },
+    image,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url }
+  });
+}
 
-        if (otherItem === item) {
-          item.classList.add('expanded');
-          blogBackBtnContainer.classList.add('active');
-          blogBackBtn.classList.add('active');
-          blogTitle.classList.add('hidden');
-          blogDetails.classList.remove('hidden');
-        } else {
-          // Hide other blog items
-          otherItem.classList.remove('active');
-        }
+function resetHeadToIndex() {
+  document.title = originalHead.title || document.title;
+  if (originalHead.description) upsertMeta('meta[name="description"]', { content: originalHead.description });
+  if (originalHead.canonicalHref) upsertMeta('link[rel="canonical"]', { rel: 'canonical', href: originalHead.canonicalHref });
+  // Clear OG/Twitter to avoid stale content
+  ['og:type','og:title','og:description','og:image','og:url'].forEach(p => {
+    const el = document.querySelector(`meta[property="${p}"]`);
+    if (el) el.parentNode.removeChild(el);
+  });
+  ['twitter:card','twitter:title','twitter:description','twitter:image'].forEach(n => {
+    const el = document.querySelector(`meta[name="${n}"]`);
+    if (el) el.parentNode.removeChild(el);
+  });
+  const ld = document.getElementById('post-json-ld');
+  if (ld) ld.parentNode.removeChild(ld);
+}
+
+// === Analytics helpers (no-op unless gtag exists) ===
+function trackPageView(path) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_location: location.origin + path,
+        page_path: path,
+        page_title: document.title
       });
+    }
+  } catch {}
+}
+
+function trackEvent(name, params) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, params || {});
+    }
+  } catch {}
+}
+
+function getSlugFromPath(pathname) {
+  const match = pathname.match(/(?:^|\/)blog\/([^/]+)\/?$/);
+  return match ? match[1] : null;
+}
+
+async function fetchManifest() {
+  if (blogPostsManifest) return blogPostsManifest;
+  const manifestUrl = '/assets/data/posts.json';
+  const res = await fetch(manifestUrl, { cache: 'no-store' });
+  if (!res.ok) throw new Error('Failed to load posts manifest');
+  blogPostsManifest = await res.json();
+  return blogPostsManifest;
+}
+
+function renderIndex(posts) {
+  if (!blogListEl) return;
+  blogListEl.innerHTML = '';
+  (posts || []).forEach(post => {
+    const li = document.createElement('li');
+    li.className = 'blog-post-item active';
+    li.innerHTML = `
+      <a href="blog/${post.slug}/" data-slug="${post.slug}" class="blog-card-link" style="display:block">
+        <figure class="blog-banner-box">
+          <img src="${post.banner}" alt="${post.title}" loading="lazy">
+        </figure>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <p class="blog-category">${post.category || ''}</p>
+            <span class="dot"></span>
+            <time datetime="${post.dateISO || ''}">${post.dateText || ''}</time>
+          </div>
+          <h3 class="h3 blog-item-title">${post.title}</h3>
+        </div>
+      </a>
+    `;
+    blogListEl.appendChild(li);
+  });
+  if (blogBackBtnContainer && blogBackBtn) {
+    blogBackBtnContainer.classList.remove('active');
+    blogBackBtn.classList.remove('active');
+  }
+}
+
+async function loadPost(slug) {
+  if (!blogListEl || !slug) return;
+  const postUrl = `/blog/${slug}/index.html`;
+  let html;
+  // Use prefetched cache if present
+  const cached = blogPrefetchCache.get(slug);
+  if (cached && cached.htmlText) {
+    html = cached.htmlText;
+  } else {
+    const res = await fetch(postUrl, { cache: 'no-store' });
+    if (!res.ok) { console.warn('Post fetch failed', slug); return; }
+    html = await res.text();
+    blogPrefetchCache.set(slug, { htmlText: html, parsedLi: null });
+  }
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const li = doc.querySelector('.blog-post-item');
+  if (!li) return;
+  activatePage('blog');
+  blogListEl.innerHTML = '';
+  blogListEl.appendChild(li);
+  if (blogBackBtnContainer && blogBackBtn) {
+    blogBackBtnContainer.classList.add('active');
+    blogBackBtn.classList.add('active');
+  }
+  // Ensure links in injected content open in new tabs
+  const links = blogListEl.querySelectorAll('.blog-details a');
+  links.forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+  // Set head metadata based on manifest
+  try {
+    const posts = await fetchManifest();
+    const post = posts.find(p => p.slug === slug);
+    if (post) setHeadForPost(post);
+  } catch {}
+  trackPageView(`/blog/${slug}/`);
+}
+
+async function route() {
+  try {
+    const slug = getSlugFromPath(location.pathname);
+    const posts = await fetchManifest();
+    if (slug) {
+      await loadPost(slug);
+    } else {
+      renderIndex(posts);
+      resetHeadToIndex();
+      trackPageView('/blog/');
+    }
+  } catch (e) {
+    console.warn('[Blog] route error', e);
+  }
+}
+
+if (blogListEl) {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Backward-compat: support legacy hash/query formats
+    try {
+      const hash = (location.hash || '').replace(/^#\/?/, '');
+      const legacyMatch = hash.match(/^blog\/([^/?#]+)\/?$/);
+      const params = new URLSearchParams(location.search);
+      const qpSlug = params.get('post');
+      const slug = legacyMatch ? legacyMatch[1] : qpSlug;
+      if (slug) {
+        history.replaceState({}, '', `/blog/${slug}/`);
+      }
+    } catch {}
+
+    route();
+    window.addEventListener('popstate', route);
+    // Prefetch on hover/focus/touchstart
+    const prefetch = (slug) => {
+      if (!slug || blogPrefetchCache.has(slug)) return;
+      const url = `/blog/${slug}/index.html`;
+      blogPrefetchCache.set(slug, { htmlText: null, parsedLi: null });
+      fetch(url, { cache: 'no-store' }).then(r => r.ok ? r.text() : '').then(txt => {
+        if (txt) blogPrefetchCache.set(slug, { htmlText: txt, parsedLi: null });
+      }).catch(() => {});
     };
-
-    // Add event listeners for photo and title
-    [blogPhoto, blogTitle].forEach(element => {
-      element.addEventListener('click', function (e) {
-        e.preventDefault();
-        toggleDetails();
-      });
+    const hoverEvents = ['mouseenter','focusin','touchstart'];
+    hoverEvents.forEach(evt => {
+      blogListEl.addEventListener(evt, (e) => {
+        const a = e.target.closest('a.blog-card-link[data-slug]');
+        if (!a) return;
+        const slug = a.getAttribute('data-slug');
+        prefetch(slug);
+      }, { passive: true });
     });
 
+    // Click delegation for cards -> hard navigation to standalone page
+    blogListEl.addEventListener('click', (e) => {
+      const a = e.target.closest('a.blog-card-link[data-slug]');
+      if (!a) return;
+      const slug = a.getAttribute('data-slug');
+      if (!slug) return;
+      // Ensure href points to the standalone page and let browser navigate
+      a.setAttribute('href', `/blog/${slug}/`);
+    });
+  }, { once: true });
+}
+
+// Expand/Collapse functionality for blog items
+if (!blogListEl) {
+  document.addEventListener('DOMContentLoaded', function () {
+    blogItems.forEach(item => {
+      const blogPhoto = item.querySelector('.blog-banner-box');
+      const blogTitle = item.querySelector('.blog-item-title');
+      const blogDetails = item.querySelector('.blog-details');
+
+      const toggleDetails = () => {
+        blogItems.forEach(otherItem => {
+          if (otherItem === item) {
+            item.classList.add('expanded');
+            if (blogBackBtnContainer && blogBackBtn) {
+              blogBackBtnContainer.classList.add('active');
+              blogBackBtn.classList.add('active');
+            }
+            blogTitle.classList.add('hidden');
+            blogDetails.classList.remove('hidden');
+          } else {
+            // Hide other blog items
+            otherItem.classList.remove('active');
+          }
+        });
+      };
+
+      // Add event listeners for photo and title
+      [blogPhoto, blogTitle].forEach(element => {
+        element.addEventListener('click', function (e) {
+          e.preventDefault();
+          toggleDetails();
+        });
+      });
+    });
   });
-});
+}
 
 // Blog back button functionality
-blogBackBtn.addEventListener('click', function () {
-  blogItems.forEach(item => {
-    const blogDetails = item.querySelector('.blog-details');
-    const blogTitle = item.querySelector('.blog-item-title');
-    item.classList.add('active');
-    item.classList.remove('expanded');
-    blogTitle.classList.remove('hidden');
-    blogDetails.classList.add('hidden');
+if (blogBackBtn) {
+  blogBackBtn.addEventListener('click', function (e) {
+    // Allow anchors with href to handle navigation; no JS override needed
   });
-  blogBackBtnContainer.classList.remove('active');
-  blogBackBtn.classList.remove('active');
-});
+}
 
 
 // Project Item Variables
@@ -382,6 +674,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeModal = document.querySelector('.modal-close-btn'); // Close button
   const prevButton = document.querySelector('.modal-button.prev'); // Modal prev button
   const nextButton = document.querySelector('.modal-button.next'); // Modal next button
+  if (!galleries.length || !modal || !modalImg || !prevButton || !nextButton) { return; }
   // const modalCaption = document.getElementById('modal-caption'); // Caption for modal image not working
 
   let currentGallerySlides = []; // Tracks slides in the active gallery

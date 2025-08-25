@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Austin Dolan Blog</title>
+    <link>/blog/</link>
+    <description>Updates and articles</description>
+    <item>
+      <title>Ho’onani Hou: A Community-Driven Map-Based Web Platform</title>
+      <link>/blog/hoonanihou/</link>
+      <guid isPermaLink="true">/blog/hoonanihou/</guid>
+      <pubDate>Mon, 06 Jan 2025 00:00:00 GMT</pubDate>
+      <description>Introducing Ho’onani Hou: a map-based platform for collaborative, community-funded projects.</description>
+    </item>
+    <item>
+      <title>AI Pixel Generation: ComfyUI, Flux, SD</title>
+      <link>/blog/ai-pixel-generation/</link>
+      <guid isPermaLink="true">/blog/ai-pixel-generation/</guid>
+      <pubDate>Mon, 06 Jan 2025 00:00:00 GMT</pubDate>
+      <description>A beginner’s guide to AI image generation with ComfyUI, Stable Diffusion, LoRA, and Flux.</description>
+    </item>
+  </channel>
+</rss>

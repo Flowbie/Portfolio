@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "hoonanihou",
+    "title": "Ho’onani Hou: A Community-Driven Map-Based Web Platform",
+    "category": "Web Development",
+    "banner": "/assets/images/Blogs/2025.1.9 ho'onanihou/hoonanihou_base.webp",
+    "dateISO": "2025-01-06",
+    "dateText": "January 6, 2025",
+    "description": "Introducing Ho’onani Hou: a map-based platform for collaborative, community-funded projects."
+  },
+  {
+    "slug": "ai-pixel-generation",
+    "title": "AI Pixel Generation: ComfyUI, Flux, SD",
+    "category": "AI",
+    "banner": "/assets/images/Blogs/2025.1.6 AI Image/robot_paint.webp",
+    "dateISO": "2025-01-06",
+    "dateText": "Jan 6, 2025",
+    "description": "A beginner’s guide to AI image generation with ComfyUI, Stable Diffusion, LoRA, and Flux."
+  }
+]
