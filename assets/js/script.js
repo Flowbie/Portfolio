@@ -5,42 +5,54 @@ const emailUser = "austindolanportfolio";
 const emailDomainDisplay = "";
 const emailDomain = "gmail.com";
 const emailLink = document.getElementById("email-link");
-emailLink.href = `mailto:${emailUser}@${emailDomain}`;
-emailLink.textContent = `${emailUser}${emailDomainDisplay}`;
+if (emailLink) {
+  emailLink.href = `mailto:${emailUser}@${emailDomain}`;
+  emailLink.textContent = `${emailUser}${emailDomainDisplay}`;
+}
 
 // Obfuscated phone
 const phoneNumber = "+1 (808) 724-7294";
 const phoneLink = document.getElementById("phone-link");
-phoneLink.href = `tel:${phoneNumber.replace(/\s|\(|\)|-/g, '')}`;
-phoneLink.textContent = phoneNumber;
+if (phoneLink) {
+  phoneLink.href = `tel:${phoneNumber.replace(/\s|\(|\)|-/g, '')}`;
+  phoneLink.textContent = phoneNumber;
+}
 
 // Obfuscated Facebook link
 const facebookUser = "austin.dolan.7";
 const facebookBase = "https://www.facebook.com/";
 const facebookLink = document.getElementById("facebook-link");
-facebookLink.href = `${facebookBase}${facebookUser}`;
-facebookLink.setAttribute("aria-label", "Visit my Facebook profile"); 
+if (facebookLink) {
+  facebookLink.href = `${facebookBase}${facebookUser}`;
+  facebookLink.setAttribute("aria-label", "Visit my Facebook profile"); 
+}
 
 // Obfuscated Twitter link
 const twitterUser = "haolehawaiian_";
 const twitterBase = "https://www.twitter.com/";
 const twitterLink = document.getElementById("twitter-link");
-twitterLink.href = `${twitterBase}${twitterUser}`;
-twitterLink.setAttribute("aria-label", "Visit my Twitter profile");
+if (twitterLink) {
+  twitterLink.href = `${twitterBase}${twitterUser}`;
+  twitterLink.setAttribute("aria-label", "Visit my Twitter profile");
+}
 
 // Obfuscated Instagram link
 const instagramUser = "ctrlalt_austin";
 const instagramBase = "https://www.instagram.com/";
 const instagramLink = document.getElementById("instagram-link");
-instagramLink.href = `${instagramBase}${instagramUser}`;
-instagramLink.setAttribute("aria-label", "Visit my Instagram profile");
+if (instagramLink) {
+  instagramLink.href = `${instagramBase}${instagramUser}`;
+  instagramLink.setAttribute("aria-label", "Visit my Instagram profile");
+}
 
 // Obfuscated LinkedIn link
 const linkedInUser = "austin-david-dolan";
 const linkedInBase = "https://www.linkedin.com/in/";
 const linkedInLink = document.getElementById("linkedin-link");
-linkedInLink.href = `${linkedInBase}${linkedInUser}`;
-linkedInLink.setAttribute("aria-label", "Visit my LinkedIn profile");
+if (linkedInLink) {
+  linkedInLink.href = `${linkedInBase}${linkedInUser}`;
+  linkedInLink.setAttribute("aria-label", "Visit my LinkedIn profile");
+}
 
 
 // element toggle function
@@ -52,37 +64,42 @@ const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
 // sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+if (sidebar && sidebarBtn) {
+  sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+}
 
 // Chevron toggle functionality for sidebar(up/down)
 document.addEventListener('DOMContentLoaded', function () {
   const infoMoreButton = document.querySelector('.info_more-btn');
-  const icon = infoMoreButton.querySelector('ion-icon');
-
-  infoMoreButton.addEventListener('click', function () {
-    // Toggle the icon's name attribute
-    if (icon.getAttribute('name') === 'chevron-down') {
-      icon.setAttribute('name', 'chevron-up');
-    } else {
-      icon.setAttribute('name', 'chevron-down');
-    }
-  });
+  if (infoMoreButton) {
+    const icon = infoMoreButton.querySelector('ion-icon');
+    infoMoreButton.addEventListener('click', function () {
+      if (!icon) return;
+      // Toggle the icon's name attribute
+      if (icon.getAttribute('name') === 'chevron-down') {
+        icon.setAttribute('name', 'chevron-up');
+      } else {
+        icon.setAttribute('name', 'chevron-down');
+      }
+    });
+  }
 });
 
 // About Me Read More Functionality
 document.addEventListener("DOMContentLoaded", function () {
   const readMoreButton = document.querySelector(".read-more-btn");
   const moreContent = document.querySelector(".about-more");
-
-  readMoreButton.addEventListener("click", function () {
-    if (moreContent.style.display === "none" || !moreContent.style.display) {
-      moreContent.style.display = "inline";
-      readMoreButton.textContent = "Read Less";
-    } else {
-      moreContent.style.display = "none";
-      readMoreButton.textContent = "Read More";
-    }
-  });
+  if (readMoreButton && moreContent) {
+    readMoreButton.addEventListener("click", function () {
+      if (moreContent.style.display === "none" || !moreContent.style.display) {
+        moreContent.style.display = "inline";
+        readMoreButton.textContent = "Read Less";
+      } else {
+        moreContent.style.display = "none";
+        readMoreButton.textContent = "Read More";
+      }
+    });
+  }
 });
 
 
@@ -127,8 +144,8 @@ const addModalListeners = (type) => {
     });
   });
 
-  modalCloseBtn.addEventListener("click", () => closeModal(type));
-  overlay.addEventListener("click", () => closeModal(type));
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", () => closeModal(type));
+  if (overlay) overlay.addEventListener("click", () => closeModal(type));
 };
 
 // Initialize Modal Listeners for Testimonials and Apps
@@ -143,17 +160,17 @@ const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
-  });
+if (select) {
+  select.addEventListener("click", function () { elementToggleFunc(this); });
+  // add event in all select items
+  for (let i = 0; i < selectItems.length; i++) {
+    selectItems[i].addEventListener("click", function () {
+      let selectedValue = this.innerText.toLowerCase();
+      if (selectValue) selectValue.innerText = this.innerText;
+      elementToggleFunc(select);
+      filterFunc(selectedValue);
+    });
+  }
 }
 
 // filter variables
@@ -194,18 +211,18 @@ const filterFunc = function (selectedValue) {
 };
 
 // add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-  filterBtn[i].addEventListener("click", function () {
-    const selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue, 'project');
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
+if (filterBtn && filterBtn.length) {
+  let lastClickedBtn = filterBtn[0];
+  for (let i = 0; i < filterBtn.length; i++) {
+    filterBtn[i].addEventListener("click", function () {
+      const selectedValue = this.innerText.toLowerCase();
+      if (selectValue) selectValue.innerText = this.innerText;
+      filterFunc(selectedValue, 'project');
+      if (lastClickedBtn) lastClickedBtn.classList.remove("active");
+      this.classList.add("active");
+      lastClickedBtn = this;
+    });
+  }
 }
 
 // contact form variables
@@ -214,48 +231,66 @@ const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
 // add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-
-  });
+if (form && formInputs && formInputs.length && formBtn) {
+  for (let i = 0; i < formInputs.length; i++) {
+    formInputs[i].addEventListener("input", function () {
+      if (form.checkValidity()) {
+        formBtn.removeAttribute("disabled");
+      } else {
+        formBtn.setAttribute("disabled", "");
+      }
+    });
+  }
 }
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-
-    for (let j = 0; j < pages.length; j++) {
-      if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
-        pages[j].classList.add("active");
-        navigationLinks[j].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[j].classList.remove("active");
-        navigationLinks[j].classList.remove("active");
+const hasIndexPages = document.querySelector('[data-page="about"]') != null;
+if (hasIndexPages) {
+  // add event to all nav link (SPA behavior)
+  for (let i = 0; i < navigationLinks.length; i++) {
+    navigationLinks[i].addEventListener("click", function () {
+      for (let j = 0; j < pages.length; j++) {
+        if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
+          pages[j].classList.add("active");
+          if (navigationLinks[j]) navigationLinks[j].classList.add("active");
+          window.scrollTo(0, 0);
+        } else {
+          pages[j].classList.remove("active");
+          if (navigationLinks[j]) navigationLinks[j].classList.remove("active");
+        }
       }
-    }
-
-    // Update hash to support external activation (e.g., from standalone back button)
-    const pageName = this.innerHTML.toLowerCase();
-    try { history.replaceState({}, '', `#${pageName}`); } catch {}
+      const pageName = this.innerHTML.toLowerCase();
+      try { history.replaceState({}, '', `#${pageName}`); } catch {}
+    });
+  }
+} else if (navigationLinks && navigationLinks.length) {
+  // Standalone pages: navigate to index anchors
+  const sectionHrefBase = location.pathname.includes('/blog/') ? '../../index.html#' : './index.html#';
+  const map = { about: 'about', resume: 'resume', portfolio: 'portfolio', blog: 'blog', contact: 'contact' };
+  navigationLinks.forEach(btn => {
+    const key = (btn.textContent || btn.innerText || '').trim().toLowerCase();
+    const section = map[key];
+    if (!section) return;
+    btn.addEventListener('click', function () {
+      location.href = sectionHrefBase + section;
+    });
+  });
+  // Mark Blog as active in standalone blog pages
+  navigationLinks.forEach(btn => {
+    const isBlog = (btn.textContent || btn.innerText || '').trim().toLowerCase() === 'blog';
+    btn.classList.toggle('active', isBlog);
   });
 }
 
 // Activate tab based on hash on load
 document.addEventListener('DOMContentLoaded', () => {
-  const hash = (location.hash || '').replace('#','');
-  if (hash) activatePage(hash);
+  if (hasIndexPages) {
+    const hash = (location.hash || '').replace('#','');
+    if (hash) activatePage(hash);
+  }
 });
 
 // Helper to activate a page programmatically
@@ -598,6 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeModal = document.querySelector('.modal-close-btn'); // Close button
   const prevButton = document.querySelector('.modal-button.prev'); // Modal prev button
   const nextButton = document.querySelector('.modal-button.next'); // Modal next button
+  if (!galleries.length || !modal || !modalImg || !prevButton || !nextButton) { return; }
   // const modalCaption = document.getElementById('modal-caption'); // Caption for modal image not working
 
   let currentGallerySlides = []; // Tracks slides in the active gallery
