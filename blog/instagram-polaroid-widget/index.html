@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8  ">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building a Polaroid-Style Instagram Card (Step-by-Step)</title>
+  <meta name="description" content="A complete, repeatable guide for integrating Instagram's API into a static site: Meta app setup, long-lived tokens, GitHub Actions, Node fetcher, and a dark Polaroid UI with swipe + nav." />
+  <link rel="canonical" href="/blog/instagram-polaroid-widget/">
+  <link rel="shortcut icon" href="../../assets/images/myna.webp" type="image/x-icon">
+  <link rel="stylesheet" href="../../assets/css/mini_pretty.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Building a Polaroid-Style Instagram Card (Step-by-Step)",
+      "datePublished": "2025-08-24",
+      "dateModified": "2025-08-24",
+      "author": { "@type": "Person", "name": "Austin Dolan" },
+      "image": "/assets/images/Blogs/2025.8.24 instagram-api/instagram-polaroid-widget.webp",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/blog/instagram-polaroid-widget/"
+      }
+    }
+    </script>
+</head>
+<body>
+  <main>
+    <div class="main-content">
+      <article class="blog active" data-page="blog">
+        <!--
+          - #NAVBAR
+        -->
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <button class="navbar-link  active" data-nav-link>About</button>
+            </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Resume</button>
+            </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Portfolio</button>
+            </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Blog</button>
+            </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Contact</button>
+            </li>
+          </ul>
+        </nav>
+
+        <!--
+          - #BLOG
+        -->
+
+        <header>
+          <h2 class="h2 article-title">Blog</h2>
+        </header>
+
+        <div class="blog-back-container active" style="margin-bottom: 15px;">
+          <a class="blog-back-btn active" href="../../#blog">
+            <img src="../../assets/images/blog-back-button.png" alt="Back">
+          </a>
+        </div>
+
+        <ul class="blog-posts-list">
+          <li class="blog-post-item active expanded">
+            <figure class="blog-banner-box">
+              <img src="../../assets/images/Blogs/2025.8.24 Instagram-api/instagram-api.png" alt="Instagram API in 2025" loading="lazy">
+            </figure>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <p class="blog-category">API Integration</p>
+                <span class="dot"></span>
+                <time datetime="2025-01-06">August 24, 2025</time>
+              </div>
+              <div class="blog-details">
+                <header>
+                  <h1 class="blog-details-title">How I Built a Polaroid-Style Instagram Widget for My Portfolio</h1>
+                  <p class="blog-details-category">A complete, repeatable guide to using the Instagram Graph API on a static site (GitHub Pages), including app setup, long-lived tokens, a secure GitHub Action fetcher, and a dark UI with swipe &amp; arrows.</p>
+                </header>
+                <section class="description">
+                <h2 class="h3">Overview</h2>
+                <p class="timeline-text">
+                  This post documents the end-to-end process I used to add a live Instagram widget to my sidebar:
+                  convert IG to a Professional account, link to a Facebook Page, generate a long-lived token, automate a
+                  fetch script via GitHub Actions, and render the latest post in a “polaroid” card with swipe and nav.
+                  It’s written so you can replicate it on any static site (including GitHub Pages) without exposing tokens client-side.
+                </p>
+                <ul class="timeline-text">
+                  <li>No client-side secrets — the site loads a static JSON file committed by CI.</li>
+                  <li>Works with multi-image (carousel) and video posts.</li>
+                  <li>Mobile-friendly: swipe gestures + nav arrows that only overlay the image.</li>
+                  <li>Dark theme aesthetic to match the rest of the site.</li>
+                </ul>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Prerequisites</h2>
+                <ul class="timeline-text">
+                  <li>A GitHub repository (Pages enabled) for your site</li>
+                  <li>Node.js (locally or via GitHub Actions)</li>
+                  <li>A Facebook (Meta) developer account</li>
+                  <li>An Instagram account you can convert to Professional (Business)</li>
+                </ul>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Step 1 — Convert Instagram to Professional &amp; Link a Facebook Page</h2>
+                <ol class="timeline-text">
+                  <li>Instagram app → <strong>Settings → Account → Switch to Professional</strong> (choose <strong>Business</strong>).</li>
+                  <li>Instagram app → <strong>Settings → Account → Sharing to Other Apps → Facebook</strong> and choose your Page.</li>
+                  <li>In Facebook Page settings, confirm the Instagram is linked.</li>
+                </ol>
+                <p class="timeline-text"><em>If you see errors like “This Page is not linked to an Instagram Professional account,” redo this step.</em></p>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Step 2 — Create a Meta App &amp; Get a Long-Lived Token</h2>
+                <ol class="timeline-text">
+                  <li>Go to <strong>Meta for Developers</strong> and create a new App (type: <strong>Business</strong>).</li>
+                  <li>Under <strong>Settings → Basic</strong>, note your <strong>App ID</strong> and <strong>App Secret</strong>.</li>
+                  <li>Authorize your user token with scopes: <code>instagram_basic</code>, <code>pages_show_list</code>, <code>pages_read_engagement</code>, <code>pages_read_user_content</code>.</li>
+                  <li>Exchange a short-lived token for a long-lived one (approx 60-day expiry):</li>
+                </ol>
+              <pre><code class="language-bash"># exchange SHORT for LONG
+              https://graph.facebook.com/v20.0/oauth/access_token?
+                grant_type=fb_exchange_token&amp;
+                client_id={APP_ID}&amp;
+                client_secret={APP_SECRET}&amp;
+                fb_exchange_token={SHORT_LIVED_TOKEN}
+              </code></pre>
+                      <p class="timeline-text">Keep this long-lived token private. We’ll use it to derive a Page token server-side and never ship it to the browser.</p>
+                    </section>
+
+                    <section class="blog-section">
+                      <h2 class="h3">Step 3 — Get Page ID and Instagram Business Account ID</h2>
+                      <p class="timeline-text">List Pages you can manage (with your long-lived user token):</p>
+              <pre><code class="language-bash">curl "https://graph.facebook.com/v20.0/me/accounts?access_token=$ACCESS_TOKEN"
+              </code></pre>
+                      <p class="timeline-text">Copy the Page ID you want to use, then resolve the IG business account ID:</p>
+              <pre><code class="language-bash">curl "https://graph.facebook.com/v20.0/{PAGE_ID}?fields=instagram_business_account&amp;access_token=$ACCESS_TOKEN"
+              # → {"instagram_business_account":{"id":"&lt;IG_USER_ID&gt;"},"id":"&lt;PAGE_ID&gt;"}
+              </code></pre>
+                <p class="timeline-text">Save <code>IG_USER_ID</code> — we’ll query this user’s media via the Graph API.</p>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Step 4 — GitHub Action to Fetch &amp; Commit <code>instagram.json</code></h2>
+                <p class="timeline-text">We’ll create a scheduled workflow that runs a Node script, fetches the latest post, normalizes it, and commits a JSON file to the repo. The site just fetches that JSON statically.</p>
+
+                <h3 class="h4">4.1 Create Secrets</h3>
+                <ul class="timeline-text">
+                  <li>In your repo: <strong>Settings → Secrets and variables → Actions</strong></li>
+                  <li>Add:
+                    <ul>
+                      <li><code>FB_PAGE_TOKEN</code> — A valid Page token (derived via your long-lived user token / Page)</li>
+                      <li><code>IG_USER_ID</code> — The Instagram Business/Creator account ID</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h3 class="h4">4.2 Node fetcher: <code>assets/scripts/fetch-instagram-graph.cjs</code></h3>
+                <pre><code class="language-js">const fs = require('fs').promises;
+                const path = require('path');
+
+                const PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
+                const IG_USER_ID = process.env.IG_USER_ID;
+                if (!PAGE_TOKEN || !IG_USER_ID) {
+                  console.error('Missing FB_PAGE_TOKEN or IG_USER_ID');
+                  process.exit(1);
+                }
+
+                const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,children{media_type,media_url}';
+
+                (async () =&gt; {
+                  const url = `https://graph.facebook.com/v20.0/${IG_USER_ID}/media?fields=${encodeURIComponent(FIELDS)}&amp;limit=1&amp;access_token=${PAGE_TOKEN}`;
+                  const resp = await fetch(url);
+                  if (!resp.ok) throw new Error(`Graph ${resp.status}: ${await resp.text()}`);
+                  const json = await resp.json();
+                  const item = json?.data?.[0];
+
+                  const media = (item?.media_type === 'CAROUSEL_ALBUM' &amp;&amp; item?.children?.data?.length)
+                    ? item.children.data
+                    : [item];
+
+                  const payload = {
+                    caption: item?.caption || '',
+                    permalink: item?.permalink || '',
+                    media: (media || []).map(m =&gt; ({
+                      type: m.media_type === 'VIDEO' ? 'video' : 'image',
+                      url: m.media_url || m.thumbnail_url
+                    }))
+                  };
+
+                  const outPath = path.join('assets', 'data', 'instagram.json');
+                  await fs.mkdir(path.dirname(outPath), { recursive: true });
+                  await fs.writeFile(outPath, JSON.stringify(payload, null, 2));
+                  console.log('Wrote', outPath);
+                })().catch(e =&gt; { console.error(e); process.exit(1); });
+                </code></pre>
+
+                <h3 class="h4">4.3 Workflow: <code>.github/workflows/sync-instagram.yml</code></h3>
+                <pre><code class="language-yaml">name: Sync Instagram Feed
+                on:
+                  schedule:
+                    - cron: '0 * * * *'  # hourly; tune as you like
+                  workflow_dispatch:
+
+                jobs:
+                  fetch:
+                    runs-on: ubuntu-latest
+                    steps:
+                      - uses: actions/checkout@v4
+
+                      - uses: actions/setup-node@v4
+                        with:
+                          node-version: 20
+
+                      - name: Fetch latest post
+                        run: node assets/scripts/fetch-instagram-graph.cjs
+                        env:
+                          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+                          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+
+                      - name: Commit instagram.json
+                        run: |
+                          git config --global user.name 'github-actions[bot]'
+                          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+                          git add assets/data/instagram.json
+                          git commit -m "Update Instagram feed" || echo "No changes"
+                          git push
+                </code></pre>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Step 5 — Render the Polaroid in the Sidebar</h2>
+
+                <h3 class="h4">5.1 HTML</h3>
+                <pre><code class="language-html">&lt;div class="polaroid-frame"&gt;
+                  &lt;div class="polaroid-head"&gt;
+                    &lt;div class="icon-box"&gt;&lt;ion-icon name="logo-instagram"&gt;&lt;/ion-icon&gt;&lt;/div&gt;
+                    &lt;h3 class="h5"&gt;Latest on Instagram&lt;/h3&gt;
+                  &lt;/div&gt;
+
+                  &lt;div class="polaroid-media"&gt;
+                    &lt;!-- slides injected by JS --&gt;
+                    &lt;button class="polaroid-nav prev" aria-label="Previous photo" type="button"&gt;❮&lt;/button&gt;
+                    &lt;button class="polaroid-nav next" aria-label="Next photo" type="button"&gt;❯&lt;/button&gt;
+                  &lt;/div&gt;
+
+                  &lt;div class="polaroid-caption" id="polaroid-caption"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                </code></pre>
+
+                <h3 class="h4">5.2 CSS (excerpt)</h3>
+                <pre><code class="language-css">.polaroid-frame{ position:relative; background:var(--eerie-black-2); border:1px solid var(--jet);
+                  border-radius:14px; box-shadow:var(--shadow-2); padding:10px; }
+                .polaroid-media{ position:relative; border-radius:10px; overflow:hidden; height:260px; }
+                .polaroid-media .slide{ position:absolute; inset:0; opacity:0; transition:opacity .25s; z-index:1; }
+                .polaroid-media .slide.active{ opacity:1; }
+
+                .polaroid-frame .polaroid-nav{ opacity:0; transition:opacity .2s ease; }
+                .polaroid-frame.nav-visible .polaroid-nav{ opacity:1; }
+                @media (hover:hover) and (pointer:fine){
+                  .polaroid-media:hover .polaroid-nav{ opacity:1; }
+                }
+                .polaroid-media .polaroid-nav{ position:absolute; top:0; bottom:0; width:40px; display:flex; align-items:center; justify-content:center;
+                  color:var(--orange-yellow-crayola); background:transparent; border:none; font-size:18px; z-index:5; cursor:pointer; }
+                .polaroid-media .polaroid-nav.prev{ left:0; }
+                .polaroid-media .polaroid-nav.next{ right:0; }
+
+                .polaroid-caption{ color:var(--light-gray); font-size:var(--fs-7); margin:10px 6px 0; line-height:1.4;
+                  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; }
+                </code></pre>
+
+                <h3 class="h4">5.3 JavaScript (loader, carousel, swipe)</h3>
+                <pre><code class="language-js">// Reusable swipe helper (shared with gallery)
+                function addSwipeHandlers(element, onNext, onPrev){
+                  let startX = 0;
+                  element.addEventListener('touchstart', e =&gt; { startX = e.changedTouches[0].screenX; }, { passive:true });
+                  element.addEventListener('touchend', e =&gt; {
+                    const endX = e.changedTouches[0].screenX;
+                    if (endX &lt; startX - 20) onNext();
+                    if (endX &gt; startX + 20) onPrev();
+                  }, { passive:true });
+                }
+
+                (() =&gt; {
+                  const frame = document.querySelector('.polaroid-frame');
+                  if (!frame) return;
+                  const mediaWrap = frame.querySelector('.polaroid-media');
+                  let prevBtn = frame.querySelector('.polaroid-nav.prev');
+                  let nextBtn = frame.querySelector('.polaroid-nav.next');
+                  const captionEl = document.getElementById('polaroid-caption');
+
+                  const PROFILE_URL = (typeof instagramLink !== 'undefined' &amp;&amp; instagramLink?.href)
+                    ? instagramLink.href : 'https://www.instagram.com/';
+
+                  const CANDIDATES = [
+                    new URL('assets/data/instagram.json', document.baseURI).toString(),
+                    `${location.origin}/assets/data/instagram.json`,
+                  ];
+
+                  function renderSlides(items){
+                    mediaWrap.innerHTML = '';
+                    (items || []).forEach((m,i) =&gt; {
+                      const slide = document.createElement('div');
+                      slide.className = 'slide' + (i===0 ? ' active' : '');
+                      if (m.type === 'video'){
+                        const v = document.createElement('video');
+                        v.src = m.url; v.controls = true; v.playsInline = true; v.preload = 'metadata';
+                        slide.appendChild(v);
+                      } else {
+                        const img = document.createElement('img');
+                        img.src = m.url; img.alt = 'Instagram post'; img.loading = 'lazy';
+                        slide.appendChild(img);
+                      }
+                      mediaWrap.appendChild(slide);
+                    });
+                  }
+
+                  function ensureNavButtons(){
+                    let prev = frame.querySelector('.polaroid-nav.prev');
+                    let next = frame.querySelector('.polaroid-nav.next');
+                    if (!prev || !next){
+                      ['prev','next'].forEach(dir =&gt; {
+                        const b = document.createElement('button');
+                        b.className = `polaroid-nav ${dir}`;
+                        b.type = 'button';
+                        b.setAttribute('aria-label', dir === 'prev' ? 'Previous photo' : 'Next photo');
+                        b.textContent = dir === 'prev' ? '❮' : '❯';
+                        mediaWrap.appendChild(b);
+                      });
+                      prev = frame.querySelector('.polaroid-nav.prev');
+                      next = frame.querySelector('.polaroid-nav.next');
+                    }
+                    prevBtn = prev; nextBtn = next;
+                  }
+
+                  function wireCarousel(){
+                    let idx = 0;
+                    const slides = () =&gt; Array.from(mediaWrap.querySelectorAll('.slide'));
+                    const show = (n) =&gt; {
+                      const S = slides(); if (!S.length) return;
+                      idx = (n + S.length) % S.length;
+                      S.forEach((el,i) =&gt; el.classList.toggle('active', i === idx));
+                    };
+
+                    const flashNav = (ms=800) =&gt; {
+                      frame.classList.add('nav-visible');
+                      clearTimeout(flashNav._t);
+                      flashNav._t = setTimeout(() =&gt; frame.classList.remove('nav-visible'), ms);
+                    };
+
+                    const next = () =&gt; { show(idx + 1); flashNav(); };
+                    const prev = () =&gt; { show(idx - 1); flashNav(); };
+
+                    prevBtn?.addEventListener('click', e =&gt; { e.preventDefault(); e.stopPropagation(); prev(); });
+                    nextBtn?.addEventListener('click', e =&gt; { e.preventDefault(); e.stopPropagation(); next(); });
+
+                    addSwipeHandlers(mediaWrap, next, prev);
+
+                    frame.setAttribute('tabindex','0');
+                    frame.addEventListener('keydown', e =&gt; {
+                      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+                      if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
+                    });
+                  }
+
+                  async function fetchFirst(paths){
+                    for (const p of paths){
+                      try{
+                        const res = await fetch(p + (p.includes('?') ? '&amp;' : '?') + 't=' + Date.now(), { cache:'no-store' });
+                        if (!res.ok) throw 0;
+                        return await res.json();
+                      } catch {}
+                    }
+                    throw new Error('All paths failed');
+                  }
+
+                  function normalize(json){
+                    if (json &amp;&amp; Array.isArray(json.media)) return json;
+                    if (json?.data?.length){
+                      const item = json.data[0];
+                      const to = (t,u,thumb) =&gt; ({ type: t==='VIDEO' ? 'video' : 'image', url: u || thumb });
+                      const media = (item.media_type === 'CAROUSEL_ALBUM' &amp;&amp; item.children?.data?.length)
+                        ? item.children.data.map(c =&gt; to(c.media_type, c.media_url, item.thumbnail_url))
+                        : [to(item.media_type, item.media_url, item.thumbnail_url)];
+                      return { caption:item.caption||'', permalink:item.permalink||'', media };
+                    }
+                    return null;
+                  }
+
+                  async function start(){
+                    try{
+                      const raw  = await fetchFirst(CANDIDATES);
+                      const data = normalize(raw);
+                      if (!data?.media?.length){ frame.style.display='none'; return; }
+
+                      renderSlides(data.media);
+                      ensureNavButtons();
+                      wireCarousel();
+
+                      if (captionEl) captionEl.textContent = data.caption || '';
+
+                      mediaWrap.addEventListener('click', (e) =&gt; {
+                        if (e.target.closest('.polaroid-nav')) return;
+                        window.open(data.permalink || PROFILE_URL, '_blank', 'noopener');
+                      });
+                    } catch (e){
+                      console.warn('[Polaroid] failed:', e);
+                      frame.style.display = 'none';
+                    }
+                  }
+
+                  (document.readyState === 'loading')
+                    ? document.addEventListener('DOMContentLoaded', start, { once:true })
+                    : start();
+                })();
+                </code></pre>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Common Errors &amp; Fixes</h2>
+                <ul class="timeline-text">
+                  <li><strong>Invalid grant type</strong> — Ensure your exchange URL uses <code>grant_type=fb_exchange_token</code> exactly.</li>
+                  <li><strong>Unsupported get request / missing perms</strong> — Your token may lack scopes; reauthorize with <code>pages_show_list</code>, <code>instagram_basic</code>, <code>pages_read_engagement</code>, <code>pages_read_user_content</code>.</li>
+                  <li><strong>“Page is not linked to an IG Professional account”</strong> — Link IG↔Page in the Instagram app (Settings → Account → Sharing to Other Apps → Facebook).</li>
+                  <li><strong>JSON 404 on GitHub Pages</strong> — Ensure the file path is <code>/assets/data/instagram.json</code> and use a cache-buster: <code>?t=Date.now()</code>.</li>
+                  <li><strong>Buttons open a new tab</strong> — Add <code>e.stopPropagation()</code> in nav button handlers so clicks don’t bubble to the media click handler.</li>
+                  <li><strong>Buttons cover caption</strong> — Place nav buttons <em>inside</em> <code>.polaroid-media</code>, not the entire frame.</li>
+                  <li><strong>Mobile hover “sticks”</strong> — Limit hover-based visibility to <code>@media (hover:hover) and (pointer:fine)</code> and drive visibility via a JS class on touch.</li>
+                  <li><strong>Weird gaps at 768px</strong> — Avoid multi-row spanning grid items, or wrap the left column into a single grid area to prevent row height inflation.</li>
+                </ul>
+              </section>
+
+              <section class="blog-section">
+                <h2 class="h3">Security Tips</h2>
+                <ul class="timeline-text">
+                  <li>Never ship your tokens to the browser. Fetch on CI and commit only JSON.</li>
+                  <li>Scope tokens minimally; rotate if you suspect compromise.</li>
+                  <li>Use GitHub Actions secrets; do not commit them to the repo.</li>
+                </ul>
+              </section>
+
+              <footer class="blog-section">
+                <h2 class="h3">Wrap-Up</h2>
+                <p class="timeline-text">
+                  With a Professional IG account linked to a Page, a long-lived token, and a small GitHub Action, you can keep
+                  your site’s Instagram widget fresh without exposing secrets. The polaroid UI here is lightweight, swipe-friendly,
+                  and dark-themed to match the rest of the site. Feel free to copy the code, adjust the styling, and tune the
+                  workflow schedule as needed.
+                </p>
+              </footer>
+            </div>
+          </li>
+        </ul>
+      </article>
+    </div>        
+  </main>
+    
+  <script src="../../assets/js/script.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const links = document.querySelectorAll('.blog-details a');
+      links.forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      });
+    });
+  </script>
+</body>
+</html>

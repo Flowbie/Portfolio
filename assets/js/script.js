@@ -102,6 +102,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Avatar click -> navigate home
+document.addEventListener('DOMContentLoaded', function () {
+  const avatarBox = document.querySelector('.avatar-box');
+  if (avatarBox) {
+    try { avatarBox.style.cursor = 'pointer'; } catch {}
+    avatarBox.addEventListener('click', function () {
+      try { location.href = '/index.html'; } catch { location.href = '/'; }
+    });
+  }
+});
+
 
 
 // Reusable Modal Functions

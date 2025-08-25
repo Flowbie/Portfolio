@@ -16,5 +16,14 @@
     "dateISO": "2025-01-06",
     "dateText": "Jan 6, 2025",
     "description": "A beginner’s guide to AI image generation with ComfyUI, Stable Diffusion, LoRA, and Flux."
+  },
+  {
+    "slug": "instagram-polaroid-widget",
+    "title": "Building a Polaroid-Style Instagram Card for My Portfolio",
+    "category": "Web Development",
+    "banner": "/assets/images/Blogs/2025.8.24 Instagram-api/instagram-polaroid-widget.jpg",
+    "dateISO": "2025-08-24",
+    "dateText": "August 24, 2025",
+    "description": "Step-by-step guide: Meta API setup, long-lived tokens, GitHub Actions, Node.js fetcher, and a dark swipeable polaroid UI for Instagram posts."
   }
 ]
