@@ -4,6 +4,7 @@
     <title>Austin Dolan Blog</title>
     <link>/blog/</link>
     <description>Updates and articles</description>
+
     <item>
       <title>Ho’onani Hou: A Community-Driven Map-Based Web Platform</title>
       <link>/blog/hoonanihou/</link>
@@ -11,6 +12,7 @@
       <pubDate>Mon, 06 Jan 2025 00:00:00 GMT</pubDate>
       <description>Introducing Ho’onani Hou: a map-based platform for collaborative, community-funded projects.</description>
     </item>
+
     <item>
       <title>AI Pixel Generation: ComfyUI, Flux, SD</title>
       <link>/blog/ai-pixel-generation/</link>
@@ -18,5 +20,14 @@
       <pubDate>Mon, 06 Jan 2025 00:00:00 GMT</pubDate>
       <description>A beginner’s guide to AI image generation with ComfyUI, Stable Diffusion, LoRA, and Flux.</description>
     </item>
+
+    <item>
+      <title>Building a Polaroid-Style Instagram Card for My Portfolio</title>
+      <link>/blog/instagram-polaroid-widget/</link>
+      <guid isPermaLink="true">/blog/instagram-polaroid-widget/</guid>
+      <pubDate>Fri, 24 Jan 2025 00:00:00 GMT</pubDate>
+      <description>Step-by-step guide: Meta API setup, long-lived tokens, GitHub Actions, Node.js fetcher, and a dark swipeable polaroid UI for Instagram posts.</description>
+    </item>
+
   </channel>
 </rss>

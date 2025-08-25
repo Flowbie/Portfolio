@@ -1215,6 +1215,85 @@ opacity:0}
 
 .blog-back-btn.active{opacity:1}
 
+/* Base code block styling (dark theme) */
+pre {
+  background: #1b1b1b;          /* deep charcoal */
+  color: #d7d7d7;               /* soft light gray */
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-family: "Fira Code", Consolas, Menlo, Monaco, monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+  overflow: auto;               /* enable both axes as needed */
+  box-shadow: 0 8px 22px rgba(0,0,0,.35);
+}
+
+/* Inline code (keeps it tidy in paragraphs) */
+code {
+  color: #e7e7e7;
+  padding: 0.15em 0.35em;
+  border-radius: 6px;
+}
+
+/* Selection color inside code blocks */
+pre::selection,
+code::selection {
+  background: #2f3a45;
+  color: #fff;
+}
+
+/* ===== Scrollbars: Chrome/Edge/Safari (WebKit) ===== */
+pre::-webkit-scrollbar {
+  height: 10px;                 /* horizontal bar height */
+  width: 10px;                  /* vertical bar width */
+}
+
+pre::-webkit-scrollbar-track {
+  background: var(--onyx);          /* track color */
+  border-radius: 10px;
+  border: 1px solid var(--smoky-black);
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3a3a3a, #2e2e2e);
+  border-radius: 10px;
+  border: 1px solid #424242;    /* crisp edge on dark bg */
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #4a4a4a, #3a3a3a);
+}
+
+pre::-webkit-scrollbar-corner {
+  background: #141414;          /* bottom-right corner (both axes) */
+}
+
+/* Optional: subtle fade-in of scrollbars on hover (WebKit) */
+pre::-webkit-scrollbar-thumb { opacity: .85; }
+pre:hover::-webkit-scrollbar-thumb { opacity: 1; }
+
+/* ===== Scrollbars: Firefox ===== */
+/* Uses the element’s background; the second color is the thumb */
+pre {
+  scrollbar-width: thin;                         /* thin | auto */
+  scrollbar-color: #3a3a3a #141414;              /* thumb track */
+}
+
+/* ===== Nice-to-have: keep long tokens from bursting layout ===== */
+pre, code {
+  word-break: normal;
+  overflow-wrap: anywhere;       /* modern browsers */
+}
+
+/* Optional max-height if you want vertical scroll for long blocks */
+@media (min-width: 900px) {
+  pre {
+    max-height: 520px;           /* adjust to taste, or remove */
+  }
+}
+
 .contact-container{display:grid;
 grid-template-columns:1fr;
 gap:30px}
