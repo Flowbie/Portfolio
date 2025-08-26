@@ -1228,6 +1228,21 @@ opacity:0}
 
 .blog-back-btn.active{opacity:1}
 
+.blog-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 1.5rem 0;
+  padding: 0 1rem; 
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;      
+}
+
+@media (max-width: 480px) {
+  pre { font-size: 0.6rem; }
+}
+
 /* Base code block styling (dark theme) */
 pre {
   background: #1b1b1b;          /* deep charcoal */
@@ -1236,10 +1251,9 @@ pre {
   border-radius: 10px;
   padding: 16px 18px;
   font-family: "Fira Code", Consolas, Menlo, Monaco, monospace;
-  font-size: 0.95rem;
   line-height: 1.55;
   margin: 1.25rem 0;
-  overflow: auto;               /* enable both axes as needed */
+  overflow: auto;  
   box-shadow: 0 8px 22px rgba(0,0,0,.35);
 }
 
@@ -1303,9 +1317,40 @@ pre, code {
 /* Optional max-height if you want vertical scroll for long blocks */
 @media (min-width: 900px) {
   pre {
-    max-height: 520px;           /* adjust to taste, or remove */
+    max-height: 520px; 
   }
 }
+
+/* On wide screens, wrap code to avoid horizontal scrolling */
+@media (min-width: 1250px) {
+  pre,
+  pre code,
+  .blog-section pre,
+  .blog-section pre code {
+    white-space: pre-wrap;   /* preserve newlines but allow wrapping */
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-x: visible;     /* no horizontal scroll needed */
+  }
+}
+
+/* Copy button in code blocks */
+pre { position: relative; }
+.code-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 6px;
+  background: var(--onyx);
+  color: var(--white-2);
+  border: 1px solid var(--jet);
+  opacity: 0.85;
+  transition: opacity var(--transition-1);
+}
+.code-copy-btn:hover { opacity: 1; }
 
 .contact-container{display:grid;
 grid-template-columns:1fr;
@@ -1579,6 +1624,41 @@ padding:16px 20px}
 
 .form-btn ion-icon{font-size:18px}
 
+}
+
+/* Mobile fixes: keep long code blocks from blowing out the layout */
+@media (max-width: 767px) {
+  /* Any flex/grid parents in the blog stack must allow shrinking */
+  .blog-posts-list,
+  .blog-posts-list > li,
+  .blog-post-item,
+  .blog-content,
+  .blog-section,
+  .timeline-text {
+    min-width: 0;             /* critical for flex/grid children */
+  }
+
+  /* Make sure the post item itself isn't forcing a flex row layout */
+  .blog-post-item {
+    display: block;           /* if it was flex before, this neutralizes it */
+  }
+
+  /* The banner container and image should never exceed the viewport */
+  .blog-banner-box {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Code blocks: fill parent, scroll horizontally if needed */
+  .blog-section pre {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;         /* horizontal scroll instead of expanding */
+    overflow-y: auto;
+    white-space: pre;         /* preserve formatting (no wrapping) */
+  }
 }
 
 @media (min-width:768px){

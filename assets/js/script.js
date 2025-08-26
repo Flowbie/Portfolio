@@ -113,6 +113,75 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+// Copy-to-clipboard buttons for code blocks
+document.addEventListener('DOMContentLoaded', function () {
+  const pres = document.querySelectorAll('pre');
+  if (!pres.length) return;
+
+  // Ensure Font Awesome is available for copy icon
+  (function ensureFontAwesome() {
+    const existing = document.querySelector('link[data-fa]');
+    if (existing) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+    link.setAttribute('data-fa', '1');
+    document.head.appendChild(link);
+  })();
+
+  pres.forEach(pre => {
+    // Skip if already enhanced
+    if (pre.dataset.copyEnhanced === '1') return;
+    pre.dataset.copyEnhanced = '1';
+
+    // Create button
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-copy-btn';
+    btn.setAttribute('aria-label', 'Copy code');
+    btn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i>';
+
+    // Position the button inside the pre
+    pre.style.position = pre.style.position || 'relative';
+    pre.appendChild(btn);
+
+    // Determine text to copy (prefer innerText to preserve formatting)
+    const getCodeText = () => {
+      const code = pre.querySelector('code');
+      return (code ? code.innerText : pre.innerText) || '';
+    };
+
+    btn.addEventListener('click', async () => {
+      const text = getCodeText();
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+          document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        }
+        const icon = btn.querySelector('i');
+        const oldCls = icon ? icon.className : '';
+        if (icon) icon.className = 'fas fa-check';
+        btn.setAttribute('aria-label', 'Copied');
+        setTimeout(() => {
+          if (icon) icon.className = oldCls || 'fas fa-copy';
+          btn.setAttribute('aria-label', 'Copy code');
+        }, 1200);
+      } catch (e) {
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = 'fas fa-exclamation-triangle';
+        btn.setAttribute('aria-label', 'Copy failed');
+        setTimeout(() => {
+          if (icon) icon.className = 'fas fa-copy';
+          btn.setAttribute('aria-label', 'Copy code');
+        }, 1500);
+      }
+    });
+  });
+});
+
 
 
 // Reusable Modal Functions
