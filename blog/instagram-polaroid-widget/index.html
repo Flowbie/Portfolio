@@ -9,6 +9,19 @@
   <link rel="canonical" href="/blog/instagram-polaroid-widget/">
   <link rel="shortcut icon" href="../../assets/images/myna.webp" type="image/x-icon">
   <link rel="stylesheet" href="../../assets/css/mini_pretty.css">
+  <!-- Base theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css">
+
+  <!-- Core Prism -->
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+
+  <!-- Language components -->
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-css.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markup.min.js"></script> <!-- for HTML -->
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-yaml.min.js"></script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -127,25 +140,35 @@
                   <li>Authorize your user token with scopes: <code>instagram_basic</code>, <code>pages_show_list</code>, <code>pages_read_engagement</code>, <code>pages_read_user_content</code>.</li>
                   <li>Exchange a short-lived token for a long-lived one (approx 60-day expiry):</li>
                 </ol>
-                <pre><code class="language-bash"># exchange SHORT for LONG
-  https://graph.facebook.com/v20.0/oauth/access_token?
-    grant_type=fb_exchange_token&amp;
-    client_id={APP_ID}&amp;
-    client_secret={APP_SECRET}&amp;
-    fb_exchange_token={SHORT_LIVED_TOKEN}
-                </code></pre>
+                <div class="code-block">
+                  <pre><code class="language-bash">
+# Exchange a short-lived token for a long-lived token
+https://graph.facebook.com/v20.0/oauth/access_token? \
+  grant_type=fb_exchange_token \
+  &client_id={APP_ID} \
+  &client_secret={APP_SECRET} \
+  &fb_exchange_token={SHORT_LIVED_TOKEN}
+                  </code></pre>
+                </div>
                 <p class="timeline-text">Keep this long-lived token private. We’ll use it to derive a Page token server-side and never ship it to the browser.</p>
               </section>
 
               <section class="blog-section">
                 <h2 class="h3">Step 3 — Get Page ID and Instagram Business Account ID</h2>
                 <p class="timeline-text">List Pages you can manage (with your long-lived user token):</p>
-                <pre><code class="language-bash">curl "https://graph.facebook.com/v20.0/me/accounts?access_token=$ACCESS_TOKEN"
-                </code></pre>
+                <div class="code-block">
+                  <pre><code class="language-bash">
+curl "https://graph.facebook.com/v20.0/me/accounts?access_token=$ACCESS_TOKEN"
+                  </code></pre>
+                </div>
                 <p class="timeline-text">Copy the Page ID you want to use, then resolve the IG business account ID:</p>
-                <pre><code class="language-bash">curl "https://graph.facebook.com/v20.0/{PAGE_ID}?fields=instagram_business_account&amp;access_token=$ACCESS_TOKEN"
-  # → {"instagram_business_account":{"id":"&lt;IG_USER_ID&gt;"},"id":"&lt;PAGE_ID&gt;"}
-                </code></pre>
+                <div class="code-block">
+                  <pre><code class="language-bash">
+curl "https://graph.facebook.com/v20.0/{PAGE_ID}?fields=instagram_business_account&access_token=$ACCESS_TOKEN"
+
+# → {"instagram_business_account":{"id":"<IG_USER_ID>"},"id":"<PAGE_ID>"}        
+                  </code></pre>
+                </div>
                 <p class="timeline-text">Save <code>IG_USER_ID</code> — we’ll query this user’s media via the Graph API.</p>
               </section>
 
@@ -165,7 +188,8 @@
                 </ul>
 
                 <h3 class="h4">4.2 Node fetcher: <code>assets/scripts/fetch-instagram-graph.cjs</code></h3>
-                <pre><code class="language-js">
+                <div class="code-block">
+                  <pre><code class="language-js">
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -203,10 +227,11 @@ const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,children
   await fs.writeFile(outPath, JSON.stringify(payload, null, 2));
   console.log('Wrote', outPath);
   })().catch(e =&gt; { console.error(e); process.exit(1); });
-                </code></pre>
-
+                  </code></pre>
+                </div>
                 <h3 class="h4">4.3 Workflow: <code>.github/workflows/sync-instagram.yml</code></h3>
-                <pre><code class="language-yaml">name: Sync Instagram Feed
+                <div class="code-block">
+                  <pre><code class="language-yaml">name: Sync Instagram Feed
   on:
     schedule:
       - cron: '0 * * * *'  # hourly; tune as you like
@@ -235,14 +260,16 @@ const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,children
             git add assets/data/instagram.json
             git commit -m "Update Instagram feed" || echo "No changes"
             git push
-                </code></pre>
+                  </code></pre>
+                </div>
               </section>
 
               <section class="blog-section">
                 <h2 class="h3">Step 5 — Render the Polaroid in the Sidebar</h2>
 
                 <h3 class="h4">5.1 HTML</h3>
-                <pre><code class="language-html">
+                <div class="code-block">
+                  <pre><code class="language-html">
 &lt;div class="polaroid-frame"&gt;
 &lt;div class="polaroid-head"&gt;
   &lt;div class="icon-box"&gt;&lt;ion-icon name="logo-instagram"&gt;&lt;/ion-icon&gt;&lt;/div&gt;
@@ -257,32 +284,95 @@ const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,children
 
 &lt;div class="polaroid-caption" id="polaroid-caption"&gt;&lt;/div&gt;
 &lt;/div&gt;
-                </code></pre>
-
+                  </code></pre>
+                </div>
                 <h3 class="h4">5.2 CSS (excerpt)</h3>
-                <pre><code class="language-css">
-.polaroid-frame{ position:relative; background:var(--eerie-black-2); border:1px solid var(--jet);
-border-radius:14px; box-shadow:var(--shadow-2); padding:10px; }
-.polaroid-media{ position:relative; border-radius:10px; overflow:hidden; height:260px; }
-.polaroid-media .slide{ position:absolute; inset:0; opacity:0; transition:opacity .25s; z-index:1; }
-.polaroid-media .slide.active{ opacity:1; }
-
-.polaroid-frame .polaroid-nav{ opacity:0; transition:opacity .2s ease; }
-.polaroid-frame.nav-visible .polaroid-nav{ opacity:1; }
-@media (hover:hover) and (pointer:fine){
-  .polaroid-media:hover .polaroid-nav{ opacity:1; }
+                <div class="code-block">
+                  <pre><code class="language-css">
+.polaroid-frame {
+  position: relative;
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  padding: 10px;
 }
-.polaroid-media .polaroid-nav{ position:absolute; top:0; bottom:0; width:40px; display:flex; align-items:center; justify-content:center;
-  color:var(--orange-yellow-crayola); background:transparent; border:none; font-size:18px; z-index:5; cursor:pointer; }
-.polaroid-media .polaroid-nav.prev{ left:0; }
-.polaroid-media .polaroid-nav.next{ right:0; }
 
-.polaroid-caption{ color:var(--light-gray); font-size:var(--fs-7); margin:10px 6px 0; line-height:1.4;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; }
-                </code></pre>
+.polaroid-media {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 260px;
+}
 
+.polaroid-media .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .25s;
+  z-index: 1;
+}
+
+.polaroid-media .slide.active {
+  opacity: 1;
+}
+
+/* Navigation buttons */
+.polaroid-frame .polaroid-nav {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.polaroid-frame.nav-visible .polaroid-nav {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .polaroid-media:hover .polaroid-nav {
+    opacity: 1;
+  }
+}
+
+.polaroid-media .polaroid-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange-yellow-crayola);
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.polaroid-media .polaroid-nav.prev {
+  left: 0;
+}
+
+.polaroid-media .polaroid-nav.next {
+  right: 0;
+}
+                  
+.polaroid-caption{ 
+  color:var(--light-gray); 
+  font-size:var(--fs-7); 
+  margin:10px 6px 0; 
+  line-height:1.4;
+  display:-webkit-box; 
+  -webkit-line-clamp:2; 
+  -webkit-box-orient:vertical; 
+  overflow:hidden; 
+  text-overflow:ellipsis; 
+}
+                  </code></pre>
+                </div>  
                 <h3 class="h4">5.3 JavaScript (loader, carousel, swipe)</h3>
-                <pre><code class="language-js">
+                <div class="code-block">
+                  <pre><code class="language-js">
 // Reusable swipe helper (shared with gallery)
 function addSwipeHandlers(element, onNext, onPrev){
   let startX = 0;
@@ -426,7 +516,8 @@ function addSwipeHandlers(element, onNext, onPrev){
     ? document.addEventListener('DOMContentLoaded', start, { once:true })
     : start();
 })();
-                </code></pre>
+                  </code></pre>
+                </div>
               </section>
 
               <section class="blog-section">

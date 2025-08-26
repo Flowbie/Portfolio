@@ -1239,8 +1239,67 @@ opacity:0}
   min-width: 0;      
 }
 
+/* Wrap each code block */
+.code-block {
+  position: relative;
+  margin: 1.25rem 0;
+}
+
+/* Make only the <pre> scroll, not the container */
+.code-block pre {
+  margin: 0;                 /* container handles outer spacing */
+  max-height: 520px;         /* or whatever you prefer */
+  overflow: auto;            /* scroll inside the pre */
+  box-sizing: border-box;
+}
+
+/* Pin the copy button to the container, not the <pre> */
+.code-block .code-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  z-index: 2;                /* above code */
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 6px;
+  background: var(--onyx);
+  color: var(--white-2);
+  border: 1px solid var(--jet);
+  opacity: 0.9;
+  transition: opacity var(--transition-1);
+}
+.code-block .code-copy-btn:hover { opacity: 1; }
+
+/* Optional: keep button from blocking code at the very top */
+.code-block pre { padding-top: 36px; }
+
+
 @media (max-width: 480px) {
-  pre { font-size: 0.6rem; }
+  /* Override Prism defaults on tiny screens */
+  pre[class*="language-"],
+  code[class*="language-"],
+  pre,
+  pre code,
+  code { font-size: 0.6rem !important; }
+}
+
+/* Medium phones / small tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+  pre[class*="language-"],
+  code[class*="language-"],
+  pre,
+  pre code,
+  code { font-size: 0.75rem !important; }
+}
+
+/* Tablets / small laptops */
+@media (min-width: 769px) and (max-width: 1249px) {
+  pre[class*="language-"],
+  code[class*="language-"],
+  pre,
+  pre code,
+  code { font-size: 0.85rem !important; }
 }
 
 /* Base code block styling (dark theme) */
@@ -1351,6 +1410,102 @@ pre { position: relative; }
   transition: opacity var(--transition-1);
 }
 .code-copy-btn:hover { opacity: 1; }
+
+/* Preserve exact spacing in code content to avoid odd wraps */
+pre code {
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* Ensure token spans (from Prism/HLJS) remain inline to prevent per-token line breaks */
+pre code span {
+  display: inline;
+}
+
+/* VS Code-like styling for JavaScript code blocks */
+pre code.language-js {
+  font-family: "Cascadia Code", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  color: #d4d4d4; /* VS Code Dark default foreground */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* If a syntax highlighter is present (Prism/HLJS), map colors to VS Code palette */
+pre code.language-js .token.comment,
+pre code.language-js .hljs-comment { color: #6a9955; }
+pre code.language-js .token.keyword,
+pre code.language-js .hljs-keyword { color: #569cd6; }
+pre code.language-js .token.string,
+pre code.language-js .hljs-string { color: #ce9178; }
+pre code.language-js .token.number,
+pre code.language-js .hljs-number { color: #b5cea8; }
+pre code.language-js .token.function,
+pre code.language-js .hljs-function .hljs-title { color: #dcdcaa; }
+pre code.language-js .token.property,
+pre code.language-js .hljs-attr,
+pre code.language-js .hljs-property { color: #9cdcfe; }
+pre code.language-js .token.operator,
+pre code.language-js .hljs-operator { color: #d4d4d4; }
+
+pre code.language-css {
+  font-family: "Cascadia Code", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  color: #c5d9f7; /* soft blue for CSS base text */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre code.language-css .token.selector { color: #f5c2e7; }  
+pre code.language-css .token.property { color: #c5a5c5; }  
+pre code.language-css .token.value { color: #a8e1a0; }      
+pre code.language-css .token.punctuation { color: #d4d4d4; } 
+pre code.language-css .token.comment { color: #6a9955; }  
+
+pre code.language-yaml {
+  font-family: "Cascadia Code", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  color: #d7d7d7; /* neutral base */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre code.language-yaml .token.key { color: #f5c2e7; }       /* pink for keys */
+pre code.language-yaml .token.string { color: #a8e1a0; }   /* green for strings */
+pre code.language-yaml .token.number { color: #f38ba8; }   /* soft red for numbers */
+pre code.language-yaml .token.boolean { color: #c5a5c5; }  /* purple for booleans */
+pre code.language-yaml .token.comment { color: #6a9955; }  /* muted green */
+
+pre code.language-bash {
+  font-family: "Cascadia Code", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  color: #d7d7d7; /* neutral base */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre code.language-bash .token.command { color: #89b4fa; }   /* blue for commands */
+pre code.language-bash .token.option { color: #f5c2e7; }    /* pink for flags/options */
+pre code.language-bash .token.string { color: #a8e1a0; }    /* green for strings */
+pre code.language-bash .token.variable { color: #f38ba8; }  /* soft red for $vars */
+pre code.language-bash .token.comment { color: #6a9955; }   /* muted green */
+
+pre code.language-html {
+  font-family: "Cascadia Code", "Fira Code", Consolas, Menlo, Monaco, monospace;
+  color: #d7d7d7; /* neutral base */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre code.language-html .token.tag { color: #89b4fa; }        /* blue for tags */
+pre code.language-html .token.attr-name { color: #f5c2e7; } /* pink for attributes */
+pre code.language-html .token.attr-value { color: #a8e1a0; }/* green for values */
+pre code.language-html .token.string { color: #a8e1a0; }    /* green fallback */
+pre code.language-html .token.punctuation { color: #d4d4d4; } /* neutral for < > / = */
+pre code.language-html .token.comment { color: #6a9955; }   /* muted green */
+
 
 .contact-container{display:grid;
 grid-template-columns:1fr;

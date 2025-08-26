@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const pres = document.querySelectorAll('pre');
   if (!pres.length) return;
 
-  // Ensure Font Awesome is available for copy icon
+  // Ensure Font Awesome for the icon (optional)
   (function ensureFontAwesome() {
     const existing = document.querySelector('link[data-fa]');
     if (existing) return;
@@ -130,46 +130,56 @@ document.addEventListener('DOMContentLoaded', function () {
   })();
 
   pres.forEach(pre => {
-    // Skip if already enhanced
     if (pre.dataset.copyEnhanced === '1') return;
     pre.dataset.copyEnhanced = '1';
 
-    // Create button
+    // 1) Wrap <pre> in a .code-block container (if not already)
+    let wrapper = pre.closest('.code-block');
+    if (!wrapper) {
+      wrapper = document.createElement('div');
+      wrapper.className = 'code-block';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+    }
+
+    // 2) Create the copy button and append to the wrapper (not inside <pre>)
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy-btn';
     btn.setAttribute('aria-label', 'Copy code');
     btn.innerHTML = '<i class="fas fa-copy" aria-hidden="true"></i>';
+    wrapper.appendChild(btn);
 
-    // Position the button inside the pre
-    pre.style.position = pre.style.position || 'relative';
-    pre.appendChild(btn);
-
-    // Determine text to copy (prefer innerText to preserve formatting)
     const getCodeText = () => {
       const code = pre.querySelector('code');
       return (code ? code.innerText : pre.innerText) || '';
     };
 
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation(); // in case pre has click handlers
       const text = getCodeText();
       try {
         if (navigator.clipboard?.writeText) {
           await navigator.clipboard.writeText(text);
         } else {
           const ta = document.createElement('textarea');
-          ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
-          document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
         }
         const icon = btn.querySelector('i');
-        const oldCls = icon ? icon.className : '';
+        const oldCls = icon?.className || '';
         if (icon) icon.className = 'fas fa-check';
         btn.setAttribute('aria-label', 'Copied');
         setTimeout(() => {
           if (icon) icon.className = oldCls || 'fas fa-copy';
           btn.setAttribute('aria-label', 'Copy code');
         }, 1200);
-      } catch (e) {
+      } catch {
         const icon = btn.querySelector('i');
         if (icon) icon.className = 'fas fa-exclamation-triangle';
         btn.setAttribute('aria-label', 'Copy failed');
@@ -181,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
 
 
 
