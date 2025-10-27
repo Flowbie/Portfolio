@@ -21,7 +21,7 @@ jobs:
           node-version: '20'
           
       - name: Install dependencies
-        run: npm install node-fetch@2
+        run: npm install node-fetch@2 libsodium-wrappers
 
       - name: Fetch latest Instagram post (Graph API)
         env:
@@ -29,6 +29,8 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+          ROTATE_SECRET_NAME: FB_PAGE_TOKEN  
         run: node assets/scripts/fetch-instagram-graph.cjs
 
 
