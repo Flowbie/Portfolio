@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeQR App — Secure QR Code Scanner</title>
+  <meta name="description" content="SafeQR is a secure QR code scanner that checks links for safety, privacy, and phishing before you open them. Compare Base vs Premium plans." />
+  <link rel="canonical" href="/apps/safeqr/" />
+  <link rel="shortcut icon" href="../../assets/images/safeqr-icon.webp" type="image/x-icon" />
+  <link rel="stylesheet" href="../../assets/css/mini_pretty.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SafeQR",
+    "operatingSystem": "iOS, Android, Web",
+    "applicationCategory": "SecurityApplication",
+    "description": "SafeQR is a secure QR code scanning app that protects you from malicious or phishing URLs.",
+    "author": { "@type": "Person", "name": "Austin Dolan" },
+    "offers": {
+      "@type": "Offer",
+      "name": "Base Package",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "url": "https://flowbie.github.io/apps/safeqr/"
+  }
+  </script>
+</head>
+
+<body>
+  <main>
+    <div class="main-content">
+    <article class="blog active" data-page="blog">
+
+      <!-- NAVBAR -->
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item"><button class="navbar-link" data-nav-link>About</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link>Resume</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link>Portfolio</button></li>
+          <li class="navbar-item"><button class="navbar-link active" data-nav-link>Apps</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link>Contact</button></li>
+        </ul>
+      </nav>
+
+      <header>
+        <h2 class="h2 article-title">Apps</h2>
+      </header>
+
+      <div class="blog-back-container active" style="margin-bottom: 15px;">
+        <a class="blog-back-btn active" href="../../#portfolio">
+          <img src="../../assets/images/blog-back-button.png" alt="Back">
+        </a>
+      </div>
+
+      <ul class="blog-posts-list">
+        <li class="blog-post-item active expanded">
+
+          <figure class="blog-banner-box">
+            <img src="../../assets/images/Apps/SafeQR/safeqr-banner.webp" alt="SafeQR App Banner" loading="lazy" />
+          </figure>
+
+          <div class="blog-content">
+            <div class="blog-meta">
+              <p class="blog-category">Security App</p>
+              <span class="dot"></span>
+              <time datetime="2025-10-27">Oct 27, 2025</time>
+            </div>
+
+            <div class="blog-details">
+              <header>
+                <h1 class="blog-details-title">SafeQR — Secure QR Code Scanner</h1>
+                <p class="blog-details-category">Privacy & Cybersecurity</p>
+              </header>
+
+              <!-- Description -->
+              <section class="description">
+                <p>
+                  <strong>SafeQR</strong> is a privacy-first QR code scanner that analyzes URLs in real time before you open them.
+                  Whether you’re scanning a restaurant menu, product code, or random flyer, SafeQR acts as your
+                  personal bodyguard—keeping you safe from malicious redirects, phishing links, and data-harvesting pages.
+                </p>
+              </section>
+
+              <!-- Core Features -->
+              <section class="components">
+                <h2>Key Features</h2>
+                <ul>
+                  <li><strong>Sandboxed Scanning:</strong> Each scan runs inside a secure environment to isolate untrusted links.</li>
+                  <li><strong>Real-Time Threat Checks:</strong> URLs are analyzed using trusted APIs like VirusTotal, URLScan, and OpenPhish.</li>
+                  <li><strong>Instant Safety Ratings:</strong> Clear visual indicators show whether a link is safe, suspicious, or blocked.</li>
+                  <li><strong>Offline Mode:</strong> Basic scanning works even without an internet connection.</li>
+                  <li><strong>Privacy-Preserving:</strong> No user tracking, analytics, or data sharing—your scans stay yours.</li>
+                </ul>
+              </section>
+
+              <!-- Base Package -->
+              <section class="purpose">
+                <h2>Base Package (Free)</h2>
+                <ul>
+                  <li>Unlimited QR scans with secure sandbox isolation.</li>
+                  <li>Basic threat detection via SafeQR’s local rule set.</li>
+                  <li>Offline QR decoding and preview display.</li>
+                  <li>Access to community-reported suspicious link data.</li>
+                  <li>Dark mode and privacy-only UI—no ads, no telemetry.</li>
+                </ul>
+                <p>
+                  Perfect for casual users who want safe, clean QR scanning without sacrificing privacy.
+                </p>
+              </section>
+
+              <!-- Premium Package -->
+              <section class="benefits">
+                <h2>Premium Package (Pro)</h2>
+                <ul>
+                  <li>Advanced cloud-based scanning with VirusTotal, URLScan.io, and OpenPhish integrations.</li>
+                  <li>SmartLink AI that explains why a link may be unsafe.</li>
+                  <li>Device-level protection—intercepts unsafe URLs before opening in Safari/Chrome.</li>
+                  <li>History analytics: view trends in your scan data.</li>
+                  <li>Priority support and early access to new modules (e.g., document scan validation, NFC link checks).</li>
+                </ul>
+                <p>
+                  Ideal for professionals, cybersecurity enthusiasts, and power users who demand total trust in their tools.
+                </p>
+              </section>
+
+              <!-- Future Plans -->
+              <section class="roadmap">
+                <h2>Upcoming Features</h2>
+                <ul>
+                  <li>Browser extension for instant link vetting.</li>
+                  <li>Enterprise dashboard for team QR safety metrics.</li>
+                  <li>Integration with Apple Shortcuts & Android Intents.</li>
+                </ul>
+              </section>
+
+              <!-- CTA -->
+              <footer class="conclusion">
+                <p>
+                  SafeQR is designed to make digital interactions safer for everyone—whether you’re scanning a code on a
+                  café table or a business presentation. Download soon on iOS, Android, or use it via the web at
+                  <a href="https://safeqr.app" target="_blank" rel="noopener noreferrer">SafeQR.app</a>.
+                </p>
+              </footer>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </article>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const links = document.querySelectorAll('.blog-details a');
+      links.forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      });
+    });
+  </script>
+</body>
+</html>
