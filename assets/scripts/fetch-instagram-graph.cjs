@@ -99,7 +99,17 @@ async function refreshToken() {
 }
 
 async function fetchInstagram() {
-  const url = `https://graph.facebook.com/v21.0/${IG_USER_ID}/media?fields=id,caption,media_url,permalink,timestamp&access_token=${ACCESS_TOKEN}`;
+  const fields = [
+    "id",
+    "caption",
+    "media_type",
+    "media_url",
+    "thumbnail_url",
+    "permalink",
+    "timestamp",
+    "children{media_type,media_url,thumbnail_url}",
+  ].join(",");
+  const url = `https://graph.facebook.com/v21.0/${IG_USER_ID}/media?fields=${fields}&access_token=${ACCESS_TOKEN}`;
   const res = await fetch(url);
   const json = await res.json();
 
