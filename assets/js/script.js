@@ -343,8 +343,11 @@ if (hasIndexPages) {
   // add event to all nav link (SPA behavior)
   for (let i = 0; i < navigationLinks.length; i++) {
     navigationLinks[i].addEventListener("click", function () {
+      const clickedPage = this.innerHTML.toLowerCase();
+      // Disable contact page navigation
+      if (clickedPage === 'contact') return;
       for (let j = 0; j < pages.length; j++) {
-        if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
+        if (clickedPage === pages[j].dataset.page) {
           pages[j].classList.add("active");
           if (navigationLinks[j]) navigationLinks[j].classList.add("active");
           window.scrollTo(0, 0);
@@ -354,13 +357,15 @@ if (hasIndexPages) {
         }
       }
       const pageName = this.innerHTML.toLowerCase();
+      // Disable contact page navigation
+      if (pageName === 'contact') return;
       try { history.replaceState({}, '', `#${pageName}`); } catch {}
     });
   }
 } else if (navigationLinks && navigationLinks.length) {
   // Standalone pages: navigate to index anchors
   const sectionHrefBase = location.pathname.includes('/blog/') ? '../../index.html#' : './index.html#';
-  const map = { about: 'about', resume: 'resume', portfolio: 'portfolio', blog: 'blog', contact: 'contact' };
+  const map = { about: 'about', resume: 'resume', portfolio: 'portfolio', blog: 'blog' };
   navigationLinks.forEach(btn => {
     const key = (btn.textContent || btn.innerText || '').trim().toLowerCase();
     const section = map[key];
@@ -387,6 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Helper to activate a page programmatically
 function activatePage(pageName) {
   if (!pages || !navigationLinks) return;
+  // Disable contact page
+  if (pageName === 'contact') return;
   for (let i = 0; i < pages.length; i++) {
     const isMatch = pages[i].dataset.page === pageName;
     pages[i].classList.toggle('active', isMatch);
