@@ -521,7 +521,15 @@ async function fetchManifest() {
 function renderIndex(posts) {
   if (!blogListEl) return;
   blogListEl.innerHTML = '';
-  (posts || []).forEach(post => {
+  
+  // Sort posts by dateISO in descending order (newest first)
+  const sortedPosts = [...(posts || [])].sort((a, b) => {
+    const dateA = new Date(a.dateISO || 0);
+    const dateB = new Date(b.dateISO || 0);
+    return dateB - dateA; // Descending order (newest first)
+  });
+  
+  sortedPosts.forEach(post => {
     const li = document.createElement('li');
     li.className = 'blog-post-item active';
     li.innerHTML = `
